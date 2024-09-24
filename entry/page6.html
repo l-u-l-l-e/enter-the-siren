@@ -9,7 +9,7 @@
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="waiting.html">
+    <a href="final.html">
       <button id="lastButton" class="button">Enter</button>
     </a>
   </div>
@@ -17,20 +17,20 @@
   <script>
     // Listen for the last button click
     document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default button action
+      e.preventDefault(); // Prevent default action
 
       // Trigger video playback on the second screen
-      triggerVideoPlayback(); // Simulate signal to the second screen
+      triggerVideoPlayback(); // Simulate signal to second screen
 
-      // Redirect to the waiting screen after clicking
-      window.location.href = 'waiting.html';
+      // Redirect to "final" (You may now enter) screen
+      window.location.href = 'final.html';
     });
 
     // Simulated function to trigger video playback on the second screen
     function triggerVideoPlayback() {
-      // For now, we simulate this with a network request or signal
-      // This could be a webhook, WebSocket, or API call
-      fetch('http://second-screen.local/play-video'); // Example of sending signal
+      // Simulate the video play trigger with a network request or signal
+      // You will implement the actual signal later
+      fetch('http://second-screen.local/play-video'); // Example
     }
   </script>
 </body>
