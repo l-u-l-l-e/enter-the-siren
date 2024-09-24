@@ -1,0 +1,36 @@
+/* Import the Fira Mono font */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
+
+body {
+  background-color: black;
+  color: lightcyan;
+  font-family: 'Fira Mono', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.button {
+  background-color: lavender;
+  color: darkslateblue;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin: 10px;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: darkslateblue;
+  color: lavender;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+}
