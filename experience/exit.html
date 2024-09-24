@@ -12,6 +12,11 @@
     </div>
 
     <script>
+        // Reset the signal when the "Please Exit" screen is shown
+        fetch('https://legend-oxidized-governor.glitch.me/reset')
+          .then(response => response.text())
+          .then(data => console.log("Signal reset: ", data)); // Log the confirmation
+
         // Redirect to dots screen after 10 seconds
         setTimeout(function() {
             window.location.href = 'dots.html';
