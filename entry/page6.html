@@ -9,8 +9,8 @@
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="final.html">
-      <button id="lastButton" class="button">Enter</button>
+    <a href="loading.html">
+      <button id="lastButton" class="button">Ready</button>
     </a>
   </div>
 
@@ -19,14 +19,19 @@
     document.getElementById('lastButton').addEventListener('click', function(e) {
       e.preventDefault(); // Prevent default action
 
-      // Trigger the signal to start the video on the other screen
-      fetch('https://legend-oxidized-governor.glitch.me') // 
+      // Trigger video playback signal (simulated)
+      triggerVideoPlayback(); // Simulate signal to second screen
+
+      // Redirect to loading screen
+      window.location.href = 'loading.html';
+    });
+
+    // Simulated function to trigger video playback on the second screen
+    function triggerVideoPlayback() {
+      fetch('https://your-glitch-project.glitch.me/play') // Replace with your Glitch URL
         .then(response => response.text())
         .then(data => console.log(data)); // Log confirmation message
-
-      // Redirect to the "final" (You may now enter) screen
-      window.location.href = 'final.html';
-    });
+    }
   </script>
 </body>
 </html>
