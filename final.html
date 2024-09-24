@@ -11,6 +11,12 @@
     <h1>You may now enter the booth</h1>
     <h2>Please put on the headphones for the full experience</h2>
   </div>
-  <script src="scripts.js"></script>
+
+  <script>
+    // Automatically redirect to waiting page after 10 seconds
+    setTimeout(function() {
+      window.location.href = "waiting.html"; // Update the URL to your actual waiting page
+    }, 10000); // 10000 milliseconds = 10 seconds
+  </script>
 </body>
 </html>
