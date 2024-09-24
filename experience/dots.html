@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting...</title>
+    <link rel="stylesheet" href="../entry/styles.css">
+</head>
+<body class="fade-in">
+    <div class="container">
+        <h2 class="dots">• • •</h2> <!-- Just 3 dots -->
+    </div>
+
+    <script>
+        // Dot animation for the waiting screen
+        let dotElement = document.querySelector('.dots');
+        let dots = 1;
+
+        setInterval(function () {
+            dotElement.textContent = '•'.repeat(dots);
+            dots = (dots % 3) + 1;
+        }, 500); // Change dots every 500ms
+    </script>
+</body>
+</html>
