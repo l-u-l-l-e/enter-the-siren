@@ -8,7 +8,7 @@
 </head>
 <body class="fade-in">
   <div class="container">
-    <!-- Placeholder for the YouTube iframe -->
+    <!-- Placeholder for YouTube video -->
     <div id="sirenVideo"></div>
   </div>
 
@@ -21,14 +21,14 @@
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // This function creates an <iframe> (and YouTube player) after the API code downloads
+    // Create YouTube video player
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('sirenVideo', {
         height: '500',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // Replace this with your YouTube video ID
+        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // We'll control autoplay with a signal
+          'autoplay': 0,  // We'll control autoplay with the signal
           'controls': 0,  // Hide controls to prevent interaction
           'mute': 1       // Start muted to ensure autoplay works
         },
@@ -39,37 +39,31 @@
       });
     }
 
-    // The API will call this function when the video player is ready
-    function onPlayerReady(event) {
-      console.log("YouTube player ready. Waiting for signal...");
-      // The video will not play automatically until we receive the signal
+    // Function to poll the Glitch server every 2 seconds
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            // If signal is received, play the video
+            playVideo();
+          }
+        });
     }
 
-    // Detect when the video ends and redirect to the "Please Exit" screen
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        // Redirect to "Please Exit" screen when video ends
-        window.location.href = 'exit.html';
-      }
-    }
-
-    // Function to start the video after receiving the signal
+    // Play video when signal is received
     function playVideo() {
-      player.mute();   // Ensure it starts muted to avoid autoplay restrictions
-      player.playVideo();  // Start playing the video
+      player.mute();  // Start muted
+      player.playVideo();  // Start video
 
-      // After the video starts, unmute it to play sound
+      // Unmute the video after 1 second
       setTimeout(() => {
-        player.unMute();  // Unmute the video after it starts playing
-      }, 1000);  // Unmute after 1 second to ensure it starts properly
+        player.unMute();
+      }, 1000);
     }
 
-    // Simulate receiving the signal after the entry point finishes
-    // You would replace this fetch with the actual signal logic
-    setTimeout(() => {
-      console.log("Signal received! Starting the video.");
-      playVideo();  // Start the video when the signal is received
-    }, 2000);  // Simulate signal being received after 2 seconds for testing
+    // Check for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
