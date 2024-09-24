@@ -4,35 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ready to Dive In?</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="final.html">
-      <button class="button">Enter</button>
+    <a href="waiting.html">
+      <button id="lastButton" class="button">Enter</button>
     </a>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const links = document.querySelectorAll('a');
+    // Listen for the last button click
+    document.getElementById('lastButton').addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default button action
 
-      links.forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const href = this.getAttribute('href');
+      // Trigger video playback on the second screen
+      triggerVideoPlayback(); // Simulate signal to the second screen
 
-          // Apply fade-out class before navigating
-          document.body.classList.add('fade-out');
-          
-          // Wait for the fade-out animation to finish, then navigate
-          setTimeout(function() {
-            window.location.href = href;
-          }, 500);  // Matches the CSS fade-out animation duration (0.5 seconds)
-        });
-      });
+      // Redirect to the waiting screen after clicking
+      window.location.href = 'waiting.html';
     });
+
+    // Simulated function to trigger video playback on the second screen
+    function triggerVideoPlayback() {
+      // For now, we simulate this with a network request or signal
+      // This could be a webhook, WebSocket, or API call
+      fetch('http://second-screen.local/play-video'); // Example of sending signal
+    }
   </script>
 </body>
 </html>
