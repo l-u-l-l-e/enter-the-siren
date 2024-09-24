@@ -36,7 +36,7 @@ h2 {
   border-radius: 25px; /* Rounded buttons */
   font-family: 'Fira Mono', monospace;
   transition: background-color 0.2s ease, color 0.2s ease; /* Faster hover transition */
-  margin: 10px; /* Added margin between buttons */
+  margin: 15px; /* Added margin between buttons */
   flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 buttons per row */
   text-align: center;
 }
