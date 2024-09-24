@@ -8,39 +8,68 @@
 </head>
 <body class="fade-in">
   <div class="container">
-    <!-- Embed the YouTube video -->
-    <iframe width="100%" height="500" 
-            src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=0" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen id="sirenVideo">
-    </iframe>
+    <!-- Placeholder for the YouTube iframe -->
+    <div id="sirenVideo"></div>
   </div>
 
   <script>
-    const videoIframe = document.getElementById('sirenVideo');
+    let player;
 
-    // Function to detect when the YouTube video ends
+    // Load the Iframe API script
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // This function creates an <iframe> (and YouTube player) after the API code downloads
     function onYouTubeIframeAPIReady() {
-      const player = new YT.Player('sirenVideo', {
+      player = new YT.Player('sirenVideo', {
+        height: '500',
+        width: '100%',
+        videoId: 'dMRR6yFSy5k',  // Replace this with your YouTube video ID
+        playerVars: {
+          'autoplay': 0,  // We'll control autoplay with a signal
+          'controls': 0,  // Hide controls to prevent interaction
+          'mute': 1       // Start muted to ensure autoplay works
+        },
         events: {
+          'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
         }
       });
     }
 
+    // The API will call this function when the video player is ready
+    function onPlayerReady(event) {
+      console.log("YouTube player ready. Waiting for signal...");
+      // The video will not play automatically until we receive the signal
+    }
+
+    // Detect when the video ends and redirect to the "Please Exit" screen
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        // Redirect to the "Please Exit" screen when the video finishes
+        // Redirect to "Please Exit" screen when video ends
         window.location.href = 'exit.html';
       }
     }
 
-    // Load the YouTube API to control the iframe
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // Function to start the video after receiving the signal
+    function playVideo() {
+      player.mute();   // Ensure it starts muted to avoid autoplay restrictions
+      player.playVideo();  // Start playing the video
+
+      // After the video starts, unmute it to play sound
+      setTimeout(() => {
+        player.unMute();  // Unmute the video after it starts playing
+      }, 1000);  // Unmute after 1 second to ensure it starts properly
+    }
+
+    // Simulate receiving the signal after the entry point finishes
+    // You would replace this fetch with the actual signal logic
+    setTimeout(() => {
+      console.log("Signal received! Starting the video.");
+      playVideo();  // Start the video when the signal is received
+    }, 2000);  // Simulate signal being received after 2 seconds for testing
   </script>
 </body>
 </html>
