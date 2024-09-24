@@ -26,10 +26,12 @@ h1 {
   border: none;
   cursor: pointer;
   font-size: 1.2em;
-  margin: 20px 0;  /* Vertical spacing between buttons */
   border-radius: 25px;  /* Rounded buttons */
   font-family: 'Fira Mono', monospace;
   transition: background-color 0.3s ease, color 0.3s ease;  /* Soft hover transition */
+  flex: 1 1 calc(50% - 40px);  /* Buttons take 50% width minus the gap */
+  text-align: center;
+  margin-bottom: 20px;  /* Vertical spacing between rows of buttons */
 }
 
 .button:hover {
@@ -41,6 +43,10 @@ h1 {
   max-width: 600px;
   width: 100%;
   padding: 20px;
+  display: flex;
+  flex-wrap: wrap;  /* Allow buttons to wrap if needed */
+  justify-content: center;  /* Center the buttons */
+  gap: 20px;  /* Adds space between the buttons */
 }
 
 /* Smooth transitions for page changes */
@@ -66,4 +72,11 @@ html {
 @keyframes fadeOut {
   0% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .button {
+    flex: 1 1 100%;  /* Make buttons take full width on small screens */
+  }
 }
