@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="fade-in">
+  <div class="container">
+    <h1>Hey you ... welcome</h1>
+    <h2>Let's dive in together</h2>
+    <a href="page1.html">
+      <button class="button">Enter</button>
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+
+          // Apply fade-out class before navigating
+          document.body.classList.add('fade-out');
+          
+          // Wait for the fade-out animation to finish, then navigate
+          setTimeout(function() {
+            window.location.href = href;
+          }, 500);  // Matches the CSS fade-out animation duration (0.5 seconds)
+        });
+      });
+    });
+  </script>
+</body>
+</html>
