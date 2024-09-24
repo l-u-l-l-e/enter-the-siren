@@ -6,10 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       const href = this.getAttribute('href');
 
-      document.body.classList.add('fade-out');  // Apply the fade-out class
+      // Apply fade-out class before navigating
+      document.body.classList.add('fade-out');
+      
+      // Wait for the fade-out animation to finish, then navigate
       setTimeout(function() {
         window.location.href = href;
-      }, 1000);  // Adjust delay to match the fade-out time (1 second here)
+      }, 1000);  // Adjust delay to match the fade-out animation duration (1 second here)
     });
   });
 });
