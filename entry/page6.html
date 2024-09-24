@@ -15,16 +15,15 @@
   </div>
 
   <script>
-    // Listen for the last button click
     document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default action
+      e.preventDefault(); // Prevent the default action
 
-      // Trigger the signal to start the video on the other screen (via Glitch)
-      fetch('https://your-glitch-project.glitch.me/play') // Replace with your Glitch URL
+      // Send the signal to start the video
+      fetch('https://legend-oxidized-governor.glitch.me') // Replace with your Glitch URL
         .then(response => response.text())
-        .then(data => console.log(data)); // Log confirmation message
+        .then(data => console.log(data)); // Log the confirmation that the signal was sent
 
-      // Redirect to the loading screen after clicking
+      // Redirect to the loading screen after the signal is sent
       window.location.href = 'loading.html';
     });
   </script>
