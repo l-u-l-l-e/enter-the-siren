@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experience Point</title>
+  <link rel="stylesheet" href="../entry/styles.css">
+</head>
+<body class="fade-in">
+  <div class="container">
+    <video id="sirenVideo" width="100%" controls>
+      <source src="siren.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    const video = document.getElementById('sirenVideo');
+
+    // Function to check for the signal to play the video
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me') // Replace with your Glitch URL
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            video.play();  // Play the video when the signal is received
+            video.requestFullscreen();  // Enter full-screen mode
+          }
+        });
+    }
+
+    // Polling to check for the signal every 2 seconds
+    setInterval(checkForSignal, 2000); // Adjust polling interval if needed
+  </script>
+</body>
+</html>
