@@ -1,6 +1,7 @@
-/* Import the Fira Mono font */
+/* Import Fira Mono font */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 
+/* Global styles */
 body {
   background-color: black;
   color: #08fff8;
@@ -12,49 +13,52 @@ body {
   text-align: center;
   margin: 0;
   padding: 50px;
-  overflow: hidden;  /* Disable scrolling */
+  overflow: hidden; /* Disable scrolling */
 }
 
+/* Heading styles */
 h1 {
-  margin-bottom: 30px;  /* Reduced space below the heading */
+  margin-bottom: 30px; /* Less space below heading */
 }
 
 h2 {
-  margin-bottom: 40px;  /* Reduced space between title and subtitle */
+  margin-bottom: 40px; /* Adjusted space between heading and subtitle */
 }
 
+/* Button styles */
 .button {
-  background-color: #E1D1FF;  /* Bright button background */
-  color: #3700AF;  /* Button text color */
+  background-color: #E1D1FF; /* Bright button background */
+  color: #3700AF; /* Button text color */
   padding: 15px 30px;
   border: none;
   cursor: pointer;
   font-size: 1.2em;
-  border-radius: 25px;  /* Rounded buttons */
+  border-radius: 25px; /* Rounded buttons */
   font-family: 'Fira Mono', monospace;
-  transition: background-color 0.2s ease, color 0.2s ease;  /* Faster hover transition */
-  flex: 1 1 calc(45% - 20px);  /* Better layout control for preventing single button wrap */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Faster hover transition */
+  flex: 1 1 calc(45% - 20px); /* Button width with good wrapping control */
   text-align: center;
-  margin-bottom: 15px;  /* Slightly reduced vertical space between buttons */
+  margin-bottom: 15px; /* Vertical space between buttons */
 }
 
 .button:hover {
-  background-color: #3700AF;  /* Darker hover background */
-  color: #E1D1FF;  /* Inverted text color on hover */
+  background-color: #3700AF; /* Darker hover background */
+  color: #E1D1FF; /* Inverted text color on hover */
 }
 
+/* Container for overall layout */
 .container {
   max-width: 600px;
   width: 100%;
   padding: 20px;
 }
 
-/* Button container to manage layout */
+/* Flexbox for button layout */
 .button-container {
   display: flex;
-  flex-wrap: wrap;  /* Allow buttons to wrap if needed */
-  justify-content: center;  /* Center the buttons */
-  gap: 15px;  /* Adds space between the buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap if needed */
+  justify-content: center; /* Center the buttons */
+  gap: 15px; /* Adds space between buttons */
 }
 
 /* Smooth transitions for page changes */
@@ -62,29 +66,34 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fade-in effect when a new page loads */
+/* Fade-in and fade-out effects */
 .fade-in {
-  animation: fadeIn 0.5s ease-in;  /* Faster fade-in */
+  animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Fade-out effect when navigating away from a page */
 .fade-out {
-  animation: fadeOut 0.5s ease-out;  /* Faster fade-out */
+  animation: fadeOut 0.5s ease-out;
 }
 
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Dot animation for the waiting page */
+.dots {
+  font-size: 2em;
+  text-align: center;
 }
 
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
   .button {
-    flex: 1 1 100%;  /* Make buttons take full width on small screens */
+    flex: 1 1 100%; /* Full-width buttons on smaller screens */
   }
 }
