@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Are You?</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="fade-in">
+  <div class="container">
+    <h1>In this sea, which of the following do you consider yourself to be?</h1>
+    <div class="button-container"> <!-- Added button-container to manage spacing -->
+      <a href="page3.html">
+        <button class="button">Surfer</button>
+      </a>
+      <a href="page3.html">
+        <button class="button">Diver</button>
+      </a>
+      <a href="page3.html">
+        <button class="button">Pirate</button>
+      </a>
+      <a href="page3.html">
+        <button class="button">Catfish</button>
+      </a>
+      <a href="page3.html">
+        <button class="button">Streamer</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+
+          // Apply fade-out class before navigating
+          document.body.classList.add('fade-out');
+          
+          // Wait for the fade-out animation to finish, then navigate
+          setTimeout(function() {
+            window.location.href = href;
+          }, 500);  // Matches the CSS fade-out animation duration (0.5 seconds)
+        });
+      });
+    });
+  </script>
+</body>
+</html>
