@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   links.forEach(link => {
     link.addEventListener('click', function(e) {
-      e.preventDefault();
+      e.preventDefault();  // Prevent immediate navigation
       const href = this.getAttribute('href');
 
-      // Apply fade-out class before navigating
+      // Apply fade-out class
       document.body.classList.add('fade-out');
       
-      // Wait for the fade-out animation to finish, then navigate
+      // Wait for the fade-out animation to finish before navigating
       setTimeout(function() {
         window.location.href = href;
-      }, 1000);  // Adjust delay to match the fade-out animation duration (1 second here)
+      }, 500);  // Matches the CSS fade-out animation duration
     });
   });
 });
