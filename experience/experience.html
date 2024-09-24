@@ -8,8 +8,8 @@
 </head>
 <body class="fade-in">
   <div class="container">
-    <video id="sirenVideo" width="100%" controls>
-      <source src="siren.mp4" type="video/mp4">
+    <video id="sirenVideo" width="100%" controls autoplay>
+      <source src="https://drive.google.com/uc?export=download&id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
@@ -17,20 +17,28 @@
   <script>
     const video = document.getElementById('sirenVideo');
 
-    // Function to check for the signal to play the video
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me') // Replace with your Glitch URL
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            video.play();  // Play the video when the signal is received
-            video.requestFullscreen();  // Enter full-screen mode
-          }
-        });
+    // Function to request full-screen mode and play video
+    function playVideoInFullscreen() {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.mozRequestFullScreen) { /* Firefox */
+        video.mozRequestFullScreen();
+      } else if (video.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) { /* IE/Edge */
+        video.msRequestFullscreen();
+      }
+      video.play(); // Start playing the video
     }
 
-    // Polling to check for the signal every 2 seconds
-    setInterval(checkForSignal, 2000); // Adjust polling interval if needed
+    // Automatically play the video in full screen
+    window.onload = function() {
+      playVideoInFullscreen();
+    };
+
+    // Ensure the video plays with sound and cannot be paused by the user
+    video.volume = 1.0; // Set volume to 100%
+    video.controls = false; // Hide controls to prevent interaction
   </script>
 </body>
 </html>
