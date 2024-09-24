@@ -19,19 +19,14 @@
     document.getElementById('lastButton').addEventListener('click', function(e) {
       e.preventDefault(); // Prevent default action
 
-      // Trigger video playback on the second screen
-      triggerVideoPlayback(); // Simulate signal to second screen
+      // Trigger the signal to start the video on the other screen
+      fetch('https://legend-oxidized-governor.glitch.me') // 
+        .then(response => response.text())
+        .then(data => console.log(data)); // Log confirmation message
 
-      // Redirect to "final" (You may now enter) screen
+      // Redirect to the "final" (You may now enter) screen
       window.location.href = 'final.html';
     });
-
-    // Simulated function to trigger video playback on the second screen
-    function triggerVideoPlayback() {
-      // Simulate the video play trigger with a network request or signal
-      // You will implement the actual signal later
-      fetch('http://second-screen.local/play-video'); // Example
-    }
   </script>
 </body>
 </html>
