@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Please Wait</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your existing stylesheet -->
+</head>
+<body>
+    <div class="container">
+        <h1>Please wait your turn</h1>
+        <h2 class="dots">• • •</h2> <!-- Animated dots below the message -->
+    </div>
+
+    <script>
+        // Dot animation for the waiting page
+        let dotElement = document.querySelector('.dots');
+        let dots = 1;
+
+        setInterval(function () {
+            dotElement.textContent = '•'.repeat(dots);
+            dots = (dots % 3) + 1;
+        }, 500); // Change dots every 500ms
+
+        // Redirect to index page after 7 minutes and 40 seconds (460,000 ms)
+        setTimeout(function () {
+            window.location.href = "index.html"; // Replace with actual index page URL
+        }, 460000); // 7 min 40 sec in milliseconds
+    </script>
+</body>
+</html>
