@@ -16,7 +16,11 @@ body {
 }
 
 h1 {
-  margin-bottom: 50px;  /* More space below the heading */
+  margin-bottom: 30px;  /* Reduced space below the heading */
+}
+
+h2 {
+  margin-bottom: 40px;  /* Reduced space between title and subtitle */
 }
 
 .button {
@@ -28,10 +32,10 @@ h1 {
   font-size: 1.2em;
   border-radius: 25px;  /* Rounded buttons */
   font-family: 'Fira Mono', monospace;
-  transition: background-color 0.3s ease, color 0.3s ease;  /* Soft hover transition */
-  flex: 1 1 calc(50% - 40px);  /* Buttons take 50% width minus the gap */
+  transition: background-color 0.2s ease, color 0.2s ease;  /* Faster hover transition */
+  flex: 1 1 calc(45% - 20px);  /* Better layout control for preventing single button wrap */
   text-align: center;
-  margin-bottom: 20px;  /* Vertical spacing between rows of buttons */
+  margin-bottom: 15px;  /* Slightly reduced vertical space between buttons */
 }
 
 .button:hover {
@@ -50,7 +54,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;  /* Allow buttons to wrap if needed */
   justify-content: center;  /* Center the buttons */
-  gap: 20px;  /* Adds space between the buttons */
+  gap: 15px;  /* Adds space between the buttons */
 }
 
 /* Smooth transitions for page changes */
@@ -60,7 +64,7 @@ html {
 
 /* Fade-in effect when a new page loads */
 .fade-in {
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 0.5s ease-in;  /* Faster fade-in */
 }
 
 @keyframes fadeIn {
@@ -70,7 +74,7 @@ html {
 
 /* Fade-out effect when navigating away from a page */
 .fade-out {
-  animation: fadeOut 1s ease-out;
+  animation: fadeOut 0.5s ease-out;  /* Faster fade-out */
 }
 
 @keyframes fadeOut {
