@@ -18,12 +18,12 @@
     document.getElementById('lastButton').addEventListener('click', function(e) {
       e.preventDefault(); // Prevent the default action
 
-      // Send the signal to start the video
-      fetch('https://legend-oxidized-governor.glitch.me') // Replace with your Glitch URL
+      // Trigger the video play signal via Glitch
+      fetch('https://legend-oxidized-governor.glitch.me/play')
         .then(response => response.text())
-        .then(data => console.log(data)); // Log the confirmation that the signal was sent
+        .then(data => console.log(data)); // Log confirmation
 
-      // Redirect to the loading screen after the signal is sent
+      // Redirect to the loading screen after sending the signal
       window.location.href = 'loading.html';
     });
   </script>
