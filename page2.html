@@ -9,7 +9,7 @@
 <body class="fade-in">
   <div class="container">
     <h1>In this sea, which of the following do you consider yourself to be?</h1>
-    <div>
+    <div class="button-container"> <!-- Added button-container to manage spacing -->
       <a href="page3.html">
         <button class="button">Surfer</button>
       </a>
@@ -27,6 +27,26 @@
       </a>
     </div>
   </div>
-  <script src="scripts.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+
+          // Apply fade-out class before navigating
+          document.body.classList.add('fade-out');
+          
+          // Wait for the fade-out animation to finish, then navigate
+          setTimeout(function() {
+            window.location.href = href;
+          }, 1000);  // Adjust delay to match the fade-out animation duration
+        });
+      });
+    });
+  </script>
 </body>
 </html>
