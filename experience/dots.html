@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waiting...</title>
-    <link rel="stylesheet" href="../entry/styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 2em;
+        }
+        .dots {
+            font-size: 3em;
+        }
+    </style>
 </head>
-<body class="fade-in">
-    <div class="container">
-        <h2 class="dots">• • •</h2> <!-- Just 3 dots -->
-    </div>
+<body>
+    <div class="dots">• • •</div>
 
     <script>
-        // Dot animation for the waiting screen
+        // Dot animation
         let dotElement = document.querySelector('.dots');
         let dots = 1;
 
