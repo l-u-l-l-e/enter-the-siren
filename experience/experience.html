@@ -4,33 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Ensure the video takes up the full screen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    .container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
+      width: 100vw;  /* Full viewport width */
+      height: 100vh; /* Full viewport height */
+    }
+  </style>
 </head>
-<body class="fade-in">
+<body>
   <div class="container">
-    <!-- YouTube Video Embed -->
     <div id="sirenVideo"></div>
   </div>
 
   <script>
     let player;
 
-    // Load the Iframe API script for YouTube
+    // Load the YouTube Iframe API script
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // Create YouTube player when API is ready
+    // Create the YouTube player when API is ready
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('sirenVideo', {
-        height: '500',
+        height: '100%',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // The video ID from your YouTube share link
+        videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Autoplay is controlled by signal
+          'autoplay': 1,  // Autoplay on load
           'controls': 0,  // Hide controls to prevent interaction
-          'mute': 1       // Start muted to bypass autoplay restrictions
+          'mute': 1,      // Start muted to ensure autoplay works
+          'playsinline': 1 // Ensure video plays inline on mobile devices
         },
         events: {
           'onReady': onPlayerReady,
@@ -39,46 +64,22 @@
       });
     }
 
-    // Player is ready
+    // When the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready. Waiting for the signal.");
+      console.log("YouTube Player is ready. Starting video.");
+      player.playVideo();  // Play video
+      setTimeout(() => {
+        player.unMute();  // Unmute after 1 second
+      }, 1000); // Allow some time for autoplay
     }
 
-    // Handle when video ends
+    // Handle when the video finishes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         // Redirect to the "Please Exit" screen when video finishes
         window.location.href = 'exit.html';
       }
     }
-
-    // Poll the server for the signal every 2 seconds
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          console.log("Signal status: ", data.playVideo); // Log signal status
-          if (data.playVideo) {
-            console.log("Signal received! Starting video.");
-            playVideo(); // Play video when signal is received
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error)); // Catch errors
-    }
-
-    // Function to play video
-    function playVideo() {
-      player.mute();  // Start muted to ensure autoplay works
-      player.playVideo();  // Start the video
-
-      // Unmute the video after 1 second
-      setTimeout(() => {
-        player.unMute();
-      }, 1000);
-    }
-
-    // Poll for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
