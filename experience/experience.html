@@ -8,29 +8,29 @@
 </head>
 <body class="fade-in">
   <div class="container">
-    <!-- Placeholder for YouTube video -->
+    <!-- YouTube Video Embed -->
     <div id="sirenVideo"></div>
   </div>
 
   <script>
     let player;
 
-    // Load the Iframe API script
+    // Load the Iframe API script for YouTube
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // Create YouTube video player
+    // Create YouTube player when API is ready
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('sirenVideo', {
         height: '500',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        videoId: 'dMRR6yFSy5k',  // The video ID from your YouTube share link
         playerVars: {
-          'autoplay': 0,  // We'll control autoplay with the signal
+          'autoplay': 0,  // Autoplay is controlled by signal
           'controls': 0,  // Hide controls to prevent interaction
-          'mute': 1       // Start muted to ensure autoplay works
+          'mute': 1       // Start muted to bypass autoplay restrictions
         },
         events: {
           'onReady': onPlayerReady,
@@ -39,22 +39,37 @@
       });
     }
 
-    // Function to poll the Glitch server every 2 seconds
+    // Player is ready
+    function onPlayerReady(event) {
+      console.log("YouTube Player is ready. Waiting for the signal.");
+    }
+
+    // Handle when video ends
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Redirect to the "Please Exit" screen when video finishes
+        window.location.href = 'exit.html';
+      }
+    }
+
+    // Poll the server for the signal every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
+          console.log("Signal status: ", data.playVideo); // Log signal status
           if (data.playVideo) {
-            // If signal is received, play the video
-            playVideo();
+            console.log("Signal received! Starting video.");
+            playVideo(); // Play video when signal is received
           }
-        });
+        })
+        .catch(error => console.error('Error checking signal:', error)); // Catch errors
     }
 
-    // Play video when signal is received
+    // Function to play video
     function playVideo() {
-      player.mute();  // Start muted
-      player.playVideo();  // Start video
+      player.mute();  // Start muted to ensure autoplay works
+      player.playVideo();  // Start the video
 
       // Unmute the video after 1 second
       setTimeout(() => {
@@ -62,7 +77,7 @@
       }, 1000);
     }
 
-    // Check for the signal every 2 seconds
+    // Poll for the signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
 </body>
