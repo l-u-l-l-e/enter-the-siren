@@ -16,16 +16,17 @@
 
   <script>
     document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent the default action
+        e.preventDefault(); // Prevent default action
 
-      // Trigger the video play signal via Glitch
-      fetch('https://legend-oxidized-governor.glitch.me/play')
-        .then(response => response.text())
-        .then(data => console.log(data)); // Log confirmation
+        // Send the signal to play the video
+        fetch('https://legend-oxidized-governor.glitch.me/play')
+          .then(response => response.text())
+          .then(data => console.log("Signal sent: ", data)) // Log confirmation
+          .catch(error => console.error('Error sending signal:', error)); // Catch errors
 
-      // Redirect to the loading screen after sending the signal
-      window.location.href = 'loading.html';
+        // Redirect to the loading screen after sending the signal
+        window.location.href = 'loading.html';
     });
-  </script>
+</script>
 </body>
 </html>
