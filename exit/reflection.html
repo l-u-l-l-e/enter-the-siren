@@ -5,14 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Internet Reflection</title>
   <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Input field styles - same as other pages */
+    .input-field {
+      background-color: transparent;
+      border: 2px solid #08fff8;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      font-size: 1.3em;
+      padding: 15px;
+      border-radius: 15px;
+      width: 100%;
+      height: 200px;  /* Larger height for reflection */
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    /* Placeholder color matching the button background */
+    .input-field::placeholder {
+      color: #E1D1FF;
+      opacity: 1;
+    }
+
+    /* Styled button to match the questionnaire */
+    .button {
+      background-color: #E1D1FF;
+      color: #3700AF;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      width: 100%;
+      font-family: 'Fira Mono', monospace;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3700AF;
+      color: #E1D1FF;
+    }
+  </style>
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>How do you relate this experience with your own life on the internet?</h1>
-    <textarea id="reflection" placeholder="There are no wrong answers" class="input-field"></textarea>
-    <a href="thankyou.html">
-      <button class="button">Submit</button>
-    </a>
+    <textarea id="reflection" class="input-field" placeholder="There are no wrong answers"></textarea>
+    <button id="submitReflection" class="button">Submit</button>
   </div>
+
+  <script>
+    const reflectionInput = document.getElementById('reflection');
+    const submitButton = document.getElementById('submitReflection');
+
+    // Enable submit button only when the user enters a response
+    reflectionInput.addEventListener('input', function() {
+      submitButton.disabled = reflectionInput.value.trim() === "";
+    });
+
+    submitButton.addEventListener('click', function() {
+      const reflection = reflectionInput.value;
+      
+      if (reflection.trim() === "") {
+        alert("Please provide your reflection.");
+        return;
+      }
+
+      // Save reflection in local storage (or send to server)
+      localStorage.setItem('reflection', reflection);
+
+      // Redirect to the Wall of Fame page
+      window.location.href = 'walloffame.html';
+    });
+  </script>
 </body>
 </html>
