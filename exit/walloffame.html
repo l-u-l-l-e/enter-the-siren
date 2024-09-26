@@ -62,3 +62,28 @@
   inactivityTime();  // Start the inactivity timer
 </script>
 
+      <script>
+  const responsesContainer = document.getElementById('responses');
+
+  // Fetch the responses from the Glitch server
+  fetch('https://legend-oxidized-governor.glitch.me/get-responses')
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(response => {
+        const responseDiv = document.createElement('div');
+        responseDiv.classList.add('response-container');
+
+        responseDiv.innerHTML = `
+          <div class="nickname">${response.nickname}</div>
+          <div class="type">Type: ${response.type}</div>
+          <div class="generation">Generation: ${response.generation}</div>
+          <div class="observed">Observed: ${response.observed}</div>
+          <div class="response">Reflection: ${response.reflection}</div>
+        `;
+
+        responsesContainer.appendChild(responseDiv);
+      });
+    })
+    .catch(error => console.error('Error fetching responses:', error));
+</script>
+
