@@ -9,9 +9,7 @@
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="loading.html">
-      <button id="lastButton" class="button">Enter</button>
-    </a>
+    <button id="lastButton" class="button">Enter</button> <!-- Removed the <a> tag -->
   </div>
 
 <script>
@@ -25,7 +23,7 @@
             .catch(error => console.error('Error sending signal:', error));  // Catch errors
 
         // Redirect to the final instructions page (final.html)
-        window.location.href = 'final.html';  // Ensure this is the correct final instructions page URL
+        window.location.href = 'final.html';  // Redirect to final.html after sending signal
     });
 </script>
 </body>
