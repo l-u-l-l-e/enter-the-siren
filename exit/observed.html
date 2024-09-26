@@ -9,7 +9,7 @@
 <body class="fade-in">
   <div class="container">
     <h1>While you were in the booth, did you feel more like an observer or the observed?</h1>
-    <div class="button-container"> <!-- Button container to style like entry point -->
+    <div class="button-container">
       <button class="button" id="observerButton">Observer</button>
       <button class="button" id="observedButton">Observed</button>
       <button class="button" id="bothButton">Both</button>
@@ -31,8 +31,6 @@
           e.preventDefault();
           
           const observed = this.innerText;  // Get the observed/observer value
-
-          // Store the selected answer locally or send it to the server
           localStorage.setItem('observed', observed);  // Temporary storage for testing
         });
       });
