@@ -55,6 +55,34 @@ h2 {
   margin-top: 30px; /* Extra margin between question and buttons */
 }
 
+/* Style for text input fields */
+.input-field {
+  background-color: transparent;
+  color: #08fff8;
+  font-family: 'Fira Mono', monospace;
+  font-size: 1.2em;
+  padding: 15px;
+  border: 2px solid #08fff8;  /* Cyan border to match the buttons */
+  border-radius: 25px;  /* Rounded corners to match the buttons */
+  width: 100%;
+  box-sizing: border-box;  /* Ensure padding doesn't affect width */
+  margin-bottom: 20px;  /* Space below the input */
+  outline: none;  /* Remove default outline */
+  transition: border-color 0.3s ease;  /* Smooth transition on focus */
+}
+
+/* Input field focus state */
+.input-field:focus {
+  border-color: #E1D1FF;  /* Light purple border on focus */
+}
+
+/* Style for textarea fields */
+textarea.input-field {
+  resize: none;  /* Disable resizing for textarea */
+  height: 150px;  /* Set height for consistency */
+}
+
+
 /* Container for overall layout */
 .container {
   max-width: 600px;
