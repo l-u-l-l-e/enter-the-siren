@@ -5,11 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nickname</title>
   <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Input field styles - larger size and matching placeholder color */
+    .input-field {
+      background-color: transparent;
+      border: 2px solid #08fff8;  /* Cyan border */
+      color: #08fff8;  /* Matching text color */
+      font-family: 'Fira Mono', monospace;
+      font-size: 1.3em;
+      padding: 15px;
+      border-radius: 15px;
+      width: 100%;
+      height: 70px;  /* Increased height for larger input field */
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    /* Placeholder color matching the button background */
+    .input-field::placeholder {
+      color: #E1D1FF;  /* Light purple placeholder */
+      opacity: 1;
+    }
+
+    /* Styled button to match the questionnaire */
+    .button {
+      background-color: #E1D1FF;
+      color: #3700AF;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      width: 100%;
+      font-family: 'Fira Mono', monospace;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3700AF;
+      color: #E1D1FF;
+    }
+  </style>
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>First of all, how would you like to be called?</h1>
     <input type="text" id="nickname" placeholder="First name" class="input-field">
+
     <button id="nextButton" class="button" disabled>Next</button>
   </div>
 
@@ -26,7 +69,7 @@
       }
     });
 
-    // Redirect to next page when the Next button is clicked
+    // Redirect to the next page when the Next button is clicked
     nextButton.addEventListener('click', function() {
       window.location.href = 'generation.html';
     });
