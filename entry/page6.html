@@ -14,18 +14,18 @@
     </a>
   </div>
 
- <script>
+<script>
     document.getElementById('lastButton').addEventListener('click', function(e) {
-        e.preventDefault();  // Prevent default action
+        e.preventDefault();  // Prevent default form submission or page reload
 
         // Send the signal to the experience point to play the video
-        fetch('https://legend-oxidized-governor.glitch.me/play')  // Replace with your Glitch URL
-          .then(response => response.text())
-          .then(data => console.log("Signal sent: ", data))  // Log the signal status
-          .catch(error => console.error('Error sending signal:', error));  // Catch errors
+        fetch('https://legend-oxidized-governor.glitch.me/play')  // Your Glitch URL to trigger the signal
+            .then(response => response.text())
+            .then(data => console.log("Signal sent: ", data))  // Log confirmation
+            .catch(error => console.error('Error sending signal:', error));  // Catch errors
 
-        // Redirect to dots.html after sending the signal
-        window.location.href = 'dots.html';
+        // Redirect to the final instructions page (final.html)
+        window.location.href = 'final.html';  // Ensure this is the correct final instructions page URL
     });
 </script>
 </body>
