@@ -55,43 +55,51 @@
     <button id="submitReflection" class="button">Submit</button>
   </div>
 
-<script>
-  submitButton.addEventListener('click', function() {
-    const reflection = reflectionInput.value;
+  <script>
+    const reflectionInput = document.getElementById('reflection');
+    const submitButton = document.getElementById('submitReflection');
 
-    if (reflection.trim() === "") {
-      alert("Please provide your reflection.");
-      return;
-    }
-
-    const userData = {
-      nickname: localStorage.getItem('nickname'),
-      type: localStorage.getItem('type'),  // Fetched from entry point
-      generation: localStorage.getItem('generation'),
-      observed: localStorage.getItem('observed'),
-      reflection: reflection
-    };
-
-    // Send user data to the Glitch server
-    fetch('https://legend-oxidized-governor.glitch.me/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      // Redirect to the thank you page
-      window.location.href = 'thankyou.html';
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+    // Enable submit button only when the user enters a response
+    reflectionInput.addEventListener('input', function() {
+      submitButton.disabled = reflectionInput.value.trim() === "";
     });
-  });
-</script>
 
+    submitButton.addEventListener('click', function() {
+      const reflection = reflectionInput.value;
 
+      if (reflection.trim() === "") {
+        alert("Please provide your reflection.");
+        return;
+      }
+
+      // Gather all user data to submit, including observed status and reason
+      const userData = {
+        nickname: localStorage.getItem('nickname'),
+        type: localStorage.getItem('type'),  // Fetched from entry point
+        generation: localStorage.getItem('generation'),
+        observed: localStorage.getItem('observed'),  // Fetched from observed.html
+        reason: localStorage.getItem('reason'),      // Fetched from observed.html (Tell us why)
+        reflection: reflection
+      };
+
+      // Send user data to the Glitch server
+      fetch('https://legend-oxidized-governor.glitch.me/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        // Redirect to the thank you page
+        window.location.href = 'thankyou.html';
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
