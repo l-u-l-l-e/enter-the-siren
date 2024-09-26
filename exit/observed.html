@@ -25,7 +25,7 @@
       color: #08fff8;
       padding: 30px; /* Spacious padding */
       border-radius: 15px;
-      width: 90%;  /* Increased width */
+      width: 90%;
       max-width: 700px;
       height: 65%;  /* Larger height */
       display: flex;
@@ -62,8 +62,8 @@
     /* Input field styles - larger size and matching placeholder color */
     .input-field {
       background-color: transparent;
-      border: 2px solid #08fff8;  /* Cyan border */
-      color: #08fff8;  /* Matching text color */
+      border: 2px solid #08fff8;
+      color: #08fff8;
       font-family: 'Fira Mono', monospace;
       font-size: 1.3em;
       padding: 15px;
@@ -74,7 +74,6 @@
       outline: none;
     }
 
-    /* Placeholder color matching the button background */
     .input-field::placeholder {
       color: #E1D1FF;  /* Light purple placeholder */
       opacity: 1;
@@ -136,8 +135,9 @@
         return;
       }
 
-      localStorage.setItem('observed', selectedOption);  // Save the selected option
-      localStorage.setItem('reason', reason);  // Save the user's reason
+      // Save the selected option and reason in local storage
+      localStorage.setItem('observed', selectedOption);
+      localStorage.setItem('reason', reason);
 
       // Redirect to the next page
       window.location.href = 'one-more-question.html';
