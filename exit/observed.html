@@ -15,26 +15,40 @@
       <button class="button" id="bothButton">Both</button>
     </div>
 
-    <input type="text" id="reason" placeholder="Tell us why" class="input-field">
+    <input type="text" id="reason" placeholder="Tell us why" class="input-field" disabled> <!-- Disabled by default -->
 
-    <a href="reflection.html">
-      <button class="button">Next</button>
-    </a>
+    <button id="nextButton" class="button" disabled>Next</button> <!-- Initially disabled -->
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const buttons = document.querySelectorAll('.button');
+    const reasonInput = document.getElementById('reason');
+    const nextButton = document.getElementById('nextButton');
+    let selectedOption = null;  // Track the selected option
 
-      buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const observed = this.innerText;  // Get the observed/observer value
-          localStorage.setItem('observed', observed);  // Temporary storage for testing
-        });
+    document.querySelectorAll('.button-container .button').forEach(button => {
+      button.addEventListener('click', function() {
+        selectedOption = this.innerText;
+        localStorage.setItem('observed', selectedOption);  // Store selection locally (or send to server)
+
+        // Highlight the selected button for visual feedback
+        document.querySelectorAll('.button-container .button').forEach(btn => btn.style.backgroundColor = '');
+        this.style.backgroundColor = '#E1D1FF';
+
+        // Enable the input field for the reason
+        reasonInput.disabled = false;
+        reasonInput.focus();
       });
     });
-  </script>
-</body>
-</html>
+
+    // Enable the next button only if the reason input is filled
+    reasonInput.addEventListener('input', function() {
+      if (reasonInput.value.trim() !== "") {
+        nextButton.disabled = false;
+      } else {
+        nextButton.disabled = true;
+      }
+    });
+
+    // Redirect to the next page when the Next button is clicked
+    nextButton.addEventListener('click', function() {
+      window.location.href =
