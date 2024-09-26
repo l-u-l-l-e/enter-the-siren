@@ -55,7 +55,7 @@
     <button id="submitReflection" class="button">Submit</button>
   </div>
 
- <script>
+<script>
   submitButton.addEventListener('click', function() {
     const reflection = reflectionInput.value;
 
@@ -66,21 +66,21 @@
 
     const userData = {
       nickname: localStorage.getItem('nickname'),
-      type: localStorage.getItem('type'),  // Collected from entry point
+      type: localStorage.getItem('type'),  // Fetched from entry point
       generation: localStorage.getItem('generation'),
       observed: localStorage.getItem('observed'),
       reflection: reflection
     };
 
     // Send user data to the Glitch server
-    fetch('https://legend-oxidized-governor.glitch.me/submit-response', {
+    fetch('https://legend-oxidized-governor.glitch.me/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(userData)
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
       // Redirect to the thank you page
@@ -91,6 +91,7 @@
     });
   });
 </script>
+
 
 </body>
 </html>
