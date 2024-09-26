@@ -9,10 +9,27 @@
 <body class="fade-in">
   <div class="container">
     <h1>First of all, how would you like to be called?</h1>
-    <input type="text" id="nickname" placeholder="nickname" class="input-field">
-    <a href="generation.html">
-      <button class="button">Next</button>
-    </a>
+    <input type="text" id="nickname" placeholder="First name" class="input-field">
+    <button id="nextButton" class="button" disabled>Next</button>
   </div>
+
+  <script>
+    const nicknameInput = document.getElementById('nickname');
+    const nextButton = document.getElementById('nextButton');
+
+    // Enable the next button only if the input is filled
+    nicknameInput.addEventListener('input', function() {
+      if (nicknameInput.value.trim() !== "") {
+        nextButton.disabled = false;
+      } else {
+        nextButton.disabled = true;
+      }
+    });
+
+    // Redirect to next page when the Next button is clicked
+    nextButton.addEventListener('click', function() {
+      window.location.href = 'generation.html';
+    });
+  </script>
 </body>
 </html>
