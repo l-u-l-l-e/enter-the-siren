@@ -9,41 +9,45 @@
 <body class="fade-in">
   <div class="container">
     <h1>In this sea, which of the following do you consider yourself to be?</h1>
-    <div class="button-container"> <!-- Added button-container to manage spacing -->
-      <a href="page3.html">
-        <button class="button">Surfer</button>
-      </a>
-      <a href="page3.html">
-        <button class="button">Diver</button>
-      </a>
-      <a href="page3.html">
-        <button class="button">Pirate</button>
-      </a>
-      <a href="page3.html">
-        <button class="button">Catfish</button>
-      </a>
-      <a href="page3.html">
-        <button class="button">Streamer</button>
-      </a>
+    <div class="button-container">
+      <button class="button" id="surferButton">Surfer</button>
+      <button class="button" id="diverButton">Diver</button>
+      <button class="button" id="pirateButton">Pirate</button>
+      <button class="button" id="catfishButton">Catfish</button>
+      <button class="button" id="streamerButton">Streamer</button>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const links = document.querySelectorAll('a');
+      const buttons = document.querySelectorAll('.button');
 
-      links.forEach(link => {
-        link.addEventListener('click', function(e) {
+      // Attach click event listeners to each button
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
           e.preventDefault();
-          const href = this.getAttribute('href');
-
-          // Apply fade-out class before navigating
-          document.body.classList.add('fade-out');
           
-          // Wait for the fade-out animation to finish, then navigate
-          setTimeout(function() {
-            window.location.href = href;
-          }, 500);  // Matches the CSS fade-out animation duration (0.5 seconds)
+          // Get the selected type from the button's inner text
+          const userType = this.innerText;
+
+          // Send the selected type to the server
+          fetch('https://legend-oxidized-governor.glitch.me/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              type: userType,
+              sessionId: 'unique-session-id'  // Replace with a method to track sessions
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Response saved:', data);
+            // Navigate to the next page (page3.html)
+            window.location.href = 'page3.html';
+          })
+          .catch(error => console.error('Error:', error));
         });
       });
     });
