@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waiting...</title>
-    <link rel="stylesheet" href="../entry/styles.css"> <!-- Linking to your main stylesheet -->
+    <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
     <style>
-        /* Use the same title styling from the rest of your project */
         body {
             background-color: black;
-            color: #08fff8;
+            color: #08fff8;  /* Cyan color */
             font-family: 'Fira Mono', monospace;  /* Same font */
             display: flex;
             justify-content: center;
@@ -22,13 +21,13 @@
         }
 
         .dots {
-            font-size: 2.5em; /* Same size as the title */
-            color: #08fff8; /* Cyan color for the dots */
+            font-size: 2.5em;  /* Same size as your titles */
+            color: #08fff8;    /* Cyan color for the dots */
         }
     </style>
 </head>
 <body>
-    <div class="dots">• • •</div> <!-- These are the animated dots -->
+    <div class="dots">• • •</div> <!-- Animated dots -->
 
     <script>
         // Dot animation
@@ -38,7 +37,25 @@
         setInterval(function () {
             dotElement.textContent = '•'.repeat(dots);
             dots = (dots % 3) + 1;
-        }, 500); // Change dots every 500ms
+        }, 500);  // Change dots every 500 milliseconds
+
+        // Poll the server for the signal every 2 seconds
+        function checkForSignal() {
+            fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Signal status:", data.playVideo);  // Log signal status
+
+                    if (data.playVideo) {
+                        console.log("Signal received! Redirecting to experience page.");
+                        window.location.href = 'experience.html';  // Redirect to your experience page
+                    }
+                })
+                .catch(error => console.error('Error checking signal:', error));
+        }
+
+        // Keep checking for the signal every 2 seconds
+        setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
     </script>
 </body>
 </html>
