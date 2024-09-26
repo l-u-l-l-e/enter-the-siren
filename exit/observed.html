@@ -23,11 +23,14 @@
     .modal-content {
       background-color: #111;
       color: #08fff8;
-      padding: 30px; /* Increased padding for more space */
+      padding: 30px; /* Spacious padding */
       border-radius: 15px;
       width: 90%;  /* Increased width */
-      max-width: 700px;  /* Set maximum width */
-      height: 60%;  /* Increased height */
+      max-width: 700px;
+      height: 65%;  /* Larger height */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     /* Side by side button styling */
@@ -56,10 +59,25 @@
       color: #E1D1FF;
     }
 
-    /* Increase size of the text area */
+    /* Input field styles - larger size and matching placeholder color */
     .input-field {
-      height: 250px;  /* Increased height for text area */
-      font-size: 1.2em;  /* Adjust text size */
+      background-color: transparent;
+      border: 2px solid #08fff8;  /* Cyan border */
+      color: #08fff8;  /* Matching text color */
+      font-family: 'Fira Mono', monospace;
+      font-size: 1.3em;
+      padding: 15px;
+      border-radius: 15px;
+      width: 100%;
+      height: 100%;  /* Fills out the box */
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    /* Placeholder color matching the button background */
+    .input-field::placeholder {
+      color: #E1D1FF;  /* Light purple placeholder */
+      opacity: 1;
     }
   </style>
 </head>
@@ -76,7 +94,7 @@
   <!-- Modal pop-up -->
   <div id="reasonModal" class="modal">
     <div class="modal-content">
-      <textarea id="reasonInput" class="input-field" placeholder="Tell us why" rows="5"></textarea>
+      <textarea id="reasonInput" class="input-field" placeholder="Tell us why"></textarea>
       <button id="submitReason" class="close-button">Submit</button>
     </div>
   </div>
