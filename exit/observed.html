@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Observer or Observed</title>
   <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Modal styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #111;
+      color: #08fff8;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    /* Side by side button styling */
+    .button-container {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .close-button {
+      background-color: #E1D1FF;
+      color: #3700AF;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 1.2em;
+      border-radius: 10px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body class="fade-in">
   <div class="container">
@@ -14,41 +56,67 @@
       <button class="button" id="observedButton">Observed</button>
       <button class="button" id="bothButton">Both</button>
     </div>
+  </div>
 
-    <input type="text" id="reason" placeholder="Tell us why" class="input-field" disabled> <!-- Disabled by default -->
-
-    <button id="nextButton" class="button" disabled>Next</button> <!-- Initially disabled -->
+  <!-- Modal pop-up -->
+  <div id="reasonModal" class="modal">
+    <div class="modal-content">
+      <h2>Tell us why</h2>
+      <textarea id="reasonInput" class="input-field" placeholder="Type your reason here..." rows="5"></textarea>
+      <button id="submitReason" class="close-button">Submit</button>
+    </div>
   </div>
 
   <script>
-    const reasonInput = document.getElementById('reason');
-    const nextButton = document.getElementById('nextButton');
+    const reasonModal = document.getElementById('reasonModal');
+    const reasonInput = document.getElementById('reasonInput');
+    const submitReasonButton = document.getElementById('submitReason');
+
     let selectedOption = null;  // Track the selected option
 
-    document.querySelectorAll('.button-container .button').forEach(button => {
-      button.addEventListener('click', function() {
-        selectedOption = this.innerText;
-        localStorage.setItem('observed', selectedOption);  // Store selection locally (or send to server)
+    // Function to show the modal pop-up
+    function showModal() {
+      reasonModal.style.display = 'flex'; // Show modal (flexbox layout)
+    }
 
-        // Highlight the selected button for visual feedback
-        document.querySelectorAll('.button-container .button').forEach(btn => btn.style.backgroundColor = '');
-        this.style.backgroundColor = '#E1D1FF';
-
-        // Enable the input field for the reason
-        reasonInput.disabled = false;
-        reasonInput.focus();
-      });
+    // Event listeners for the buttons
+    document.getElementById('observerButton').addEventListener('click', function() {
+      selectedOption = 'Observer';
+      showModal();
     });
 
-    // Enable the next button only if the reason input is filled
-    reasonInput.addEventListener('input', function() {
-      if (reasonInput.value.trim() !== "") {
-        nextButton.disabled = false;
-      } else {
-        nextButton.disabled = true;
+    document.getElementById('observedButton').addEventListener('click', function() {
+      selectedOption = 'Observed';
+      showModal();
+    });
+
+    document.getElementById('bothButton').addEventListener('click', function() {
+      selectedOption = 'Both';
+      showModal();
+    });
+
+    // Close modal and submit the reason
+    submitReasonButton.addEventListener('click', function() {
+      const reason = reasonInput.value;
+
+      if (reason.trim() === "") {
+        alert("Please provide a reason before continuing.");
+        return;
+      }
+
+      localStorage.setItem('observed', selectedOption);  // Save the selected option
+      localStorage.setItem('reason', reason);  // Save the user's reason
+
+      // Redirect to the next page
+      window.location.href = 'reflection.html';
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+      if (event.target === reasonModal) {
+        reasonModal.style.display = 'none';
       }
     });
-
-    // Redirect to the next page when the Next button is clicked
-    nextButton.addEventListener('click', function() {
-      window.location.href =
+  </script>
+</body>
+</html>
