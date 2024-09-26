@@ -23,60 +23,27 @@
     .modal-content {
       background-color: #111;
       color: #08fff8;
-      padding: 30px; /* Spacious padding */
+      padding: 30px;
       border-radius: 15px;
       width: 90%;
       max-width: 700px;
-      height: 65%;  /* Larger height */
+      height: 75%;  /* Larger height for the modal */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* Side by side button styling */
-    .button-container {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    /* Styled submit button to match the questionnaire */
-    .close-button {
-      background-color: #E1D1FF;
-      color: #3700AF;
-      border: none;
-      padding: 15px;
+    /* Fill the textarea and button to cover the modal */
+    #reasonInput {
+      height: 70%;  /* Takes 70% of the modal */
+      width: 100%;
       font-size: 1.2em;
-      border-radius: 25px;
-      margin-top: 20px;
-      cursor: pointer;
+    }
+
+    /* Full-width submit button */
+    #submitReason {
       width: 100%;
-      font-family: 'Fira Mono', monospace;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .close-button:hover {
-      background-color: #3700AF;
-      color: #E1D1FF;
-    }
-
-    /* Input field styles - larger size and matching placeholder color */
-    .input-field {
-      background-color: transparent;
-      border: 2px solid #08fff8;
-      color: #08fff8;
-      font-family: 'Fira Mono', monospace;
       font-size: 1.3em;
-      padding: 15px;
-      border-radius: 15px;
-      width: 100%;
-      height: 100%;  /* Fills out the box */
-      box-sizing: border-box;
-      outline: none;
-    }
-
-    .input-field::placeholder {
-      color: #E1D1FF;  /* Light purple placeholder */
-      opacity: 1;
     }
   </style>
 </head>
