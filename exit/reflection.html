@@ -64,20 +64,20 @@
       submitButton.disabled = reflectionInput.value.trim() === "";
     });
 
-    submitButton.addEventListener('click', function() {
-      const reflection = reflectionInput.value;
-      
-      if (reflection.trim() === "") {
-        alert("Please provide your reflection.");
-        return;
-      }
+  submitButton.addEventListener('click', function() {
+  const reflection = reflectionInput.value;
 
-      // Save reflection in local storage (or send to server)
-      localStorage.setItem('reflection', reflection);
+  if (reflection.trim() === "") {
+    alert("Please provide your reflection.");
+    return;
+  }
 
-      // Redirect to the Wall of Fame page
-      window.location.href = 'walloffame.html';
-    });
+  // Save reflection in local storage (or send to server)
+  localStorage.setItem('reflection', reflection);
+
+  // Redirect to the Thank You page
+  window.location.href = 'thankyou.html';
+});
   </script>
 </body>
 </html>
