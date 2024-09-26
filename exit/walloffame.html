@@ -1,24 +1,37 @@
 <script>
-  const responsesContainer = document.getElementById('responses');
+  submitButton.addEventListener('click', function() {
+    const reflection = reflectionInput.value;
 
-  // Fetch the responses from the Glitch server
-  fetch('https://legend-oxidized-governor.glitch.me/responses')
+    if (reflection.trim() === "") {
+      alert("Please provide your reflection.");
+      return;
+    }
+
+    const userData = {
+      nickname: localStorage.getItem('nickname'),
+      type: localStorage.getItem('type'),  // Fetched from entry point
+      generation: localStorage.getItem('generation'),
+      observed: localStorage.getItem('observed'),  // Fetched from observed.html
+      reason: localStorage.getItem('reason'),      // Fetched from observed.html (Tell us why)
+      reflection: reflection
+    };
+
+    // Send user data to the Glitch server
+    fetch('https://legend-oxidized-governor.glitch.me/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
     .then(response => response.json())
     .then(data => {
-      data.forEach(response => {
-        const responseDiv = document.createElement('div');
-        responseDiv.classList.add('response-container');
-
-        responseDiv.innerHTML = `
-          <div class="nickname">${response.nickname}</div>
-          <div class="type">Type: ${response.type}</div>
-          <div class="generation">Generation: ${response.generation}</div>
-          <div class="observed">Observed: ${response.observed}</div>
-          <div class="response">Reflection: ${response.reflection}</div>
-        `;
-
-        responsesContainer.appendChild(responseDiv);
-      });
+      console.log('Success:', data);
+      // Redirect to the thank you page
+      window.location.href = 'thankyou.html';
     })
-    .catch(error => console.error('Error fetching responses:', error));
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  });
 </script>
