@@ -40,3 +40,25 @@
       padding: 10px 20px;
       border-radius: 20px;
       font-family: 'Fira Mono', monospace
+
+      <script>
+  let inactivityTime = function () {
+    let time;
+
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+
+    function redirectToQuestionnaire() {
+      window.location.href = 'nickname.html'; // Redirect to questionnaire after 9 minutes
+    }
+
+    function resetTimer() {
+      clearTimeout(time);
+      time = setTimeout(redirectToQuestionnaire, 9 * 60 * 1000);  // 9 minutes in milliseconds
+    }
+  };
+
+  inactivityTime();  // Start the inactivity timer
+</script>
+
