@@ -6,7 +6,7 @@
   <title>Internet Reflection</title>
   <link rel="stylesheet" href="../entry/styles.css">
   <style>
-    /* Input field styles - same as other pages */
+    /* Input field styles */
     .input-field {
       background-color: transparent;
       border: 2px solid #08fff8;
@@ -21,13 +21,13 @@
       outline: none;
     }
 
-    /* Placeholder color matching the button background */
+    /* Placeholder color */
     .input-field::placeholder {
       color: #E1D1FF;
       opacity: 1;
     }
 
-    /* Styled button to match the questionnaire */
+    /* Submit button centered */
     .button {
       background-color: #E1D1FF;
       color: #3700AF;
@@ -35,10 +35,12 @@
       font-size: 1.2em;
       border-radius: 25px;
       width: 100%;
+      max-width: 300px; /* Limit button width */
       font-family: 'Fira Mono', monospace;
       border: none;
       cursor: pointer;
-      margin-top: 20px;
+      margin: 20px auto; /* Center the button */
+      display: block;    /* Center the button */
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -72,13 +74,13 @@
         return;
       }
 
-      // Gather all user data to submit, including observed status and reason
+      // Gather all user data to submit
       const userData = {
         nickname: localStorage.getItem('nickname'),
-        type: localStorage.getItem('type'),  // Fetched from entry point
+        type: localStorage.getItem('type'),
         generation: localStorage.getItem('generation'),
-        observed: localStorage.getItem('observed'),  // Fetched from observed.html
-        reason: localStorage.getItem('reason'),      // Fetched from observed.html (Tell us why)
+        observed: localStorage.getItem('observed'),
+        reason: localStorage.getItem('reason'),
         reflection: reflection
       };
 
@@ -93,7 +95,6 @@
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        // Redirect to the thank you page
         window.location.href = 'thankyou.html';
       })
       .catch((error) => {
