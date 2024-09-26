@@ -55,29 +55,42 @@
     <button id="submitReflection" class="button">Submit</button>
   </div>
 
-  <script>
-    const reflectionInput = document.getElementById('reflection');
-    const submitButton = document.getElementById('submitReflection');
-
-    // Enable submit button only when the user enters a response
-    reflectionInput.addEventListener('input', function() {
-      submitButton.disabled = reflectionInput.value.trim() === "";
-    });
-
+ <script>
   submitButton.addEventListener('click', function() {
-  const reflection = reflectionInput.value;
+    const reflection = reflectionInput.value;
 
-  if (reflection.trim() === "") {
-    alert("Please provide your reflection.");
-    return;
-  }
+    if (reflection.trim() === "") {
+      alert("Please provide your reflection.");
+      return;
+    }
 
-  // Save reflection in local storage (or send to server)
-  localStorage.setItem('reflection', reflection);
+    const userData = {
+      nickname: localStorage.getItem('nickname'),
+      type: localStorage.getItem('type'),  // Collected from entry point
+      generation: localStorage.getItem('generation'),
+      observed: localStorage.getItem('observed'),
+      reflection: reflection
+    };
 
-  // Redirect to the Thank You page
-  window.location.href = 'thankyou.html';
-});
-  </script>
+    // Send user data to the Glitch server
+    fetch('https://legend-oxidized-governor.glitch.me/submit-response', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log('Success:', data);
+      // Redirect to the thank you page
+      window.location.href = 'thankyou.html';
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  });
+</script>
+
 </body>
 </html>
