@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>You May Now Enter</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Booth</title>
+    <link rel="stylesheet" href="../entry/styles.css">
 </head>
-<body class="fade-in">
-  <div class="container">
-    <h1>You may now enter the booth</h1>
-    <h2>Please put on the headphones for the full experience</h2>
-  </div>
+<body>
+    <div class="container">
+        <h1>You may now enter the booth</h1>
+        <h2>Please put on the headphones for the full experience</h2>
+    </div>
 
- <script>
-  // Redirect after 10 seconds
-  setTimeout(function() {
-    window.location.href = 'waiting.html';
-  }, 10000);  // 10 seconds = 10000 milliseconds
-</script>
+    <script>
+        setTimeout(function() {
+            window.location.href = 'waiting.html';  // Redirect to waiting after 10 seconds
+        }, 10000);
+    </script>
 </body>
 </html>
