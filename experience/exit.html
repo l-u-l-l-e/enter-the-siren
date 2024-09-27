@@ -13,10 +13,9 @@
             justify-content: center;
             align-items: center;
             background-color: black;
-            color: #08fff8;
-            font-family: 'Fira Mono', monospace;  /* Match font style */
-            font-size: 2.5em;  /* Match title size */
-            text-align: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 3em;
         }
     </style>
 </head>
@@ -24,7 +23,15 @@
     <div>Please Exit</div>
 
     <script>
-        // After 10 seconds, redirect back to the 3 dots waiting screen
+        // Reset the signal on the server
+        fetch('https://legend-oxidized-governor.glitch.me/reset', {
+            method: 'POST'
+        })
+        .then(response => response.text())
+        .then(data => console.log('Signal reset:', data))
+        .catch(error => console.error('Error resetting signal:', error));
+
+        // After 10 seconds, redirect back to the dots waiting screen
         setTimeout(function() {
             window.location.href = 'dots.html';
         }, 10000);  // 10000 milliseconds = 10 seconds
