@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loading...</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-    /* Ensure full page background and positioning */
-    body {
-      background-color: black;
-      color: #08fff8;  /* Cyan color */
-      font-family: 'Fira Mono', monospace;  /* Use your standard font */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="../entry/styles.css">
+    <style>
+        body {
+            background-color: black;
+            color: #08fff8;
+            font-family: 'Fira Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 50px;
+            overflow: hidden;
+        }
 
-    .dots {
-      font-size: 2.5em;  /* Same size as titles */
-      color: #08fff8;    /* Cyan color for the dots */
-    }
-  </style>
+        .dots {
+            font-size: 2.5em;
+            color: #08fff8;
+        }
+    </style>
 </head>
 <body>
-  <div class="dots">• • •</div> <!-- Animated dots -->
+    <div class="dots">• • •</div>
 
-  <script>
-    // Dot animation
-    let dotElement = document.querySelector('.dots');
-    let dots = 1;
+    <script>
+        let dotElement = document.querySelector('.dots');
+        let dots = 1;
 
-    setInterval(function () {
-      dotElement.textContent = '•'.repeat(dots);
-      dots = (dots % 3) + 1;
-    }, 500);  // Change dots every 500 milliseconds
+        setInterval(function () {
+            dotElement.textContent = '•'.repeat(dots);
+            dots = (dots % 3) + 1;
+        }, 500);
 
-    // Redirect to final.html after 6 seconds
-    setTimeout(function() {
-      window.location.href = 'final.html';
-    }, 6000);  // 6 seconds delay
-  </script>
+        setTimeout(function() {
+            window.location.href = 'final.html';  // Redirect to final after 6 seconds
+        }, 6000);
+    </script>
 </body>
 </html>
