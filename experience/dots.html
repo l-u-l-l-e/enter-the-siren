@@ -44,7 +44,7 @@
             fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Signal status:", data.playVideo);  // Log signal status
+                    console.log("Signal status on dots page:", data.playVideo);  // Log signal status
 
                     if (data.playVideo) {
                         console.log("Signal received! Redirecting to experience page.");
