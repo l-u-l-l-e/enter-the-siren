@@ -38,7 +38,7 @@
 
   <script>
     let player;
-    let videoHasStarted = false; // To ensure video starts only once
+    let videoHasStarted = false;
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -53,7 +53,7 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Set to autoplay on ready
+          'autoplay': 1,  // Set to autoplay
           'controls': 0,  // Hide controls
           'mute': 1       // Start muted
         },
@@ -67,28 +67,27 @@
     // When the player is ready
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-      
-      // Set the video quality to the highest available (1080p)
-      player.setPlaybackQuality('hd1080'); // Force 1080p quality if available
-      playVideo(); // Start playing video after 2 seconds delay
-    }
 
-    // Handle video state changes
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        window.location.href = 'exit.html'; // Redirect when video ends
-      }
+      // Set the video quality to the highest available
+      player.setPlaybackQuality('hd1080');
+      playVideo();  // Call to play the video
     }
 
     // Function to play the video
     function playVideo() {
       if (!videoHasStarted) {
-        console.log("Starting video playback after 2 seconds.");
         setTimeout(() => {
-          player.unMute(); // Unmute the video
-          player.playVideo(); // Play the video
-          videoHasStarted = true;  // Ensure video plays only once
-        }, 2000); // 2-second delay before playing video
+          player.unMute();  // Unmute the video
+          player.playVideo();  // Play the video
+          videoHasStarted = true;  // Mark that the video has started
+        }, 2000);  // Delay by 2 seconds
+      }
+    }
+
+    // Handle video state changes
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        window.location.href = 'exit.html';  // Redirect when video ends
       }
     }
   </script>
