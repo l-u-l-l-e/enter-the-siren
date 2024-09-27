@@ -52,8 +52,8 @@
         playerVars: {
           'autoplay': 1,  // Autoplay the video
           'controls': 0,  // Hide controls
-          'mute': 1,      // Start muted to bypass browser autoplay restrictions
-          'playsinline': 1 // Force video to play inline without fullscreen (iOS fix)
+          'mute': 1,      // Start muted to bypass autoplay restrictions
+          'playsinline': 1 // Force video to play inline on mobile (iOS)
         },
         events: {
           'onReady': onPlayerReady,
@@ -65,20 +65,33 @@
     // When the player is ready
     function onPlayerReady(event) {
       console.log("Player is ready!");
-
-      // Unmute and play after 2 seconds to ensure smooth autoplay
       setTimeout(() => {
-        player.unMute();  // Unmute the video
+        player.unMute();  // Unmute the video after delay
         player.playVideo();  // Start playing the video
-      }, 2000);  // Delay video unmuting and play for 2 seconds
+      }, 2000);  // 2-second delay to handle autoplay restrictions
     }
 
-    // Handle when the video ends
+    // Handle video state changes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
+        console.log("Video ended, redirecting to exit page.");
         window.location.href = 'exit.html';  // Redirect after video ends
       } else if (event.data === YT.PlayerState.PAUSED) {
-        // If the video pauses, try to restart it
+        console.log("Video paused, attempting to restart.");
         setTimeout(() => {
-          player.playVideo();
-        }, 500)
+          player.playVideo();  // Retry playing if paused
+        }, 500);  // Try to play again after 500ms if it pauses
+      }
+    }
+
+    // Additional failsafe: Periodically check if video is paused, and resume it
+    setInterval(function() {
+      if (player && player.getPlayerState && player.getPlayerState() === YT.PlayerState.PAUSED) {
+        console.log("Resuming paused video.");
+        player.playVideo();  // Force play if paused
+      }
+    }, 1000);  // Check every second to ensure the video plays continuously
+  </script>
+
+</body>
+</html>
