@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
+    /* Fullscreen video and background styling */
     html, body {
       margin: 0;
       padding: 0;
@@ -33,12 +34,13 @@
 <body>
 
   <div class="container">
-    <div id="sirenVideo"></div>
+    <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
   </div>
 
   <script>
     let player;
-    let videoHasStarted = false;
+    let videoHasStarted = false; // To track if the video has started
+    let pollingActive = true; // Track if we are still polling for signal
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -53,9 +55,9 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Set to autoplay
+          'autoplay': 0,  // Set to autoplay when triggered by signal
           'controls': 0,  // Hide controls
-          'mute': 1       // Start muted
+          'mute': 1       // Start muted to ensure autoplay works
         },
         events: {
           'onReady': onPlayerReady,
@@ -64,24 +66,9 @@
       });
     }
 
-    // When the player is ready
+    // This function is called when the player is ready
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-
-      // Set the video quality to the highest available
-      player.setPlaybackQuality('hd1080');
-      playVideo();  // Call to play the video
-    }
-
-    // Function to play the video
-    function playVideo() {
-      if (!videoHasStarted) {
-        setTimeout(() => {
-          player.unMute();  // Unmute the video
-          player.playVideo();  // Play the video
-          videoHasStarted = true;  // Mark that the video has started
-        }, 2000);  // Delay by 2 seconds
-      }
     }
 
     // Handle video state changes
@@ -90,6 +77,39 @@
         window.location.href = 'exit.html';  // Redirect when video ends
       }
     }
+
+    // Poll the server for the signal every 2 seconds
+    function checkForSignal() {
+      if (!pollingActive) return; // Stop polling if signal received
+
+      fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
+        .then(response => response.json())
+        .then(data => {
+          console.log("Signal status:", data.playVideo);  // Log signal status
+
+          if (data.playVideo && !videoHasStarted) {
+            console.log("Signal received! Starting video after 2 seconds.");
+            pollingActive = false; // Stop further polling
+            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    // Play the video after the delay
+    function playVideo() {
+      player.mute();  // Start muted to allow autoplay
+      player.playVideo();  // Play the video
+      videoHasStarted = true;  // Mark that the video has started
+
+      // Unmute after 1 second
+      setTimeout(() => {
+        player.unMute();
+      }, 1000);
+    }
+
+    // Keep checking for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
   </script>
 </body>
 </html>
