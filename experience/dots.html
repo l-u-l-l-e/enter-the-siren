@@ -30,26 +30,20 @@
     <div class="dots">• • •</div>
 
     <script>
-        let dotElement = document.querySelector('.dots');
-        let dots = 1;
-
-        setInterval(function () {
-            dotElement.textContent = '•'.repeat(dots);
-            dots = (dots % 3) + 1;
-        }, 500);
-
-        function checkForSignal() {
-            fetch('https://legend-oxidized-governor.glitch.me/signal')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.playVideo) {
-                        window.location.href = 'experience.html';  // Redirect to experience page
-                    }
-                })
-                .catch(error => console.error('Error checking signal:', error));
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          window.location.href = 'experience.html';  // Redirect to experience when signal is sent
         }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
 
-        setInterval(checkForSignal, 2000);
-    </script>
+  // Check the signal every 2 seconds
+  setInterval(checkForSignal, 2000);
+</script>
+
 </body>
 </html>
