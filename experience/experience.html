@@ -39,6 +39,7 @@
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     let player;
+    let isPlayerReady = false; // To track if the player is ready
 
     // Load the YouTube Iframe API script and create player
     function onYouTubeIframeAPIReady() {
@@ -60,21 +61,25 @@
 
     // This function is called when the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready. Waiting for the signal.");
-      
-      // Set the video quality to the highest available (1080p)
-      player.setPlaybackQuality('hd1080'); // Forces 1080p quality if available
+      console.log("YouTube Player is ready.");
+      isPlayerReady = true; // Mark player as ready
+      player.setPlaybackQuality('hd1080'); // Set video quality
     }
 
-    // Function to play the video after receiving signal
+    // Function to play the video after receiving the signal
     function playVideo() {
-      player.mute();  // Start muted to allow autoplay
-      player.playVideo();  // Play the video
+      if (isPlayerReady) { // Ensure the player is ready
+        console.log("Playing video...");
+        player.mute();  // Start muted to allow autoplay
+        player.playVideo();  // Play the video
 
-      // Unmute after 1 second
-      setTimeout(() => {
-        player.unMute();
-      }, 1000);
+        // Unmute after 1 second
+        setTimeout(() => {
+          player.unMute();
+        }, 1000);
+      } else {
+        console.log("Player is not ready yet!");
+      }
     }
 
     // Handle when the video ends
