@@ -72,13 +72,6 @@
     // Player ready event
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-      preloadVideo(); // Preload video by playing and pausing it immediately
-    }
-
-    // Preload video by playing and immediately pausing it
-    function preloadVideo() {
-      player.playVideo();
-      setTimeout(() => player.pauseVideo(), 1000);  // Play for 1 second, then pause
     }
 
     // Handle video state changes
