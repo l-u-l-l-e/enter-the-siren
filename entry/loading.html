@@ -3,28 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>...</title>
+  <title>Loading...</title>
   <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Ensure full page background and positioning */
+    body {
+      background-color: black;
+      color: #08fff8;  /* Cyan color */
+      font-family: 'Fira Mono', monospace;  /* Use your standard font */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    .dots {
+      font-size: 2.5em;  /* Same size as titles */
+      color: #08fff8;    /* Cyan color for the dots */
+    }
+  </style>
 </head>
-<body class="fade-in">
-  <div class="container">
-    <h2 class="dots">• • •</h2> <!-- Animated dots below the loading message -->
-  </div>
+<body>
+  <div class="dots">• • •</div> <!-- Animated dots -->
 
   <script>
-    // Dot animation for the loading screen
+    // Dot animation
     let dotElement = document.querySelector('.dots');
     let dots = 1;
 
     setInterval(function () {
       dotElement.textContent = '•'.repeat(dots);
       dots = (dots % 3) + 1;
-    }, 500); // Change dots every 500ms
+    }, 500);  // Change dots every 500 milliseconds
 
-    // Redirect to final screen after 3 seconds
+    // Redirect to final.html after 6 seconds
     setTimeout(function() {
-      window.location.href = "final.html"; // Redirect to the "You may now enter" screen
-    }, 6000); // 3000 milliseconds = 3 seconds
+      window.location.href = 'final.html';
+    }, 6000);  // 6 seconds delay
   </script>
 </body>
 </html>
