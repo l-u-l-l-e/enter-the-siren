@@ -36,13 +36,16 @@
     <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
   </div>
 
+  <!-- Load the YouTube API script -->
   <script src="https://www.youtube.com/iframe_api"></script>
+  
   <script>
     let player;
     let isPlayerReady = false; // To track if the player is ready
 
     // Load the YouTube Iframe API script and create player
     function onYouTubeIframeAPIReady() {
+      console.log('YouTube API ready');
       player = new YT.Player('sirenVideo', {
         height: '100%',
         width: '100%',
@@ -85,7 +88,7 @@
     // Handle when the video ends
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        // Redirect to the "Please Exit" screen when the video finishes
+        console.log('Video ended. Redirecting to exit.html');
         window.location.href = 'exit.html';
       }
     }
@@ -98,8 +101,8 @@
           console.log("Signal status:", data.playVideo);  // Log signal status
 
           if (data.playVideo) {
-            console.log("Signal received! Starting video after 3 seconds.");
-            setTimeout(playVideo, 3000);  // Delay video playback by 3 seconds
+            console.log("Signal received! Starting video after 2 seconds.");
+            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
           }
         })
         .catch(error => console.error('Error checking signal:', error));
