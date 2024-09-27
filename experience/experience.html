@@ -22,34 +22,47 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
-    video {
+    iframe {
       width: 100vw;
       height: 100vh;
+    }
+
+    /* Visual alert for muted video */
+    .muted-alert {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-family: 'Fira Mono', monospace;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <video id="experienceVideo" width="100%" height="100%" autoplay muted>
-      <source src="https://drive.google.com/uc?export=preview&id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <iframe id="vimeoVideo" src="https://player.vimeo.com/video/1013656394?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay; fullscreen" title="Siren of the stream"></iframe>
+    <div id="mutedAlert" class="muted-alert">Sound will start shortly...</div>
   </div>
 
 <script>
-  const video = document.getElementById('experienceVideo');
+  // Wait for video to load and play for a second, then unmute
+  function unmuteVideo() {
+    const iframe = document.getElementById('vimeoVideo');
+    const player = new Vimeo.Player(iframe);
 
-  function playVideo() {
-    // Start playing the video muted (so it auto-plays)
-    video.play().then(() => {
-      // After video starts playing, unmute it
-      video.muted = false;
-    }).catch(error => {
-      console.error("Error playing the video:", error);
-    });
+    // Unmute the video after a brief delay
+    setTimeout(() => {
+      player.setVolume(1);  // Set volume to full
+      document.getElementById('mutedAlert').style.display = 'none';  // Hide the alert
+    }, 3000);  // Unmute after 3 seconds of playtime
   }
 
   // Poll for signal and start the video
@@ -59,7 +72,7 @@
       .then(data => {
         if (data.playVideo) {
           console.log("Signal received! Playing video after 2 seconds.");
-          setTimeout(playVideo, 2000);  // Play video after 2 seconds
+          setTimeout(unmuteVideo, 2000);  // Play video after 2 seconds
         }
       })
       .catch(error => console.error('Error checking signal:', error));
@@ -67,6 +80,8 @@
 
   setInterval(checkForSignal, 2000);  // Check for signal every 2 seconds
 </script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
 
 </body>
 </html>
