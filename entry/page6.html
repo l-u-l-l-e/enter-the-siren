@@ -9,22 +9,27 @@
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <button id="lastButton" class="button">Enter</button> <!-- Removed the <a> tag -->
+    <a href="loading.html">
+      <button id="lastButton" class="button">Enter</button>
+    </a>
   </div>
 
-<script>
+  <script>
     document.getElementById('lastButton').addEventListener('click', function(e) {
         e.preventDefault();  // Prevent default form submission or page reload
 
         // Send the signal to the experience point to play the video
-        fetch('https://legend-oxidized-governor.glitch.me/play')  // Your Glitch URL to trigger the signal
-            .then(response => response.text())
-            .then(data => console.log("Signal sent: ", data))  // Log confirmation
-            .catch(error => console.error('Error sending signal:', error));  // Catch errors
-
-        // Redirect to the final instructions page (final.html)
-        window.location.href = 'final.html';  // Redirect to final.html after sending signal
+        fetch('https://legend-oxidized-governor.glitch.me/play', { // Your Glitch URL to trigger the signal
+            method: 'POST',
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Signal sent: ", data);  // Log confirmation
+            // Redirect to the loading page (3 dots)
+            window.location.href = 'loading.html';
+        })
+        .catch(error => console.error('Error sending signal:', error));
     });
-</script>
+  </script>
 </body>
 </html>
