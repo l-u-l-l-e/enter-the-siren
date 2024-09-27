@@ -23,18 +23,11 @@
     <div>Please Exit</div>
 
     <script>
-        // Reset the signal on the server
-        fetch('https://legend-oxidized-governor.glitch.me/reset', {
-            method: 'POST'  // Ensure it's a POST request
-        })
-        .then(response => response.text())
-        .then(data => console.log('Signal reset:', data))
-        .catch(error => console.error('Error resetting signal:', error));
+    // After 10 seconds, redirect back to the dots waiting screen
+    setTimeout(function() {
+        window.location.href = 'dots.html';
+    }, 10000);  // 10 seconds in milliseconds
+</script>
 
-        // After 10 seconds, redirect back to the dots waiting screen
-        setTimeout(function() {
-            window.location.href = 'dots.html';
-        }, 10000);  // 10000 milliseconds = 10 seconds
-    </script>
 </body>
 </html>
