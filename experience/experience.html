@@ -38,7 +38,7 @@
 
   <script>
     let player;
-    let signalPolling;
+    let videoHasStarted = false; // To ensure video starts only once
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -53,9 +53,9 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Autoplay after delay
-          'controls': 0,  // Hide controls
-          'mute': 1       // Start muted to ensure autoplay works
+          'autoplay': 0,
+          'controls': 0,
+          'mute': 1
         },
         events: {
           'onReady': onPlayerReady,
@@ -68,8 +68,7 @@
     function onPlayerReady(event) {
       console.log("YouTube Player is ready. Waiting for the signal.");
       
-      // Set video quality to 1080p
-      player.setPlaybackQuality('hd1080'); // Set the quality to highest available
+      player.setPlaybackQuality('hd1080'); // Force 1080p quality
     }
 
     // Handle video state changes
@@ -81,35 +80,39 @@
 
     // Poll the server for the signal every 2 seconds
     function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          console.log("Signal status:", data.playVideo);
+      if (!videoHasStarted) {
+        fetch('https://legend-oxidized-governor.glitch.me/signal')
+          .then(response => response.json())
+          .then(data => {
+            console.log("Signal status:", data.playVideo);
 
-          if (data.playVideo) {
-            console.log("Signal received! Starting video after 2 seconds.");
-            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
+            if (data.playVideo && !videoHasStarted) {  // Ensure the video starts only once
+              console.log("Signal received! Starting video after 2 seconds.");
+              setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
+            }
+          })
+          .catch(error => console.error('Error checking signal:', error));
+      }
     }
 
     // Play video and stop polling for the signal
     function playVideo() {
-      player.mute();  // Mute initially
-      player.playVideo();  // Play the video
+      if (!videoHasStarted) {
+        player.mute();  // Mute initially
+        player.playVideo();  // Play the video
 
-      // Unmute after 1 second
-      setTimeout(() => {
-        player.unMute();  // Unmute after it starts
-      }, 1000);
+        // Unmute after 1 second
+        setTimeout(() => {
+          player.unMute();
+        }, 1000);
 
-      // Stop polling for the signal to avoid interruptions
-      clearInterval(signalPolling);
+        videoHasStarted = true;  // Mark that the video has started
+        clearInterval(signalPolling);  // Stop polling for signals
+      }
     }
 
     // Start polling for the signal every 2 seconds
-    signalPolling = setInterval(checkForSignal, 2000);
+    const signalPolling = setInterval(checkForSignal, 2000);
 
   </script>
 </body>
