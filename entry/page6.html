@@ -20,18 +20,15 @@
 
         // Send the signal to the experience point to play the video
         fetch('https://legend-oxidized-governor.glitch.me/play', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log("Signal sent: ", data);  // Log confirmation
-            // Redirect to the final instructions page (final.html)
-            window.location.href = 'final.html';  // Ensure this is the correct final instructions page URL
-        })
-        .catch(error => console.error('Error sending signal:', error));
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.text())
+.then(data => console.log('Signal sent:', data))
+.catch(error => console.error('Error sending signal:', error));
+
     });
 </script>
 </body>
