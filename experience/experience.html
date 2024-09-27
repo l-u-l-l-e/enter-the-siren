@@ -17,34 +17,73 @@
       overflow: hidden;
     }
 
-    video {
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
       width: 100vw;
       height: 100vh;
-      object-fit: cover; /* Ensures the video covers the full viewport */
     }
   </style>
 </head>
 <body>
 
-  <!-- Embedding the Google Drive video -->
-  <video id="experienceVideo" autoplay muted playsinline>
-    <source src="https://drive.google.com/uc?export=preview&id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div class="container">
+    <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
+  </div>
 
   <script>
-    const video = document.getElementById('experienceVideo');
+    let player;
 
-    // Unmute the video after 2 seconds to allow smooth autoplay
-    setTimeout(() => {
-      video.muted = false;
-    }, 2000);
+    // Load the YouTube Iframe API script
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // Automatically redirect after the video ends
-    video.onended = function() {
-      window.location.href = 'exit.html';  // Redirect to exit page
-    };
+    // Create the YouTube player when API is ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('sirenVideo', {
+        height: '100%',
+        width: '100%',
+        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        playerVars: {
+          'autoplay': 1,  // Autoplay immediately
+          'controls': 0,  // Hide controls
+          'mute': 1       // Start muted to ensure autoplay works
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    // This function is called when the player is ready
+    function onPlayerReady(event) {
+      console.log("YouTube Player is ready.");
+      player.playVideo(); // Start playing immediately on load
+      setTimeout(() => {
+        player.unMute();  // Unmute after 1 second
+      }, 1000);
+    }
+
+    // Handle when the video ends
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        window.location.href = 'exit.html';  // Redirect to exit screen
+      }
+    }
+
+    // Play video automatically after signal is received
+    function playVideo() {
+      player.playVideo();  // Start playing the video
+    }
   </script>
-
 </body>
 </html>
