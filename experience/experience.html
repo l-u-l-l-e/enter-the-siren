@@ -53,7 +53,7 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Ensure autoplay is enabled
+          'autoplay': 1,  // Autoplay the video
           'controls': 0,  // Hide controls
           'mute': 1       // Start muted to ensure autoplay works
         },
@@ -71,9 +71,6 @@
       // Play video immediately, muted to allow autoplay
       player.playVideo();
       
-      // Set the video quality to the highest available (1080p)
-      player.setPlaybackQuality('hd1080'); // Forces 1080p quality if available
-
       // Unmute the video after 1 second to enable sound
       setTimeout(() => {
         player.unMute();
