@@ -33,7 +33,7 @@
 <body>
 
   <div class="container">
-    <video id="experienceVideo" width="100%" height="100%" autoplay controls>
+    <video id="experienceVideo" width="100%" height="100%" autoplay muted>
       <source src="http://localhost:8000/siren.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -52,13 +52,18 @@
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            setTimeout(playVideo, 2000);  // Play video after 2 seconds
+            setTimeout(function() {
+              playVideo();  // Play the video after 2 seconds
+              setTimeout(function() {
+                video.muted = false;  // Unmute the video after it starts playing
+              }, 1000);  // Unmute after 1 second of play
+            }, 2000);  // Start the video 2 seconds after signal
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    setInterval(checkForSignal, 2000);
+    setInterval(checkForSignal, 2000);  // Poll every 2 seconds for the signal
   </script>
 
 </body>
