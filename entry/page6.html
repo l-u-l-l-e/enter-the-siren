@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ready to Dive In?</title>
+  <title>Enter Experience</title>
   <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="loading.html">
-      <button id="lastButton" class="button">Enter</button>
-    </a>
+    <button id="enterButton" class="button">Enter</button>
   </div>
 
-<script>
-  document.getElementById('enterButton').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    // Send the play signal to the server
-    fetch('https://legend-oxidized-governor.glitch.me/play', { method: 'POST' })
-      .then(response => response.text())
-      .then(data => {
-        console.log("Play signal sent:", data);
-        window.location.href = 'final.html';  // Redirect to the next page after signal
+  <script>
+    document.getElementById('enterButton').addEventListener('click', function() {
+      // Send the play signal to the server
+      fetch('https://legend-oxidized-governor.glitch.me/play', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Signal sent successfully');
+          // Redirect to the next page (e.g., loading.html or final.html)
+          window.location.href = 'loading.html'; // Redirect after signal
+        } else {
+          console.error('Failed to send signal');
+        }
       })
       .catch(error => console.error('Error sending signal:', error));
-  });
-</script>
+    });
+  </script>
 </body>
 </html>
