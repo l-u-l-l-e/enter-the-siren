@@ -15,73 +15,43 @@
       align-items: center;
       overflow: hidden;
     }
-
     .container {
       width: 100%;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
-
     iframe {
       width: 100vw;
       height: 100vh;
-    }
-
-    /* Visual alert for muted video */
-    .muted-alert {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-family: 'Fira Mono', monospace;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1.2em;
+      border: none;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <iframe id="vimeoVideo" src="https://player.vimeo.com/video/1013656394?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay; fullscreen" title="Siren of the stream"></iframe>
-    <div id="mutedAlert" class="muted-alert">Sound will start shortly...</div>
+    <!-- Updated Vimeo Embed Code -->
+    <iframe 
+      src="https://player.vimeo.com/video/1013656394?autoplay=1&muted=0&background=1" 
+      frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+    </iframe>
   </div>
 
-<script>
-  // Wait for video to load and play for a second, then unmute
-  function unmuteVideo() {
-    const iframe = document.getElementById('vimeoVideo');
-    const player = new Vimeo.Player(iframe);
+  <script>
+    // Function to play the Vimeo video
+    function playVideo() {
+      const iframe = document.querySelector('iframe');
+      const player = new Vimeo.Player(iframe);
 
-    // Unmute the video after a brief delay
-    setTimeout(() => {
-      player.setVolume(1);  // Set volume to full
-      document.getElementById('mutedAlert').style.display = 'none';  // Hide the alert
-    }, 3000);  // Unmute after 3 seconds of playtime
-  }
+      // Try to play the video and set volume
+      player.play().then(function() {
+        player.setVolume(1);  // Set volume to max after playing
+      }).catch(function(error) {
+        console.error('Error playing the video:', error);
+      });
+    }
 
-  // Poll for signal and start the video
-  function checkForSignal() {
-    fetch('https://legend-oxidized-governor.glitch.me/signal')
-      .then(response => response.json())
-      .then(data => {
-        if (data.playVideo) {
-          console.log("Signal received! Playing video after 2 seconds.");
-          setTimeout(unmuteVideo, 2000);  // Play video after 2 seconds
-        }
-      })
-      .catch(error => console.error('Error checking signal:', error));
-  }
-
-  setInterval(checkForSignal, 2000);  // Check for signal every 2 seconds
-</script>
-
-<script src="https://player.vimeo.com/api/player.js"></script>
-
-</body>
-</html>
+    // Polling for signal and playing the video after 2 seconds
+    function checkForSignal() {
+      fetch('https://legend-oxidiz
