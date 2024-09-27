@@ -34,33 +34,40 @@
 
   <div class="container">
     <video id="experienceVideo" width="100%" height="100%" autoplay muted>
-  <source src="https://drive.google.com/uc?id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z&export=download" type="video/mp4">
-</video>
+      <source src="https://drive.google.com/uc?export=preview&id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 
-<script>
-  const video = document.getElementById('experienceVideo');
+  <script>
+    const video = document.getElementById('experienceVideo');
 
-  function playVideo() {
-  video.play();  
-  video.muted = false;  // Unmute after starting
-}
+    function playVideo() {
+      video.muted = true;  // Start muted
+      video.play().then(() => {
+        // Video has started playing, unmute it after a short delay
+        setTimeout(() => {
+          video.muted = false;
+        }, 1000);  // 1-second delay before unmuting
+      }).catch(error => {
+        console.error('Error playing video:', error);
+      });
+    }
 
-  // Poll for signal and start the video
-  function checkForSignal() {
-    fetch('https://legend-oxidized-governor.glitch.me/signal')
-      .then(response => response.json())
-      .then(data => {
-        if (data.playVideo) {
-          setTimeout(playVideo, 2000);  // Play video after 2 seconds
-        }
-      })
-      .catch(error => console.error('Error checking signal:', error));
-  }
+    // Poll for signal and start the video
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            setTimeout(playVideo, 2000);  // Play video after 2 seconds
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
 
-  // Poll the server every 2 seconds for the signal
-  setInterval(checkForSignal, 2000);
-</script>
+    setInterval(checkForSignal, 2000);  // Poll the signal every 2 seconds
+  </script>
 
 </body>
 </html>
