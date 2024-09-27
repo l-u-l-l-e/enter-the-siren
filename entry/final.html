@@ -3,28 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Instructions</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <title>You May Now Enter</title>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
 </head>
-<body>
+<body class="fade-in">
   <div class="container">
     <h1>You may now enter the booth</h1>
     <h2>Please put on the headphones for the full experience</h2>
   </div>
 
   <script>
-    // Automatically send the signal to the server when the page loads
-    fetch('https://legend-oxidized-governor.glitch.me/play', { // Make sure the URL is correct
-      method: 'POST'
-    })
-    .then(response => response.text())
-    .then(data => console.log('Signal sent:', data))
-    .catch(error => console.error('Error sending signal:', error));
-
-    // Automatically redirect to dots page after 10 seconds
+    // Automatically redirect to waiting page after 10 seconds
     setTimeout(function() {
-      window.location.href = 'dots.html';
-    }, 10000);  // 10 seconds before redirect
+      window.location.href = "waiting.html"; // Replace with actual waiting page URL
+    }, 10000); // 10 seconds delay
   </script>
 </body>
 </html>
