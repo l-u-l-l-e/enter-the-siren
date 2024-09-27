@@ -23,20 +23,80 @@
   </style>
 </head>
 <body>
-  <!-- Direct YouTube embed with autoplay muted -->
-  <iframe
-    src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
+  <div class="container">
+    <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
+  </div>
 
   <script>
-    // Unmute the video after 2 seconds (you can adjust the delay)
-    setTimeout(() => {
-      const iframe = document.querySelector('iframe');
-      iframe.src = iframe.src.replace('mute=1', 'mute=0'); // Unmute the video
-    }, 2000); // 2 second delay to unmute after autoplay starts
+    let player;
+
+    // Load the YouTube Iframe API script
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // Create the YouTube player when API is ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('sirenVideo', {
+        height: '100%',
+        width: '100%',
+        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        playerVars: {
+          'autoplay': 1,  // Autoplay immediately
+          'controls': 0,  // Hide controls
+          'mute': 1,      // Mute initially to allow autoplay
+          'rel': 0,       // Prevent related videos at the end
+          'playsinline': 1 // For better autoplay compatibility on mobile
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    // This function is called when the player is ready
+    function onPlayerReady(event) {
+      console.log("YouTube Player is ready.");
+      // Unmute after the video starts
+      setTimeout(() => {
+        player.unMute(); // Unmute after 2 seconds
+      }, 2000);  // Wait 2 seconds before unmuting
+    }
+
+    // Handle when the video ends
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Redirect to the "Please Exit" screen when the video finishes
+        window.location.href = 'exit.html';
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        console.log("The video has paused.");
+      }
+    }
+
+    // Play the video after 2 seconds
+    function playVideo() {
+      player.playVideo();  // Play the video
+    }
+
+    // Poll the server for the signal every 2 seconds
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
+        .then(response => response.json())
+        .then(data => {
+          console.log("Signal status:", data.playVideo);  // Log signal status
+
+          if (data.playVideo) {
+            console.log("Signal received! Starting video after 2 seconds.");
+            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    // Keep checking for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
   </script>
 </body>
 </html>
