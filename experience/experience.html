@@ -53,9 +53,9 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Initially set to 0 to prevent early autoplay
+          'autoplay': 1,  // Force autoplay
           'controls': 0,  // Hide controls
-          'mute': 1       // Start muted to bypass autoplay restrictions
+          'mute': 1       // Start muted to ensure autoplay works
         },
         events: {
           'onReady': onPlayerReady,
@@ -64,20 +64,18 @@
       });
     }
 
-    // When the player is ready
+    // This function is called when the player is ready
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-
-      // Preload the video, but don’t autoplay immediately
-      player.mute(); // Start muted to bypass autoplay restrictions
+      setTimeout(playVideo, 2000);  // Wait 2 seconds and start the video
     }
 
-    // Play the video after a 2-second delay
+    // Play the video
     function playVideo() {
       player.playVideo();
       setTimeout(() => {
         player.unMute();  // Unmute after 1 second
-      }, 1000);  // 1 second delay to unmute
+      }, 1000);
     }
 
     // Redirect to "Please Exit" screen when the video finishes
@@ -86,24 +84,6 @@
         window.location.href = 'exit.html';  // Redirect to "Please Exit" screen
       }
     }
-
-    // Poll the server for the signal every 2 seconds
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          console.log("Signal status:", data.playVideo);
-
-          if (data.playVideo) {
-            console.log("Signal received! Starting video after 2 seconds.");
-            setTimeout(playVideo, 2000);  // Wait for 2 seconds before starting
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
-
-    // Keep checking for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
