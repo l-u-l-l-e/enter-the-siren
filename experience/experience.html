@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Fullscreen video and background styling */
     html, body {
       margin: 0;
       padding: 0;
@@ -16,15 +15,6 @@
       align-items: center;
       overflow: hidden;
     }
-
-    .container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     iframe {
       width: 100vw;
       height: 100vh;
@@ -32,15 +22,12 @@
   </style>
 </head>
 <body>
-
   <div class="container">
     <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
   </div>
 
   <script>
     let player;
-    let videoHasStarted = false;
-    let pollingActive = true;
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -53,14 +40,11 @@
       player = new YT.Player('sirenVideo', {
         height: '100%',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Autoplay only after triggered
+          'autoplay': 1,  // Autoplay immediately
           'controls': 0,  // Hide controls
-          'mute': 1,      // Start muted
-          'rel': 0,       // Don’t show related videos
-          'modestbranding': 1,  // Disable YouTube branding
-          'playsinline': 1  // Ensure playback on mobile devices without fullscreen
+          'mute': 0       // Start with sound
         },
         events: {
           'onReady': onPlayerReady,
@@ -69,52 +53,17 @@
       });
     }
 
-    // Player ready event
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
+      // No delay here, just direct playback for testing
+      player.playVideo();
     }
 
-    // Handle video state changes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        window.location.href = 'exit.html';  // Redirect when video ends
+        window.location.href = 'exit.html';  // Go to exit page after video ends
       }
     }
-
-    // Poll the server for the signal every 2 seconds
-    function checkForSignal() {
-      if (!pollingActive) return; // Stop polling if signal received
-
-      fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
-        .then(response => response.json())
-        .then(data => {
-          console.log("Signal status:", data.playVideo);
-
-          if (data.playVideo && !videoHasStarted) {
-            console.log("Signal received! Starting video after 2 seconds.");
-            pollingActive = false;  // Stop polling after receiving signal
-            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
-
-    // Play the video after the delay
-    function playVideo() {
-      if (!videoHasStarted) {
-        player.mute();  // Start muted to allow autoplay
-        player.playVideo();  // Play the video
-        videoHasStarted = true;  // Mark video as started
-
-        // Unmute after 1 second
-        setTimeout(() => {
-          player.unMute();
-        }, 1000);
-      }
-    }
-
-    // Keep checking for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
   </script>
 </body>
 </html>
