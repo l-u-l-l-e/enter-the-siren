@@ -50,11 +50,11 @@
       player = new YT.Player('sirenVideo', {
         height: '100%',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Video will not autoplay until signal is received
+          'autoplay': 0,  // Autoplay after delay
           'controls': 0,  // Hide controls
-          'mute': 1,      // Ensure video starts muted for autoplay compliance
+          'mute': 1       // Start muted to ensure autoplay works
         },
         events: {
           'onReady': onPlayerReady,
@@ -63,22 +63,22 @@
       });
     }
 
-    // This function is called when the player is ready
+    // When player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready.");
+      console.log("YouTube Player is ready. Waiting for signal.");
       
-      // Set the video quality to the highest available (1080p)
-      player.setPlaybackQuality('hd1080');
+      // Set video quality to 1080p
+      player.setPlaybackQuality('hd1080'); // Set the quality to highest available
     }
 
-    // Handle video state changes
+    // Handle video end event
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        window.location.href = 'exit.html';  // Redirect after video ends
+        window.location.href = 'exit.html'; // Redirect when video ends
       }
     }
 
-    // Poll the server for the signal every 2 seconds
+    // Poll for signal every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -93,19 +93,20 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Play the video after the signal is received
+    // Play video
     function playVideo() {
-      player.mute();  // Start muted for autoplay
+      player.mute();  // Mute initially
       player.playVideo();  // Play the video
 
-      // Unmute after the video starts playing
+      // Unmute after 1 second
       setTimeout(() => {
-        player.unMute();  // Unmute after 1 second
+        player.unMute();  // Unmute after it starts
       }, 1000);
     }
 
-    // Keep polling for the signal until the video starts
-    setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
+    // Start polling for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
+
   </script>
 </body>
 </html>
