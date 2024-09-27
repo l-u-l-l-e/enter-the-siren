@@ -33,32 +33,35 @@
 <body>
 
   <div class="container">
-    <iframe src="https://player.vimeo.com/video/1013656394?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" allowfullscreen title="Siren of the stream"></iframe>
+    <iframe id="experienceVideo" src="https://player.vimeo.com/video/1013656394?autoplay=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
   </div>
 
   <script>
-    const iframe = document.querySelector('iframe');
+    let iframe = document.getElementById('experienceVideo');
+    let videoPlayer;
 
-    function playVideo() {
-      // Autoplay is controlled by the iframe (Vimeo allows autoplay)
-      console.log("Playing video...");
-    }
+    // Wait for Vimeo API to load and create player
+    document.addEventListener('DOMContentLoaded', () => {
+      videoPlayer = new Vimeo.Player(iframe);
 
-    // Poll for signal and play the video
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            console.log("Signal received! Playing video after 2 seconds.");
-            setTimeout(playVideo, 2000);  // Play video after 2 seconds
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
+      // Poll for the signal and start the video
+      function checkForSignal() {
+        fetch('https://legend-oxidized-governor.glitch.me/signal')
+          .then(response => response.json())
+          .then(data => {
+            if (data.playVideo) {
+              setTimeout(() => {
+                videoPlayer.setVolume(1); // Unmute after 2 seconds
+                videoPlayer.play();
+              }, 2000);  // Wait for 2 seconds before starting the video
+            }
+          })
+          .catch(error => console.error('Error checking signal:', error));
+      }
 
-    setInterval(checkForSignal, 2000);  // Poll every 2 seconds
+      // Poll every 2 seconds to check for the signal
+      setInterval(checkForSignal, 2000);
+    });
   </script>
-
 </body>
 </html>
