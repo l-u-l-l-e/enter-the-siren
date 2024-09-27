@@ -3,29 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Please Wait</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+    <title>Waiting...</title>
+    <link rel="stylesheet" href="../entry/styles.css">
+    <style>
+        body {
+            background-color: black;
+            color: #08fff8;
+            font-family: 'Fira Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 50px;
+            overflow: hidden;
+        }
+
+        .dots {
+            font-size: 2.5em;
+            color: #08fff8;
+        }
+    </style>
 </head>
-<body class="fade-in">
-    <div class="container">
-        <h1>Please wait your turn</h1>
-        <h2 class="dots">• • •</h2> <!-- Animated dots below the message -->
-    </div>
+<body>
+    <div class="dots">• • •</div>
 
     <script>
-        // Dot animation for the waiting page
         let dotElement = document.querySelector('.dots');
         let dots = 1;
 
         setInterval(function () {
             dotElement.textContent = '•'.repeat(dots);
             dots = (dots % 3) + 1;
-        }, 500); // Change dots every 500ms
+        }, 500);
 
-        // Redirect to index page after 10 min
-        setTimeout(function () {
-            window.location.href = "index.html"; 
-        }, 600000); // 10 min in milliseconds
+        function checkForSignal() {
+            fetch('https://legend-oxidized-governor.glitch.me/signal')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.playVideo) {
+                        window.location.href = 'experience.html';  // Redirect to experience page
+                    }
+                })
+                .catch(error => console.error('Error checking signal:', error));
+        }
+
+        setInterval(checkForSignal, 2000);
     </script>
 </body>
 </html>
