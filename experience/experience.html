@@ -61,8 +61,12 @@
     }
 
     function playVideo() {
+      player.setVolume(0);  // Start with muted volume to allow autoplay
       player.play().then(function() {
         console.log("Video started playing.");
+        setTimeout(() => {
+          player.setVolume(1);  // Unmute after video starts
+        }, 1000);  // Unmute after 1 second
       }).catch(function(error) {
         console.error('Error playing the video:', error);
       });
