@@ -52,7 +52,7 @@
         playerVars: {
           'autoplay': 1,  // Autoplay the video
           'controls': 0,  // Hide controls
-          'mute': 1,      // Start muted to bypass autoplay restrictions
+          'mute': 1,      // Start muted to comply with autoplay policy
           'playsinline': 1 // Force video to play inline on mobile (iOS)
         },
         events: {
@@ -65,10 +65,10 @@
     // When the player is ready
     function onPlayerReady(event) {
       console.log("Player is ready!");
+      player.playVideo(); // Play video immediately
       setTimeout(() => {
-        player.unMute();  // Unmute the video after delay
-        player.playVideo();  // Start playing the video
-      }, 2000);  // 2-second delay to handle autoplay restrictions
+        player.unMute();  // Unmute the video after 2 seconds
+      }, 2000); // Wait for 2 seconds to avoid conflicts with autoplay restrictions
     }
 
     // Handle video state changes
@@ -76,21 +76,16 @@
       if (event.data === YT.PlayerState.ENDED) {
         console.log("Video ended, redirecting to exit page.");
         window.location.href = 'exit.html';  // Redirect after video ends
-      } else if (event.data === YT.PlayerState.PAUSED) {
-        console.log("Video paused, attempting to restart.");
-        setTimeout(() => {
-          player.playVideo();  // Retry playing if paused
-        }, 500);  // Try to play again after 500ms if it pauses
       }
     }
 
-    // Additional failsafe: Periodically check if video is paused, and resume it
+    // Periodically check if video is paused and force play if needed
     setInterval(function() {
       if (player && player.getPlayerState && player.getPlayerState() === YT.PlayerState.PAUSED) {
         console.log("Resuming paused video.");
         player.playVideo();  // Force play if paused
       }
-    }, 1000);  // Check every second to ensure the video plays continuously
+    }, 1000);  // Check every second to ensure continuous play
   </script>
 
 </body>
