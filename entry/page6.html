@@ -15,20 +15,18 @@
   </div>
 
 <script>
-    document.getElementById('lastButton').addEventListener('click', function(e) {
-        e.preventDefault();  // Prevent default form submission or page reload
+  document.getElementById('enterButton').addEventListener('click', function(e) {
+    e.preventDefault();
 
-        // Send the signal to the experience point to play the video
-        fetch('https://legend-oxidized-governor.glitch.me/play', {  // Ensure this is a POST request
-          method: 'POST'
-        })  
-            .then(response => response.text())
-            .then(data => console.log("Signal sent: ", data))  // Log confirmation
-            .catch(error => console.error('Error sending signal:', error));
-
-        // Redirect to the loading page
-        window.location.href = 'loading.html';  // Ensure this is the correct URL
-    });
+    // Send the play signal to the server
+    fetch('https://legend-oxidized-governor.glitch.me/play', { method: 'POST' })
+      .then(response => response.text())
+      .then(data => {
+        console.log("Play signal sent:", data);
+        window.location.href = 'final.html';  // Redirect to the next page after signal
+      })
+      .catch(error => console.error('Error sending signal:', error));
+  });
 </script>
 </body>
 </html>
