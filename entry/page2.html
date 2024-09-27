@@ -12,15 +12,21 @@
     <div class="button-container">
       <button class="button" id="surferButton">Surfer</button>
       <button class="button" id="diverButton">Diver</button>
+      <button class="button" id="streamerButton">Streamer</button>
       <button class="button" id="pirateButton">Pirate</button>
       <button class="button" id="catfishButton">Catfish</button>
-      <button class="button" id="streamerButton">Streamer</button>
+      <button class="button" id="browserButton">Browser</button>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const buttons = document.querySelectorAll('.button');
+
+      // Function to store the selected type locally
+      function storeUserType(type) {
+        localStorage.setItem('userType', type);  // Save type to localStorage
+      }
 
       // Attach click event listeners to each button
       buttons.forEach(button => {
@@ -30,6 +36,9 @@
           // Get the selected type from the button's inner text
           const userType = this.innerText;
 
+          // Store the selected type locally
+          storeUserType(userType);
+
           // Send the selected type to the server
           fetch('https://legend-oxidized-governor.glitch.me/submit', {
             method: 'POST',
@@ -38,16 +47,24 @@
             },
             body: JSON.stringify({
               type: userType,
-              sessionId: 'unique-session-id'  // Replace with a method to track sessions
+              sessionId: 'unique-session-id'  // Replace with your session logic
             }),
           })
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to submit');
+            }
+            return response.json();
+          })
           .then(data => {
             console.log('Response saved:', data);
             // Navigate to the next page (page3.html)
             window.location.href = 'page3.html';
           })
-          .catch(error => console.error('Error:', error));
+          .catch(error => {
+            console.error('Error:', error);
+            alert('There was an issue saving your response. Please try again.');
+          });
         });
       });
     });
