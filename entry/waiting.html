@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiting...</title>
-    <link rel="stylesheet" href="../entry/styles.css">
+    <title>Please Wait Your Turn</title>
+    <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
     <style>
         body {
             background-color: black;
@@ -16,40 +16,22 @@
             height: 100vh;
             margin: 0;
             text-align: center;
-            padding: 50px;
-            overflow: hidden;
         }
 
-        .dots {
-            font-size: 2.5em;
-            color: #08fff8;
+        .message {
+            font-size: 2em;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="dots">• • •</div>
+    <div class="message">Please wait your turn</div> <!-- Message to the user -->
 
     <script>
-        let dotElement = document.querySelector('.dots');
-        let dots = 1;
-
-        setInterval(function () {
-            dotElement.textContent = '•'.repeat(dots);
-            dots = (dots % 3) + 1;
-        }, 500);
-
-        function checkForSignal() {
-            fetch('https://legend-oxidized-governor.glitch.me/signal')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.playVideo) {
-                        window.location.href = 'experience.html';  // Redirect to experience page
-                    }
-                })
-                .catch(error => console.error('Error checking signal:', error));
-        }
-
-        setInterval(checkForSignal, 2000);
+        // After 10 minutes (600,000 milliseconds), redirect to the index page
+        setTimeout(function() {
+            window.location.href = 'index.html';  // Redirect to your index page after 10 minutes
+        }, 600000);  // 600,000 milliseconds = 10 minutes
     </script>
 </body>
 </html>
