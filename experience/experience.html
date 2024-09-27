@@ -53,7 +53,7 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Force autoplay
+          'autoplay': 0,  // Autoplay after delay
           'controls': 0,  // Hide controls
           'mute': 1       // Start muted to ensure autoplay works
         },
@@ -66,24 +66,48 @@
 
     // This function is called when the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready.");
-      setTimeout(playVideo, 2000);  // Wait 2 seconds and start the video
+      console.log("YouTube Player is ready. Waiting for the signal.");
+      
+      // Set the video quality to the highest available (1080p)
+      player.setPlaybackQuality('hd1080'); // Forces 1080p quality if available
     }
 
-    // Play the video
+    // Handle when the video ends
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Redirect to the "Please Exit" screen when the video finishes
+        window.location.href = 'exit.html';
+      }
+    }
+
+    // Poll the server for the signal every 2 seconds
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
+        .then(response => response.json())
+        .then(data => {
+          console.log("Signal status:", data.playVideo);  // Log signal status
+
+          if (data.playVideo) {
+            console.log("Signal received! Starting video after 2 seconds.");
+            setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    // Play the video after the delay
     function playVideo() {
-      player.playVideo();
+      player.mute();  // Start muted to allow autoplay
+      player.playVideo();  // Play the video
+
+      // Unmute after 1 second
       setTimeout(() => {
-        player.unMute();  // Unmute after 1 second
+        player.unMute();
       }, 1000);
     }
 
-    // Redirect to "Please Exit" screen when the video finishes
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        window.location.href = 'exit.html';  // Redirect to "Please Exit" screen
-      }
-    }
+    // Keep checking for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
   </script>
 </body>
 </html>
