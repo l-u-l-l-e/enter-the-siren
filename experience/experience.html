@@ -84,6 +84,11 @@
     function playVideo() {
       player.playVideo();  // Start playing the video
     }
+
+    if (event.data === YT.PlayerState.ENDED) {
+  window.location.href = 'exit.html';  // Redirect to exit screen
+}
+
   </script>
 </body>
 </html>
