@@ -39,19 +39,29 @@
     </video>
   </div>
 
-  <script>
-    const video = document.getElementById('experienceVideo');
+<script>
+  const video = document.getElementById('experienceVideo');
 
-    // Auto play video after 2 seconds and unmute
-    setTimeout(() => {
-      video.play();
-      video.muted = false;
-    }, 2000);
+  function playVideo() {
+    video.play();  // Auto play the video
+    video.muted = false;  // Unmute the video after it starts
+  }
 
-    // Redirect to exit.html when the video ends
-    video.onended = function() {
-      window.location.href = 'exit.html';
-    };
-  </script>
+  // Poll for signal and start the video
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          setTimeout(playVideo, 2000);  // Play video after 2 seconds
+        }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
+
+  // Poll the server every 2 seconds for the signal
+  setInterval(checkForSignal, 2000);
+</script>
+
 </body>
 </html>
