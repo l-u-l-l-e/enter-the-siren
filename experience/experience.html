@@ -52,7 +52,7 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Autoplay the video
+          'autoplay': 1,  // Autoplay the video immediately
           'controls': 0,  // Hide controls
           'mute': 1       // Start muted to ensure autoplay works
         },
@@ -66,11 +66,9 @@
     // This function is called when the player is ready
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-
-      // Play video muted, then unmute after 1 second to allow autoplay
-      player.playVideo();
+      player.playVideo();  // Play the video immediately
       setTimeout(() => {
-        player.unMute();
+        player.unMute();  // Unmute after 1 second to enable sound
       }, 1000);
     }
 
@@ -80,29 +78,6 @@
         window.location.href = 'exit.html';  // Redirect after video ends
       }
     }
-
-    // Fetch the signal only once and then play the video
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            console.log("Signal received! Starting video after 3 seconds.");
-            setTimeout(playVideo, 3000);  // Delay video playback by 3 seconds
-          } else {
-            console.log("No signal received.");
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
-
-    // Play the video after the delay
-    function playVideo() {
-      player.playVideo();
-    }
-
-    // Fetch the signal only once on page load
-    window.onload = checkForSignal;
   </script>
 </body>
 </html>
