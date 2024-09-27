@@ -27,7 +27,7 @@
     <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
   </div>
 
-  <script>
+ <script>
     let player;
 
     // Load the YouTube Iframe API script
@@ -43,11 +43,9 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Autoplay immediately
+          'autoplay': 0,  // Disable autoplay initially
           'controls': 0,  // Hide controls
-          'mute': 1,      // Mute initially to allow autoplay
-          'rel': 0,       // Prevent related videos at the end
-          'playsinline': 1 // For better autoplay compatibility on mobile
+          'mute': 1       // Mute to ensure autoplay works
         },
         events: {
           'onReady': onPlayerReady,
@@ -58,26 +56,22 @@
 
     // This function is called when the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready.");
-      // Unmute after the video starts
-      setTimeout(() => {
-        player.unMute(); // Unmute after 2 seconds
-      }, 2000);  // Wait 2 seconds before unmuting
+      console.log("YouTube Player is ready. Waiting for the signal.");
+      
+      // Set the video quality to the highest available (1080p)
+      player.setPlaybackQuality('hd1080'); // Forces 1080p quality if available
     }
 
-    // Handle when the video ends
+    // Handle when the video state changes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        // Redirect to the "Please Exit" screen when the video finishes
-        window.location.href = 'exit.html';
+        console.log("Video ended, redirecting to exit.");
+        window.location.href = 'exit.html';  // Redirect to exit page when video ends
       } else if (event.data === YT.PlayerState.PAUSED) {
-        console.log("The video has paused.");
+        console.log("Video paused unexpectedly. Current time:", player.getCurrentTime());
+      } else if (event.data === YT.PlayerState.PLAYING) {
+        console.log("Video playing successfully.");
       }
-    }
-
-    // Play the video after 2 seconds
-    function playVideo() {
-      player.playVideo();  // Play the video
     }
 
     // Poll the server for the signal every 2 seconds
@@ -95,8 +89,15 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
+    // Play the video after the delay
+    function playVideo() {
+      player.playVideo(); // Play the video without pause or delay
+      player.unMute();  // Unmute the video after autoplay
+    }
+
     // Keep checking for the signal every 2 seconds
     setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
-  </script>
+</script>
+
 </body>
 </html>
