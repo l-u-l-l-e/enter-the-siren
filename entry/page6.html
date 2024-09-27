@@ -3,26 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entry Point</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Ready to Dive In?</title>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your stylesheet -->
+  <style>
+    /* Additional styling if needed */
+    body {
+      background-color: black;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      background-color: #08fff8;
+      color: black;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #00a9a8;
+    }
+
+    .button:focus {
+      outline: none;
+    }
+  </style>
 </head>
-<body>
+<body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <button id="enterButton">Enter</button>
+    <button id="enterButton" class="button">Enter</button>
   </div>
 
   <script>
-    document.getElementById('enterButton').addEventListener('click', function() {
-      fetch('https://your-glitch-url.com/play', {
-        method: 'POST',
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log('Signal sent:', data);
-        window.location.href = 'final.html';  // Redirect to final instructions
-      })
-      .catch(error => console.error('Error sending signal:', error));
+    document.addEventListener('DOMContentLoaded', function() {
+      const enterButton = document.getElementById('enterButton');
+
+      enterButton.addEventListener('click', function() {
+        fetch('https://legend-oxidized-governor.glitch.me/play', {  // Make sure this URL is correct
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => {
+          if (response.ok) {
+            // If the signal was successfully sent, navigate to the next page
+            window.location.href = 'loading.html';  // Redirect to the loading screen
+          } else {
+            console.error('Error sending signal:', response);
+            alert('There was an issue sending the signal. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error sending signal:', error);
+          alert('There was an issue sending the signal. Please try again.');
+        });
+      });
     });
   </script>
 </body>
