@@ -38,6 +38,7 @@
 
   <script>
     let player;
+    let signalPolling;
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -63,22 +64,22 @@
       });
     }
 
-    // When player is ready
+    // When the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready. Waiting for signal.");
+      console.log("YouTube Player is ready. Waiting for the signal.");
       
       // Set video quality to 1080p
       player.setPlaybackQuality('hd1080'); // Set the quality to highest available
     }
 
-    // Handle video end event
+    // Handle video state changes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         window.location.href = 'exit.html'; // Redirect when video ends
       }
     }
 
-    // Poll for signal every 2 seconds
+    // Poll the server for the signal every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -93,7 +94,7 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Play video
+    // Play video and stop polling for the signal
     function playVideo() {
       player.mute();  // Mute initially
       player.playVideo();  // Play the video
@@ -102,10 +103,13 @@
       setTimeout(() => {
         player.unMute();  // Unmute after it starts
       }, 1000);
+
+      // Stop polling for the signal to avoid interruptions
+      clearInterval(signalPolling);
     }
 
     // Start polling for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
+    signalPolling = setInterval(checkForSignal, 2000);
 
   </script>
 </body>
