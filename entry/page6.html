@@ -3,32 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ready to Dive In?</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <title>Entry Point</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="fade-in">
+<body>
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <a href="loading.html">
-      <button id="lastButton" class="button">Enter</button>
-    </a>
+    <button id="enterButton">Enter</button>
   </div>
 
   <script>
-    document.getElementById('lastButton').addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // Send the signal to the experience point to play the video
-        fetch('https://legend-oxidized-governor.glitch.me/play', {
-            method: 'POST'
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log("Signal sent: ", data);
-            // Redirect to loading.html
-            window.location.href = 'loading.html';
-        })
-        .catch(error => console.error('Error sending signal:', error));
+    document.getElementById('enterButton').addEventListener('click', function() {
+      fetch('https://your-glitch-url.com/play', {
+        method: 'POST',
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log('Signal sent:', data);
+        window.location.href = 'final.html';  // Redirect to final instructions
+      })
+      .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
