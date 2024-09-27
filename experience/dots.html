@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waiting...</title>
-    <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="../entry/styles.css">
     <style>
         body {
             background-color: black;
-            color: #08fff8;  /* Cyan color */
-            font-family: 'Fira Mono', monospace;  /* Same font */
+            color: #08fff8;
+            font-family: 'Fira Mono', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,43 +17,44 @@
             margin: 0;
             text-align: center;
             padding: 50px;
-            overflow: hidden;  /* Disable scrolling */
+            overflow: hidden;
         }
 
         .dots {
-            font-size: 2.5em;  /* Same size as your titles */
-            color: #08fff8;    /* Cyan color for the dots */
+            font-size: 2.5em;
+            color: #08fff8;
         }
     </style>
 </head>
 <body>
-    <div class="dots">• • •</div> <!-- Animated dots -->
+    <div class="dots">• • •</div>
 
     <script>
-        // Dot animation
         let dotElement = document.querySelector('.dots');
         let dots = 1;
 
+        // Dot animation
         setInterval(function () {
             dotElement.textContent = '•'.repeat(dots);
             dots = (dots % 3) + 1;
-        }, 500);  // Change dots every 500 milliseconds
+        }, 500);
 
-        // Poll the server for the signal every 2 seconds
+        // Poll the server every 2 seconds to check for the signal
         function checkForSignal() {
             fetch('https://legend-oxidized-governor.glitch.me/signal')
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Signal status:", data.playVideo);
+
                     if (data.playVideo) {
-                        console.log("Signal received! Redirecting to experience page.");
-                        window.location.href = 'experience.html';  // Redirect to your experience page
+                        console.log("Signal received! Redirecting to experience.");
+                        window.location.href = 'experience.html';  // Redirect to experience page
                     }
                 })
                 .catch(error => console.error('Error checking signal:', error));
         }
 
-        // Keep checking for the signal every 2 seconds
-        setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
+        setInterval(checkForSignal, 2000);  // Poll every 2 seconds
     </script>
 </body>
 </html>
