@@ -32,20 +32,21 @@
   </style>
 </head>
 <body>
+
   <div class="container">
     <div id="sirenVideo"></div> <!-- YouTube video will be embedded here -->
   </div>
 
   <!-- Load the YouTube API script -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  
+
   <script>
-    let player;
-    let isPlayerReady = false; // To track if the player is ready
+    let player;  // Declare player globally
+    let isPlayerReady = false;  // Track if the player is ready
 
     // Load the YouTube Iframe API script and create player
     function onYouTubeIframeAPIReady() {
-      console.log('YouTube API ready');
+      console.log('YouTube API is ready');
       player = new YT.Player('sirenVideo', {
         height: '100%',
         width: '100%',
@@ -65,13 +66,13 @@
     // This function is called when the player is ready
     function onPlayerReady(event) {
       console.log("YouTube Player is ready.");
-      isPlayerReady = true; // Mark player as ready
-      player.setPlaybackQuality('hd1080'); // Set video quality
+      isPlayerReady = true;  // Mark player as ready
+      player.setPlaybackQuality('hd1080');  // Set video quality
     }
 
     // Function to play the video after receiving the signal
     function playVideo() {
-      if (isPlayerReady) { // Ensure the player is ready
+      if (isPlayerReady) {  // Ensure the player is ready
         console.log("Playing video...");
         player.mute();  // Start muted to allow autoplay
         player.playVideo();  // Play the video
@@ -108,7 +109,7 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Keep checking for the signal every 2 seconds
+    // Start checking for the signal every 2 seconds
     setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
   </script>
 </body>
