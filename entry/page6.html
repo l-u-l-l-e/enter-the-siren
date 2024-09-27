@@ -16,19 +16,19 @@
 
   <script>
     document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault();  // Prevent default form submission or page reload
+        e.preventDefault();
 
-      // Send the signal to the experience point to play the video
-      fetch('https://legend-oxidized-governor.glitch.me/play', {  // Make sure the URL is correct for your Glitch project
-        method: 'POST',
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log("Signal sent: ", data);  // Log confirmation
-        // Redirect to the final instructions page (loading.html)
-        window.location.href = 'loading.html';
-      })
-      .catch(error => console.error('Error sending signal:', error));  // Catch errors
+        // Send the signal to the experience point to play the video
+        fetch('https://legend-oxidized-governor.glitch.me/play', {
+            method: 'POST'
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Signal sent: ", data);
+            // Redirect to loading.html
+            window.location.href = 'loading.html';
+        })
+        .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
