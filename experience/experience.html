@@ -108,6 +108,20 @@
 
     // Keep checking for the signal every 2 seconds
     setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
+
+    if (event.data === YT.PlayerState.ENDED) {
+  // Redirect to the "Please Exit" screen when the video finishes
+  window.location.href = 'exit.html';
+
+  // Reset the signal after the video ends
+  fetch('https://legend-oxidized-governor.glitch.me/reset', {
+    method: 'POST'
+  })
+  .then(response => response.text())
+  .then(data => console.log('Signal reset:', data))
+  .catch(error => console.error('Error resetting signal:', error));
+}
+
   </script>
 </body>
 </html>
