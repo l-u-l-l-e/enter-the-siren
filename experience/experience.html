@@ -34,18 +34,17 @@
 
   <div class="container">
     <video id="experienceVideo" width="100%" height="100%" autoplay muted>
-      <source src="https://drive.google.com/uc?id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z&export=download" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+  <source src="https://drive.google.com/uc?id=1RIweoTOnW0X1eg1RZhV4EOBy7gPDCx9z&export=download" type="video/mp4">
+</video>
   </div>
 
 <script>
   const video = document.getElementById('experienceVideo');
 
   function playVideo() {
-    video.play();  // Auto play the video
-    video.muted = false;  // Unmute the video after it starts
-  }
+  video.play();  
+  video.muted = false;  // Unmute after starting
+}
 
   // Poll for signal and start the video
   function checkForSignal() {
