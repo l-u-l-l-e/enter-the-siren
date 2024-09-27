@@ -39,6 +39,7 @@
 
   <script>
     let player;
+    let pollingActive = true;
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -82,14 +83,17 @@
 
     // Poll the server for the signal every 2 seconds
     function checkForSignal() {
+      if (!pollingActive) return; // Stop polling once video starts
+
       fetch('https://legend-oxidized-governor.glitch.me/signal')  // Replace with your Glitch URL
         .then(response => response.json())
         .then(data => {
           console.log("Signal status:", data.playVideo);  // Log signal status
 
           if (data.playVideo) {
-            console.log("Signal received! Starting video after 10 seconds.");
-            setTimeout(playVideo, 10000);  // Delay video playback by 10 seconds
+            console.log("Signal received! Starting video after 4 seconds.");
+            setTimeout(playVideo, 4000);  // Delay video playback by 4 seconds
+            pollingActive = false;  // Stop further polling
           }
         })
         .catch(error => console.error('Error checking signal:', error));
@@ -108,20 +112,6 @@
 
     // Keep checking for the signal every 2 seconds
     setInterval(checkForSignal, 2000);  // Poll the server every 2 seconds
-
-    if (event.data === YT.PlayerState.ENDED) {
-  // Redirect to the "Please Exit" screen when the video finishes
-  window.location.href = 'exit.html';
-
-  // Reset the signal after the video ends
-  fetch('https://legend-oxidized-governor.glitch.me/reset', {
-    method: 'POST'
-  })
-  .then(response => response.text())
-  .then(data => console.log('Signal reset:', data))
-  .catch(error => console.error('Error resetting signal:', error));
-}
-
   </script>
 </body>
 </html>
