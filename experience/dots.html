@@ -28,34 +28,22 @@
 <body>
     <div class="dots">• • •</div>
 
-    <script>
-        let dotElement = document.querySelector('.dots');
-        let dots = 1;
-
-        setInterval(function () {
-            dotElement.textContent = '•'.repeat(dots);
-            dots = (dots % 3) + 1;
-        }, 500);  // Change dots every 500 milliseconds
-
-        // Poll the server for the signal every 2 seconds
-        function checkForSignal() {
-            fetch('https://legend-oxidized-governor.glitch.me/signal')
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Signal status:", data.playVideo);  // Log signal status
-
-                    if (data.playVideo) {
-                        console.log("Signal received! Redirecting to experience page.");
-                        window.location.href = 'experience.html';  // Redirect to your experience page
-                    } else {
-                        console.log("No signal yet.");
-                    }
-                })
-                .catch(error => console.error('Error checking signal:', error));
+   <script>
+  // Poll the server for the signal every 2 seconds
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          console.log("Signal received! Redirecting to experience page.");
+          window.location.href = 'experience.html';  // Redirect to video page
         }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
 
-        // Keep checking for the signal every 2 seconds
-        setInterval(checkForSignal, 2000);
-    </script>
+  setInterval(checkForSignal, 2000);  // Check every 2 seconds
+</script>
+
 </body>
 </html>
