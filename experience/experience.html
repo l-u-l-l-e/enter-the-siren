@@ -29,6 +29,7 @@
 
  <script>
     let player;
+    let videoStarted = false;  // Flag to ensure video only starts once
 
     // Load the YouTube Iframe API script
     const tag = document.createElement('script');
@@ -41,11 +42,11 @@
       player = new YT.Player('sirenVideo', {
         height: '100%',
         width: '100%',
-        videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
+        videoId: 'dMRR6yFSy5k',  // Your YouTube video ID
         playerVars: {
-          'autoplay': 0,  // Disable autoplay initially
+          'autoplay': 0,  // Autoplay after the signal
           'controls': 0,  // Hide controls
-          'mute': 1       // Mute to ensure autoplay works
+          'mute': 1       // Mute initially
         },
         events: {
           'onReady': onPlayerReady,
@@ -56,21 +57,27 @@
 
     // This function is called when the player is ready
     function onPlayerReady(event) {
-      console.log("YouTube Player is ready. Waiting for the signal.");
-      
-      // Set the video quality to the highest available (1080p)
-      player.setPlaybackQuality('hd1080'); // Forces 1080p quality if available
+      console.log("YouTube Player is ready, waiting for the signal.");
+      // Set video quality to the highest (optional)
+      player.setPlaybackQuality('hd1080'); 
     }
 
-    // Handle when the video state changes
+    // Handle video state changes
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        console.log("Video ended, redirecting to exit.");
-        window.location.href = 'exit.html';  // Redirect to exit page when video ends
-      } else if (event.data === YT.PlayerState.PAUSED) {
-        console.log("Video paused unexpectedly. Current time:", player.getCurrentTime());
-      } else if (event.data === YT.PlayerState.PLAYING) {
-        console.log("Video playing successfully.");
+        console.log("Video ended, redirecting to exit page.");
+        window.location.href = 'exit.html';  // Redirect after video ends
+      }
+    }
+
+    // Play the video (after the signal) and ensure it does not pause again
+    function playVideo() {
+      if (!videoStarted) {  // Only start the video once
+        console.log("Starting video.");
+        player.playVideo();   // Play the video
+        player.unMute();      // Unmute after starting
+
+        videoStarted = true;  // Mark video as started
       }
     }
 
@@ -81,18 +88,12 @@
         .then(data => {
           console.log("Signal status:", data.playVideo);  // Log signal status
 
-          if (data.playVideo) {
+          if (data.playVideo && !videoStarted) {
             console.log("Signal received! Starting video after 2 seconds.");
             setTimeout(playVideo, 2000);  // Delay video playback by 2 seconds
           }
         })
         .catch(error => console.error('Error checking signal:', error));
-    }
-
-    // Play the video after the delay
-    function playVideo() {
-      player.playVideo(); // Play the video without pause or delay
-      player.unMute();  // Unmute the video after autoplay
     }
 
     // Keep checking for the signal every 2 seconds
