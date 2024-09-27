@@ -50,9 +50,10 @@
         width: '100%',
         videoId: 'dMRR6yFSy5k',  // Replace with your YouTube video ID
         playerVars: {
-          'autoplay': 1,  // Attempt to autoplay
+          'autoplay': 1,  // Autoplay the video
           'controls': 0,  // Hide controls
-          'mute': 1       // Start muted to allow autoplay (browser requirement)
+          'mute': 1,      // Start muted to bypass browser autoplay restrictions
+          'playsinline': 1 // Force video to play inline without fullscreen (iOS fix)
         },
         events: {
           'onReady': onPlayerReady,
@@ -63,20 +64,21 @@
 
     // When the player is ready
     function onPlayerReady(event) {
-      // Delay the unmuting and playback to bypass autoplay policies
+      console.log("Player is ready!");
+
+      // Unmute and play after 2 seconds to ensure smooth autoplay
       setTimeout(() => {
         player.unMute();  // Unmute the video
-        player.playVideo();  // Play the video after unmuting
-      }, 2000);  // Start video after 2-second delay
+        player.playVideo();  // Start playing the video
+      }, 2000);  // Delay video unmuting and play for 2 seconds
     }
 
     // Handle when the video ends
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         window.location.href = 'exit.html';  // Redirect after video ends
-      }
-    }
-  </script>
-
-</body>
-</html>
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        // If the video pauses, try to restart it
+        setTimeout(() => {
+          player.playVideo();
+        }, 500)
