@@ -24,7 +24,7 @@
       align-items: center;
     }
 
-    iframe {
+    video {
       width: 100vw;
       height: 100vh;
     }
@@ -33,31 +33,20 @@
 <body>
 
   <div class="container">
-    <div style="padding:56.25% 0 0 0;position:relative;">
-      <iframe src="https://player.vimeo.com/video/1013656394?h=39852bc616&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&autoplay=1&muted=0" 
-              frameborder="0" 
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-              allowfullscreen 
-              style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-              title="Siren of the stream">
-      </iframe>
-    </div>
-    <script src="https://player.vimeo.com/api/player.js"></script>
+    <video id="experienceVideo" width="100%" height="100%" autoplay controls>
+      <source src="http://localhost:8000/siren.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 
   <script>
-    // Wait for the player to be ready and control playback
-    const iframe = document.querySelector('iframe');
-    const player = new Vimeo.Player(iframe);
+    const video = document.getElementById('experienceVideo');
 
-    // Ensure autoplay starts after the signal is received
     function playVideo() {
-      player.play().catch(function(error) {
-        console.error('Error attempting to autoplay the video:', error);
-      });
+      video.play();  // Auto play the video
     }
 
-    // Poll for signal to start the video
+    // Poll for signal and start the video
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -69,8 +58,8 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Poll the signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
+
 </body>
 </html>
