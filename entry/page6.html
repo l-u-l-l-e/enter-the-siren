@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter Page</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <title>Enter</title>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your styles -->
 </head>
-<body>
+<body class="fade-in">
   <div class="container">
-    <h1>Ready to dive in?</h1>
-    <button id="enterButton" class="button">Enter</button>
+    <h1>Are you ready to dive in?</h1>
+    <button id="enterButton">Enter</button>
   </div>
 
   <script>
-    document.getElementById("enterButton").addEventListener("click", function () {
+    document.getElementById('enterButton').addEventListener('click', function() {
+      // Send signal to start the video
       fetch('https://legend-oxidized-governor.glitch.me/play-video', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          action: 'playVideo',
-        }),
       })
       .then(response => response.json())
       .then(data => {
         console.log('Signal sent:', data);
-        // Redirect to loading page after the signal is sent
-        window.location.href = 'loading.html';
+        // Redirect to the next page after sending signal
+        window.location.href = 'waiting.html';
       })
       .catch(error => {
         console.error('Error sending signal:', error);
+        alert('There was an issue sending the signal.');
       });
     });
   </script>
