@@ -38,7 +38,7 @@
 
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
+        .then(response => response.json()) // Expect JSON response
         .then(data => {
           if (data.playVideo) {
             window.location.href = 'experience.html'; // Redirect to video page
@@ -47,7 +47,7 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    setInterval(checkForSignal, 2000); // Check for signal every 2 seconds
+    setInterval(checkForSignal, 2000); // Poll every 2 seconds
   </script>
 </body>
 </html>
