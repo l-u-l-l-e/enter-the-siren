@@ -3,26 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ready to Dive In?</title>
+  <title>Enter</title>
   <link rel="stylesheet" href="../entry/styles.css">
 </head>
-<body class="fade-in">
+<body>
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <button id="lastButton" class="button">Enter</button>
+    <button class="button" id="enterButton">Enter</button>
   </div>
 
   <script>
-    document.getElementById('lastButton').addEventListener('click', function() {
-      // Send the play signal to the server
-      fetch('https://legend-oxidized-governor.glitch.me/play', { method: 'POST' })
-        .then(response => response.text())
-        .then(data => {
-          console.log("Signal sent to play video:", data);
-          // Redirect to the loading page after sending the signal
+    document.getElementById('enterButton').addEventListener('click', function() {
+      // Send signal to play the video
+      fetch('https://legend-oxidized-governor.glitch.me/play', {
+        method: 'POST'
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Signal sent to play the video');
+          // Redirect to the waiting/loading page
           window.location.href = 'loading.html';
-        })
-        .catch(error => console.error('Error sending signal:', error));
+        } else {
+          console.error('Failed to send signal');
+        }
+      })
+      .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
