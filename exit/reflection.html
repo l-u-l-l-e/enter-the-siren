@@ -4,51 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Internet Reflection</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-    /* Input field styles */
-    .input-field {
-      background-color: transparent;
-      border: 2px solid #08fff8;
-      color: #08fff8;
-      font-family: 'Fira Mono', monospace;
-      font-size: 1.3em;
-      padding: 15px;
-      border-radius: 15px;
-      width: 100%;
-      height: 200px;  /* Larger height for reflection */
-      box-sizing: border-box;
-      outline: none;
-    }
-
-    /* Placeholder color */
-    .input-field::placeholder {
-      color: #E1D1FF;
-      opacity: 1;
-    }
-
-    /* Submit button centered */
-    .button {
-      background-color: #E1D1FF;
-      color: #3700AF;
-      padding: 15px;
-      font-size: 1.2em;
-      border-radius: 25px;
-      width: 100%;
-      max-width: 300px; /* Limit button width */
-      font-family: 'Fira Mono', monospace;
-      border: none;
-      cursor: pointer;
-      margin: 20px auto; /* Center the button */
-      display: block;    /* Center the button */
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #3700AF;
-      color: #E1D1FF;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
@@ -58,54 +14,41 @@
   </div>
 
   <script>
-    const reflectionInput = document.getElementById('reflection');
-    const submitButton = document.getElementById('submitReflection');
+    document.getElementById('submitReflection').addEventListener('click', function() {
+      const userReflection = document.getElementById('reflection').value;
+      const userNickname = localStorage.getItem('nickname');  // Assuming you save this earlier in the exit questionnaire
+      const userType = localStorage.getItem('type');  // Data from entry point stored in local storage
+      const userGeneration = localStorage.getItem('generation');  // Collected in the exit point
+      const observedChoice = localStorage.getItem('observed');  // Collected in the exit point
+      const observationReason = localStorage.getItem('reason');  // Collected in the exit point
 
-    // Enable submit button only when the user enters a response
-    reflectionInput.addEventListener('input', function() {
-      submitButton.disabled = reflectionInput.value.trim() === "";
-    });
-
-    submitButton.addEventListener('click', function() {
-      const reflection = reflectionInput.value.trim();
-
-      if (reflection === "") {
-        alert("Please provide your reflection.");
+      // Ensure all required fields are filled out before submission
+      if (userReflection.trim() === "" || !userNickname || !userType || !userGeneration || !observedChoice) {
+        alert("Please complete all fields.");
         return;
       }
 
-      // Gather all user data to submit
-      const userData = {
-        nickname: localStorage.getItem('nickname'),
-        type: localStorage.getItem('type'),
-        generation: localStorage.getItem('generation'),
-        observed: localStorage.getItem('observed'),
-        reason: localStorage.getItem('reason'),
-        reflection: reflection
-      };
-
-      // Send user data to the Glitch server
+      // Submit the user data to the server
       fetch('https://legend-oxidized-governor.glitch.me/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify({
+          nickname: userNickname,
+          type: userType,
+          generation: userGeneration,
+          observed: observedChoice,
+          reason: observationReason,
+          reflection: userReflection
+        }),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to submit');
-        }
-        return response.json(); // Parse response as JSON
-      })
+      .then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
-        window.location.href = 'thankyou.html'; // Redirect after success
+        console.log('Response saved:', data);
+        window.location.href = 'thankyou.html';  // Redirect to thank you page after submitting
       })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert("There was an error submitting your reflection. Please try again.");
-      });
+      .catch(error => console.error('Error saving response:', error));
     });
   </script>
 </body>
