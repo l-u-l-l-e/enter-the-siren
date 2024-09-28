@@ -3,71 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: 'Fira Mono', monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-
-    .container {
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2em;
-      color: #08fff8;
-    }
-
-    button {
-      font-size: 1.5em;
-      padding: 10px 20px;
-      background-color: #08fff8;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #06d1d1;
-    }
-  </style>
+  <title>Enter Page</title>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to main stylesheet for consistent styling -->
 </head>
-<body class="fade-in">
+<body>
   <div class="container">
-    <h1>Are you ready to dive in?</h1>
-    <button id="enterButton">Enter</button>
+    <h1>Press Enter to Begin</h1>
+    <button class="button" id="enterButton">Enter</button> <!-- Styled button -->
   </div>
 
   <script>
     document.getElementById('enterButton').addEventListener('click', function() {
-      // Send signal to start the video
       fetch('https://legend-oxidized-governor.glitch.me/play-video', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       })
       .then(response => response.json())
       .then(data => {
         console.log('Signal sent:', data);
-        // Redirect to the next page after sending signal
-        window.location.href = 'waiting.html';
+        window.location.href = 'loading.html'; // Redirect to loading page
       })
-      .catch(error => {
-        console.error('Error sending signal:', error);
-        alert('There was an issue sending the signal.');
-      });
+      .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
