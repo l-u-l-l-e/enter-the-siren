@@ -4,37 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generation Question</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-      .button-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 15px;
-      }
-
-      .button {
-          background-color: #08fff8;
-          color: black;
-          padding: 15px;
-          font-size: 1.2em;
-          border-radius: 25px;
-          width: 100%;
-          max-width: 200px;
-          text-align: center;
-          cursor: pointer;
-      }
-  </style>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure the path is correct -->
 </head>
-<body>
-    <div class="container">
-        <h1>Which generation do you feel like you belong to?</h1>
-        <div class="button-container">
-            <button class="button" id="boomerButton">Baby Boomer</button>
-            <button class="button" id="genXButton">Gen X</button>
-            <button class="button" id="millennialButton">Millennial</button>
-            <button class="button" id="genZButton">Gen Z</button>
-        </div>
+<body class="fade-in">
+  <div class="container">
+    <h1>Which generation do you feel like you belong to?</h1>
+
+    <!-- Button container for generation options -->
+    <div class="button-container">
+      <button class="button">Baby Boomer</button>
+      <button class="button">Gen X</button>
+      <button class="button">Millennial</button>
+      <button class="button">Gen Z</button>
     </div>
+  </div>
 
     <script>
         const buttons = document.querySelectorAll('.button');
@@ -45,7 +28,7 @@
                 localStorage.setItem('generation', selectedGeneration);  // Store selected generation in localStorage
 
                 // Redirect to the next page after selecting
-                window.location.href = 'tell-us-why.html'; 
+                window.location.href = 'observed.html'; 
             });
         });
     </script>
