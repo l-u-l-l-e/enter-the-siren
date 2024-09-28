@@ -62,28 +62,22 @@
     // Play the video by sending a command to the YouTube iframe API
     function playVideo() {
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      // Unmute after playing (if required)
+      
+      // Attempt to unmute after a delay
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 3000);  // Unmute after 3 seconds
+      }, 2000);  // Unmute after 2 seconds to avoid issues
     }
 
-    // This function triggers when the video ends, resets the signal, and redirects to the exit page
+    // When the video ends, reset signal and redirect to exit page
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
           method: 'POST',
         })
-        .then(() => {
-          window.location.href = 'please-exit.html';  // Redirect to the exit page
-        })
+        .then(() => window.location.href = 'please-exit.html')
         .catch(error => console.error('Error resetting signal:', error));
       }
-    }
-
-    // Initialize YouTube API
-    function onYouTubeIframeAPIReady() {
-      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
     // Keep checking for signal every 2 seconds
@@ -93,4 +87,3 @@
 
 </body>
 </html>
-
