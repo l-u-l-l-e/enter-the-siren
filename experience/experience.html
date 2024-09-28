@@ -55,6 +55,17 @@
 
     // Keep checking for the signal every 2 seconds
     setInterval(checkForSignal, 2000);
+
+    function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    fetch('https://legend-oxidized-governor.glitch.me/reset', {
+      method: 'POST',
+    })
+    .then(() => window.location.href = 'please-exit.html')
+    .catch(error => console.error('Error resetting signal:', error));
+  }
+}
+
   </script>
 
 </body>
