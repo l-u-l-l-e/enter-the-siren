@@ -32,29 +32,45 @@
 </head>
 <body>
   <div class="container">
-    <iframe id="experienceVideo" 
-            src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=0&controls=0"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-    </iframe>
+    <iframe
+      id="experienceVideo"
+      src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&controls=0&mute=0&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
   </div>
 
   <script>
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('experienceVideo', {
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        window.location.href = 'please-exit.html';
+      }
+    }
+
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            setTimeout(() => {
-              document.getElementById('experienceVideo').src = "https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=0&controls=0";
-            }, 2000); // Delay playback by 2 seconds
+            setTimeout(() => player.playVideo(), 3000); // Video plays after 3 seconds
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    setInterval(checkForSignal, 2000);  // Check for the signal every 2 seconds
+    setInterval(checkForSignal, 2000); // Check every 2 seconds
   </script>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
