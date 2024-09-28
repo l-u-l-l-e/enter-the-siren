@@ -4,28 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tell Us Why</title>
-<link rel="stylesheet" href="../entry/styles.css">
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
-    <h1>Tell us why you felt that way</h1>
-    <textarea id="reason" class="input-field" placeholder="Explain your experience"></textarea>
-    <button id="submitReason" class="button">Next</button>
+    <h1>Tell us why</h1>
+    <textarea id="reason" class="input-field" placeholder="Tell us why..."></textarea>
+    <button id="submitReason" class="button">Submit</button>
   </div>
 
   <script>
-  const submitButton = document.getElementById('submitTellUsWhy');
+    document.addEventListener('DOMContentLoaded', function() {
+      const submitButton = document.getElementById('submitReason');
+      const reasonField = document.getElementById('reason');
 
-  submitButton.addEventListener('click', function() {
-    const observationReason = document.getElementById('observationReason').value;
+      // Ensure both elements exist before adding event listener
+      if (submitButton && reasonField) {
+        submitButton.addEventListener('click', function() {
+          const reason = reasonField.value.trim();
+          if (!reason) {
+            alert("Please provide a reason.");
+            return;
+          }
 
-    // Save "Tell us why" response logic
-    localStorage.setItem('observationReason', observationReason);
-
-    // After saving, navigate to "one more question" page
-    window.location.href = 'one-more-question.html';
-  });
-</script>
-
+          // Save reason to localStorage for later use
+          localStorage.setItem('reason', reason);
+          window.location.href = 'reflection.html';  // Redirect to next page after submission
+        });
+      } else {
+        console.error('Submit button or reason field not found in the DOM.');
+      }
+    });
+  </script>
 </body>
 </html>
