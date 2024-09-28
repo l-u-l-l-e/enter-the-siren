@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Waiting...</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure this path is correct -->
   <style>
     body {
       background-color: black;
@@ -41,7 +41,7 @@
         .then(response => response.json()) // Expect JSON response
         .then(data => {
           if (data.playVideo) {
-            window.location.href = 'experience.html'; // Redirect to video page
+            window.location.href = 'experience.html'; // Redirect to experience page
           }
         })
         .catch(error => console.error('Error checking signal:', error));
