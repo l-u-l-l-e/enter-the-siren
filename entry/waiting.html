@@ -1,57 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiting...</title>
-    <link rel="stylesheet" href="../entry/styles.css">
-    <style>
-        body {
-            background-color: black;
-            color: #08fff8;
-            font-family: 'Fira Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding: 50px;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiting...</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-color: black;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+    }
 
-        .dots {
-            font-size: 2.5em;
-            color: #08fff8;
-        }
-    </style>
+    .dots {
+      font-size: 2.5em;
+      color: #08fff8;
+    }
+  </style>
 </head>
 <body>
-    <div class="dots">
-      Please wait your turn<br>• • •
-    </div>
+  <div class="dots">
+    Please wait your turn<br>• • •
+  </div>
 
-    <script>
-        let dotElement = document.querySelector('.dots');
-        let dots = 1;
+  <script>
+    let dotElement = document.querySelector('.dots');
+    let dots = 1;
 
-        setInterval(function () {
-            dotElement.textContent = '•'.repeat(dots);
-            dots = (dots % 3) + 1;
-        }, 500);
+    setInterval(function () {
+      dotElement.textContent = '•'.repeat(dots);
+      dots = (dots % 3) + 1;
+    }, 500);
 
-        function checkForSignal() {
-            fetch('https://legend-oxidized-governor.glitch.me/signal')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.playVideo) {
-                        window.location.href = 'experience.html';  // Redirect to experience page
-                    }
-                })
-                .catch(error => console.error('Error checking signal:', error));
-        }
-
-        setInterval(checkForSignal, 2000);
-    </script>
+    setTimeout(function () {
+      window.location.href = 'index.html'; // After 10 minutes, redirect to index
+    }, 600000); // 600,000 ms = 10 minutes
+  </script>
 </body>
 </html>
