@@ -38,9 +38,10 @@
   </div>
 
   <script>
-    document.getElementById('experienceVideo').addEventListener('ended', function () {
-      window.location.href = 'exit.html';  // Redirect to exit page when the video finishes
-    });
+    // After the video finishes, redirect to "please exit" page
+    setTimeout(function() {
+      window.location.href = 'exit.html';
+    }, 600000); // 10 minutes
   </script>
 </body>
 </html>
