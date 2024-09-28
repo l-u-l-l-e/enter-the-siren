@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Fullscreen styling */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      width: 100%;
       background-color: black;
       display: flex;
       justify-content: center;
@@ -18,64 +16,56 @@
       overflow: hidden;
     }
 
-    #videoContainer {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+      width: 100vw;
+      height: 100vh;
     }
   </style>
 </head>
 <body>
-
-  <div id="videoContainer">
-    <!-- YouTube Video Embed -->
-    <iframe id="experienceVideo" 
-      src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1" 
-      frameborder="0" 
-      allow="autoplay; fullscreen" 
-      allowfullscreen>
+  <div class="container">
+    <iframe 
+      id="experienceVideo" 
+      src="https://www.youtube.com/embed/dMRR6yFSy5k?enablejsapi=1&autoplay=1&controls=0&loop=0&modestbranding=1&rel=0"
+      frameborder="0"
+      allow="autoplay; fullscreen">
     </iframe>
   </div>
 
   <script>
-    // Load YouTube API asynchronously
-    let tag = document.createElement('script');
+    // YouTube Iframe API setup to detect when video ends and reset the signal
+    var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
-    let firstScriptTag = document.getElementsByTagName('script')[0];
+    var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    let player;
-    
-    // Create the YouTube player once API is ready
+    var player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('experienceVideo', {
         events: {
-          'onStateChange': onPlayerStateChange,
-          'onReady': function(event) {
-            event.target.mute();  // Ensure it starts muted
-            event.target.playVideo();  // Start video playback
-          }
+          'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    // Reset signal and redirect after the video ends
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        fetch('https://legend-oxidized-governor.glitch.me/reset', {
+        // Video has ended, send reset signal
+        fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
           method: 'POST',
         })
-        .then(() => window.location.href = 'please-exit.html')  // Redirect to the exit page
+        .then(() => window.location.href = 'please-exit.html')
         .catch(error => console.error('Error resetting signal:', error));
       }
     }
   </script>
-  
 </body>
 </html>
