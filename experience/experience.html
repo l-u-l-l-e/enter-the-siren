@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
+    /* Fullscreen styling */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      width: 100%;
       background-color: black;
       display: flex;
       justify-content: center;
@@ -16,57 +18,64 @@
       overflow: hidden;
     }
 
-    .container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    #videoContainer {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
     }
 
     iframe {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Updated Vimeo embed code without fullscreen -->
-    <iframe src="https://player.vimeo.com/video/1013656394?h=39852bc616&autoplay=1&muted=0&loop=0"
-    frameborder="0" allow="autoplay; picture-in-picture; clipboard-write" style="width:100%;height:100%;">
+  <div id="videoContainer">
+    <!-- YouTube Video Embed -->
+    <iframe id="experienceVideo" 
+      src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1" 
+      frameborder="0" 
+      allow="autoplay; fullscreen" 
+      allowfullscreen>
     </iframe>
   </div>
 
   <script>
-    // Poll the server for the signal every 2 seconds
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            console.log("Signal received! Playing video.");
-            document.querySelector('iframe').src += '&autoplay=1';  // Add autoplay when signal is received
+    // Load YouTube API asynchronously
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+    
+    // Create the YouTube player once API is ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('experienceVideo', {
+        events: {
+          'onStateChange': onPlayerStateChange,
+          'onReady': function(event) {
+            event.target.mute();  // Ensure it starts muted
+            event.target.playVideo();  // Start video playback
           }
-        })
-        .catch(error => console.error('Error checking signal:', error));
+        }
+      });
     }
 
-    // Keep checking for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
-
+    // Reset signal and redirect after the video ends
     function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    fetch('https://legend-oxidized-governor.glitch.me/reset', {
-      method: 'POST',
-    })
-    .then(() => window.location.href = 'please-exit.html')
-    .catch(error => console.error('Error resetting signal:', error));
-  }
-}
-
+      if (event.data === YT.PlayerState.ENDED) {
+        fetch('https://legend-oxidized-governor.glitch.me/reset', {
+          method: 'POST',
+        })
+        .then(() => window.location.href = 'please-exit.html')  // Redirect to the exit page
+        .catch(error => console.error('Error resetting signal:', error));
+      }
+    }
   </script>
-
+  
 </body>
 </html>
