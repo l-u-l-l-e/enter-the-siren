@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Please Wait</title>
-    <link rel="stylesheet" href="../entry/styles.css">
-    <style>
-        body {
-            background-color: black;
-            color: #08fff8;
-            font-family: 'Fira Mono', monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding: 50px;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Please Wait Your Turn</title>
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure this path is correct -->
+  <style>
+    body {
+      background-color: black;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      margin: 0;
+      padding: 50px;
+    }
 
-        .dots {
-            font-size: 2.5em;
-            color: #08fff8;
-            margin-top: 20px; /* Space between the text and dots */
-        }
-    </style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .message {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .dots {
+      font-size: 2.5em;
+      color: #08fff8;
+    }
+  </style>
 </head>
 <body>
-    <h1>Please wait your turn</h1>
-    <div class="dots">• • •</div> <!-- Animated dots below the sentence -->
+  <div class="container">
+    <h1 class="message">Please Wait Your Turn</h1>
+    <div class="dots">• • •</div>
+  </div>
 
-    <script>
-        let dotElement = document.querySelector('.dots');
-        let dots = 1;
+  <script>
+    let dotElement = document.querySelector('.dots');
+    let dots = 1;
 
-        setInterval(function () {
-            dotElement.textContent = '•'.repeat(dots);
-            dots = (dots % 3) + 1;
-        }, 500);
-    </script>
+    // Dot animation
+    setInterval(function () {
+      dotElement.textContent = '•'.repeat(dots);
+      dots = (dots % 3) + 1;
+    }, 500);
+
+    // Redirect to index after 10 minutes (600,000 milliseconds)
+    setTimeout(function() {
+      window.location.href = 'index.html';
+    }, 600000); // 600,000ms = 10 minutes
+  </script>
 </body>
 </html>
