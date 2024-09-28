@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What Are You?</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure this path is correct -->
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure correct stylesheet path -->
 </head>
 <body class="fade-in">
   <div class="container">
@@ -38,23 +38,21 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              type: userType,  // Send user type to the server
-              sessionId: 'unique-session-id'  // Replace with a real session tracking mechanism
+              type: userType,
+              sessionId: 'unique-session-id'  // Replace with a method to track sessions
             }),
           })
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('There was an issue saving your response.');
+            }
+            return response.json();
+          })
           .then(data => {
             console.log('Response saved:', data);
-            if (data.message === "Response saved successfully!") {
-              window.location.href = 'page3.html';  // Navigate to the next page if saved successfully
-            } else {
-              alert('There was an issue saving your response. Please try again.');
-            }
+            window.location.href = 'page3.html';  // Navigate to the next page
           })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('There was an issue saving your response. Please try again.');
-          });
+          .catch(error => console.error('Error:', error));
         });
       });
     });
