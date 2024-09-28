@@ -63,10 +63,13 @@
       });
     }
 
-    // Called when the player is ready
-    function onPlayerReady(event) {
-      console.log("YouTube Player is ready. Waiting for signal...");
-    }
+   // Called when the player is ready
+function onPlayerReady(event) {
+  console.log("YouTube Player is ready. Waiting for signal...");
+
+  // Set the highest available quality
+  player.setPlaybackQuality('hd1080');  // Use 'hd1080' for 1080p, or 'highres' for 4k if available
+}
 
     // Stop polling for signal when video is playing
     function onPlayerStateChange(event) {
