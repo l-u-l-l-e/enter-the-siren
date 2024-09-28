@@ -23,9 +23,12 @@
   <div>Please Exit</div>
 
   <script>
+    // Redirect to 'dots.html' after 10 seconds
     setTimeout(function() {
-      window.location.href = 'dots.html'; // Return to dots after 10 seconds
-    }, 10000);
+      fetch('https://legend-oxidized-governor.glitch.me/reset', { method: 'POST' })
+        .then(() => window.location.href = 'dots.html')
+        .catch(error => console.error('Error resetting signal:', error));
+    }, 10000);  // 10 seconds delay
   </script>
 </body>
 </html>
