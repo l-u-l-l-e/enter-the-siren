@@ -45,45 +45,13 @@
 
     <!-- Dynamic Responses will be inserted here -->
     <div id="responses">
-      <!-- Sample response structure for reference -->
-      <!--
-      <div class="response">
-        <div class="headline">Julie</div>
-        <div class="headline">Surfer, Gen X</div>
-        <div class="response-body">
-          <p><strong>Felt: </strong>Observed</p>
-          <p><strong>Because: </strong>The siren kept staring at me...</p>
-          <p>The internet is the scariest and loveliest place to exist</p>
-        </div>
-      </div>
-      -->
+      <!-- Real responses from the server will be injected here -->
     </div>
   </div>
 
   <script>
-    // Simulating fetched responses from server (you'll replace this with actual API response)
-    const responses = [
-      {
-        nickname: "Julie",
-        type: "Surfer",
-        generation: "Gen X",
-        observed: "Observed",
-        reason: "The siren kept staring at me...",
-        reflection: "The internet is the scariest and loveliest place to exist"
-      },
-      {
-        nickname: "Alex",
-        type: "Explorer",
-        generation: "Millennial",
-        observed: "Observer",
-        reason: "I felt like I was watching over a whole new world.",
-        reflection: "I always find myself on the edges of the internet."
-      }
-      // Add more responses here...
-    ];
-
     // Function to display the responses on the wall
-    function displayResponses() {
+    function displayResponses(responses) {
       const responsesContainer = document.getElementById('responses');
       responsesContainer.innerHTML = ''; // Clear any existing content
 
@@ -107,8 +75,16 @@
       });
     }
 
-    // Call the function to display the responses when the page loads
-    displayResponses();
+    // Fetch real responses from the server
+    function fetchResponses() {
+      fetch('https://legend-oxidized-governor.glitch.me/responses')  // Ensure the correct URL
+        .then(response => response.json())
+        .then(data => displayResponses(data))
+        .catch(error => console.error('Error fetching responses:', error));
+    }
+
+    // Call the function to fetch and display the responses when the page loads
+    fetchResponses();
 
     // Redirect to the welcome back page after 9 minutes of inactivity
     let inactivityTime = 9 * 60 * 1000; // 9 minutes in milliseconds
