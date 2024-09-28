@@ -33,6 +33,14 @@
       line-height: 1.5; /* Spacing between lines for readability */
     }
 
+    /* Styling for date and time */
+    .date-time {
+      font-size: 0.8em;
+      color: #888888;
+      margin-top: 10px;
+      text-align: right;
+    }
+
     /* Hide title on the page */
     h1 {
       display: none;
@@ -50,6 +58,12 @@
   </div>
 
   <script>
+    // Function to format the date and time
+    function formatDateTime(timestamp) {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-GB', { hour12: false });
+    }
+
     // Function to display the responses on the wall
     function displayResponses(responses) {
       const responsesContainer = document.getElementById('responses');
@@ -70,6 +84,11 @@
                              <p><strong>Because: </strong>${response.reason}</p>
                              <p>${response.reflection}</p>`;
         responseDiv.appendChild(bodyDiv);
+
+        const dateTimeDiv = document.createElement('div');
+        dateTimeDiv.classList.add('date-time');
+        dateTimeDiv.textContent = formatDateTime(response.timestamp); // Format and display timestamp
+        responseDiv.appendChild(dateTimeDiv);
 
         responsesContainer.appendChild(responseDiv);
       });
