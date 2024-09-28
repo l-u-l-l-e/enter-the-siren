@@ -3,36 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ready to Dive In?</title>
+  <title>Ready to Dive In</title>
   <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
-    <h1>Ready to dive in?</h1>
-    <a href="loading.html">
-      <button id="lastButton" class="button">ready</button>
-    </a>
+    <h1>Ready to Dive In?</h1>
+    <button id="readyButton" class="button">Ready</button> <!-- Button now called "Ready" -->
   </div>
 
   <script>
-    document.getElementById('lastButton').addEventListener('click', function(e) {
-        e.preventDefault();  // Prevent default form submission or page reload
-
-        // Send the signal to the experience point to play the video
-        fetch('https://legend-oxidized-governor.glitch.me/play-video', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.text())  // Parse as plain text instead of JSON
-        .then(data => {
-            console.log("Signal sent: ", data);  // Log confirmation
-            window.location.href = 'loading.html';  // Redirect after signal is sent
-        })
-        .catch(error => {
-            console.error('Error sending signal:', error);
-        });
+    document.getElementById('readyButton').addEventListener('click', function() {
+      // Send signal to play the video
+      fetch('https://legend-oxidized-governor.glitch.me/play-video', {
+        method: 'POST',
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Signal sent:', data);
+        window.location.href = 'loading.html'; // Redirect to loading after signal is sent
+      })
+      .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
