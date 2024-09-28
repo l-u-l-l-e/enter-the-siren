@@ -24,7 +24,7 @@
       align-items: center;
     }
 
-    video {
+    iframe {
       width: 100vw;
       height: 100vh;
     }
@@ -32,39 +32,50 @@
 </head>
 <body>
 
-  <div class="container">
-    <video id="experienceVideo" width="100%" height="100%" autoplay muted>
-      <source src="http://localhost:8000/siren.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+<div class="container">
+  <iframe id="youtubePlayer" width="100%" height="100%" 
+    src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&enablejsapi=1" 
+    frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+</div>
 
-  <script>
-    const video = document.getElementById('experienceVideo');
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  let player;
 
-    function playVideo() {
-      video.play();  // Auto play the video
+  // This function creates the YouTube player when the API is ready
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtubePlayer', {
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    console.log("YouTube player is ready");
+    // Poll for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+      window.location.href = 'exit.html';  // Redirect after video ends
     }
+  }
 
-    // Poll for signal and start the video
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            setTimeout(function() {
-              playVideo();  // Play the video after 2 seconds
-              setTimeout(function() {
-                video.muted = false;  // Unmute the video after it starts playing
-              }, 1000);  // Unmute after 1 second of play
-            }, 2000);  // Start the video 2 seconds after signal
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
-
-    setInterval(checkForSignal, 2000);  // Poll every 2 seconds for the signal
-  </script>
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          console.log("Signal received! Unmuting video.");
+          setTimeout(() => player.unMute(), 2000);  // Unmute after 2 seconds
+        }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
+</script>
 
 </body>
 </html>
