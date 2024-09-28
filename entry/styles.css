@@ -51,13 +51,6 @@ h2 {
   color: #E1D1FF; /* Inverted text color on hover */
 }
 
-}
-
-.button:hover {
-  background-color: #3700AF; /* Darker hover background */
-  color: #E1D1FF; /* Inverted text color on hover */
-}
-
 /* Flexbox for button layout */
 .button-container {
   display: flex;
