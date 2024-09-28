@@ -39,7 +39,14 @@ h2 {
   margin: 15px; /* Added margin between buttons */
   flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 buttons per row */
   text-align: center;
-  text-decoration: none; /* Remove underline from button text */
+  text-decoration: none; /* REMOVE underline from button text */
+}
+
+.button:hover {
+  background-color: #3700AF; /* Darker hover background */
+  color: #E1D1FF; /* Inverted text color on hover */
+}
+
 }
 
 .button:hover {
