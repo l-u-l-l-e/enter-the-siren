@@ -3,81 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nickname</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-    /* Input field styles */
-    .input-field {
-      background-color: transparent;
-      border: 2px solid #08fff8;
-      color: #08fff8;
-      font-family: 'Fira Mono', monospace;
-      font-size: 1.3em;
-      padding: 15px;
-      border-radius: 15px;
-      width: 100%;
-      box-sizing: border-box;
-      outline: none;
-    }
-
-    /* Placeholder color */
-    .input-field::placeholder {
-      color: #E1D1FF;
-      opacity: 1;
-    }
-
-    /* Centered submit button */
-    .button {
-      background-color: #E1D1FF;
-      color: #3700AF;
-      padding: 15px;
-      font-size: 1.2em;
-      border-radius: 25px;
-      width: 100%;
-      max-width: 300px; /* Limit button width */
-      font-family: 'Fira Mono', monospace;
-      border: none;
-      cursor: pointer;
-      margin: 20px auto; /* Center the button */
-      display: block;    /* Center the button */
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #3700AF;
-      color: #E1D1FF;
-    }
-  </style>
+  <title>Nickname Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>First of all, how would you like to be called?</h1>
-    <input id="nicknameInput" class="input-field" type="text" placeholder="Enter your nickname" />
-    <button id="submitNickname" class="button">Submit</button>
+    <input id="nickname" class="input-field" type="text" placeholder="Enter your nickname">
+    <button id="submitNickname" class="button">Next</button>
   </div>
 
   <script>
-    const nicknameInput = document.getElementById('nicknameInput');
-    const submitButton = document.getElementById('submitNickname');
-
-    // Enable submit button only when the user enters a nickname
-    nicknameInput.addEventListener('input', function() {
-      submitButton.disabled = nicknameInput.value.trim() === "";
-    });
-
-    submitButton.addEventListener('click', function() {
-      const nickname = nicknameInput.value;
+    document.getElementById('submitNickname').addEventListener('click', function() {
+      const nickname = document.getElementById('nickname').value;
 
       if (nickname.trim() === "") {
         alert("Please enter a nickname.");
         return;
       }
 
-      // Store the nickname in local storage
+      // Save nickname in local storage
       localStorage.setItem('nickname', nickname);
 
-      // Redirect to the next page
-      window.location.href = 'generation.html'; // Change this to the next page URL
+      // Navigate to the next question (generation.html for example)
+      window.location.href = 'generation.html';
     });
   </script>
 </body>
