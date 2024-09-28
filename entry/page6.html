@@ -16,26 +16,23 @@
 
   <script>
     document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault();  // Prevent default form submission or page reload
+        e.preventDefault();  // Prevent default form submission or page reload
 
-      // Send the signal to the experience point to play the video
-      fetch('https://legend-oxidized-governor.glitch.me/play-video', {  // Updated route
-        method: 'POST',
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to send signal.');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log("Signal sent:", data);
-        // Redirect to final.html after the signal is sent
-        window.location.href = 'loading.html';
-      })
-      .catch(error => {
-        console.error('Error sending signal:', error);
-      });
+        // Send the signal to the experience point to play the video
+        fetch('https://legend-oxidized-governor.glitch.me/play-video', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.text())  // Parse as plain text instead of JSON
+        .then(data => {
+            console.log("Signal sent: ", data);  // Log confirmation
+            window.location.href = 'loading.html';  // Redirect after signal is sent
+        })
+        .catch(error => {
+            console.error('Error sending signal:', error);
+        });
     });
   </script>
 </body>
