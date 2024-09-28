@@ -6,7 +6,6 @@
   <title>Thank You</title>
   <link rel="stylesheet" href="../entry/styles.css">
   <style>
-    /* Style for the 3-dot animation */
     .dots {
       font-size: 2em;
       text-align: center;
@@ -22,19 +21,18 @@
   </div>
 
   <script>
-    // Dot animation for the 3-dot loading effect
     let dotElement = document.querySelector('.dots');
     let dots = 1;
 
     setInterval(function () {
       dotElement.textContent = '•'.repeat(dots);
       dots = (dots % 3) + 1;
-    }, 500); // Change dots every 500ms
+    }, 500);
 
     // Redirect to Wall of Fame after 5 seconds
     setTimeout(function() {
       window.location.href = 'walloffame.html';
-    }, 5000); // 5-second delay
+    }, 5000);
   </script>
 </body>
 </html>
