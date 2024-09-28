@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Fullscreen video and background styling */
+    /* Styling for non-fullscreen video */
     html, body {
       margin: 0;
       padding: 0;
@@ -14,27 +14,32 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
     }
 
     .container {
-      width: 100%;
-      height: 100%;
+      width: 80%; /* You can adjust this to control the video size */
+      max-width: 1200px;
+      height: 60vh; /* Control the height of the video */
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: black;
     }
 
     iframe {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <iframe id="sirenVideo" src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe id="sirenVideo" 
+            src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
+            allow="autoplay; encrypted-media">
+    </iframe>
   </div>
 
   <script>
@@ -67,5 +72,6 @@
     // Keep checking for signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
+
 </body>
 </html>
