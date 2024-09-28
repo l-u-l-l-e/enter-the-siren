@@ -16,6 +16,13 @@ body {
   overflow: hidden; /* Disable scrolling */
 }
 
+/* Container for overall layout */
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+}
+
 /* Heading styles */
 h1 {
   margin-bottom: 30px; /* Less space below heading */
@@ -37,10 +44,13 @@ h2 {
   font-family: 'Fira Mono', monospace;
   transition: background-color 0.2s ease, color 0.2s ease; /* Faster hover transition */
   margin: 15px; /* Added margin between buttons */
-  flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 buttons per row */
+  width: 100%; /* Full width buttons */
+  max-width: 200px; /* Limit the button width */
   text-align: center;
+  display: block; /* Ensures buttons are centered and block level */
 }
 
+/* Button hover effect */
 .button:hover {
   background-color: #3700AF; /* Darker hover background */
   color: #E1D1FF; /* Inverted text color on hover */
@@ -51,12 +61,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.button-container .button {
-  margin: 10px;
-  width: 45%; /* Adjust button width to fit two per line */
-  font-size: 1.3em;
+  gap: 20px;
 }
 
 /* Style for text input fields */
@@ -86,25 +91,18 @@ textarea.input-field {
   height: 150px;  /* Set height for consistency */
 }
 
-
-/* Container for overall layout */
-.container {
-  max-width: 600px;
-  width: 100%;
-  padding: 20px;
+/* Dot animation for waiting pages */
+.dots {
+  font-size: 2em;
+  text-align: center;
+  margin-top: 20px;
 }
 
-/* Flexbox for button layout */
-.button-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow buttons to wrap if needed */
-  justify-content: center; /* Center the buttons */
-  gap: 20px; /* Adds space between buttons */
-}
-
-/* Smooth transitions for page changes */
-html {
-  scroll-behavior: smooth;
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .button {
+    width: 100%; /* Full-width buttons on smaller screens */
+  }
 }
 
 /* Fade-in and fade-out effects */
@@ -126,15 +124,14 @@ html {
   to { opacity: 0; }
 }
 
-/* Dot animation for the waiting page */
-.dots {
-  font-size: 2em;
-  text-align: center;
+/* Ensuring buttons are centered properly */
+.container .button {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Mobile responsiveness */
-@media screen and (max-width: 768px) {
-  .button {
-    flex: 1 1 100%; /* Full-width buttons on smaller screens */
-  }
+/* Generation question buttons on two lines */
+.gen-buttons .button {
+  width: 45%; /* Buttons take up 45% of the row */
 }
+
