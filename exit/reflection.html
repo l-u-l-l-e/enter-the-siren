@@ -4,7 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Internet Reflection</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    .input-field {
+      background-color: transparent;
+      border: 2px solid #08fff8;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      font-size: 1.3em;
+      padding: 15px;
+      border-radius: 15px;
+      width: 100%;
+      height: 200px;
+      box-sizing: border-box;
+      outline: none;
+    }
+    .input-field::placeholder {
+      color: #E1D1FF;
+    }
+    .button {
+      background-color: #E1D1FF;
+      color: #3700AF;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      width: 100%;
+      max-width: 300px;
+      font-family: 'Fira Mono', monospace;
+      border: none;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
 </head>
 <body class="fade-in">
   <div class="container">
@@ -16,36 +48,37 @@
   <script>
     document.getElementById('submitReflection').addEventListener('click', function() {
       const reflection = document.getElementById('reflection').value;
-      const nickname = localStorage.getItem('nickname');
-      const type = localStorage.getItem('type');
-      const generation = localStorage.getItem('generation');
-      const observed = localStorage.getItem('observed');
-      const reason = localStorage.getItem('reason');
-
-      if (reflection.trim() === "") {
+      if (!reflection.trim()) {
         alert("Please provide your reflection.");
         return;
       }
 
-      // Submit the user data to the server
+      // Collect all user data from localStorage
+      const userNickname = localStorage.getItem('nickname');
+      const userType = localStorage.getItem('type');
+      const userGeneration = localStorage.getItem('generation');
+      const observedChoice = localStorage.getItem('observed');
+      const observationReason = localStorage.getItem('reason');
+
+      // Submit the data to the Glitch server
       fetch('https://legend-oxidized-governor.glitch.me/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nickname: nickname,
-          type: type,
-          generation: generation,
-          observed: observed,
-          reason: reason,
+          nickname: userNickname,
+          type: userType,
+          generation: userGeneration,
+          observed: observedChoice,
+          reason: observationReason,
           reflection: reflection
         }),
       })
       .then(response => response.json())
       .then(data => {
         console.log('Response saved:', data);
-        window.location.href = 'thankyou.html';  // Redirect to thank you page after submitting
+        window.location.href = 'thankyou.html';  // Redirect to Thank You page
       })
       .catch(error => console.error('Error saving response:', error));
     });
