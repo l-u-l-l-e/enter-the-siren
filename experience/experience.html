@@ -68,9 +68,29 @@
       }, 3000);  // Unmute after 3 seconds
     }
 
+    // This function triggers when the video ends, resets the signal, and redirects to the exit page
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
+          method: 'POST',
+        })
+        .then(() => {
+          window.location.href = 'please-exit.html';  // Redirect to the exit page
+        })
+        .catch(error => console.error('Error resetting signal:', error));
+      }
+    }
+
+    // Initialize YouTube API
+    function onYouTubeIframeAPIReady() {
+      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
     // Keep checking for signal every 2 seconds
     setInterval(checkForSignal, 2000);
+
   </script>
 
 </body>
 </html>
+
