@@ -61,26 +61,26 @@
       const observationReason = localStorage.getItem('reason');
 
       // Submit the data to the Glitch server
-      fetch('https://legend-oxidized-governor.glitch.me/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nickname: userNickname,
-          type: userType,
-          generation: userGeneration,
-          observed: observedChoice,
-          reason: observationReason,
-          reflection: reflection
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Response saved:', data);
-        window.location.href = 'thankyou.html';  // Redirect to Thank You page
-      })
-      .catch(error => console.error('Error saving response:', error));
+     fetch('https://legend-oxidized-governor.glitch.me/submit', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    nickname: userNickname,
+    type: userType,
+    generation: userGeneration,
+    observed: observedChoice,
+    reason: observationReason,
+    reflection: userReflection,
+  }),
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log('Response saved:', data);
+    window.location.href = 'thankyou.html';  // Redirect after submission
+  })
+  .catch(error => console.error('Error saving response:', error));
     });
   </script>
 </body>
