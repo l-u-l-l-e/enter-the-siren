@@ -31,62 +31,31 @@
   </style>
 </head>
 <body>
+
   <div class="container">
-    <iframe
-      id="experienceVideo"
-      src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&controls=0&mute=0&enablejsapi=1"
-      frameborder="0"
-      allow="autoplay; fullscreen"
-      allowfullscreen
-    ></iframe>
+    <!-- Updated Vimeo embed code without fullscreen -->
+    <iframe src="https://player.vimeo.com/video/1013656394?h=39852bc616&autoplay=1&muted=0&loop=0"
+    frameborder="0" allow="autoplay; picture-in-picture; clipboard-write" style="width:100%;height:100%;">
+    </iframe>
   </div>
 
   <script>
-    let player;
-    
-    // Initialize the YouTube API
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('experienceVideo', {
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    // Handle when the video ends
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        // Send a POST request to reset the signal
-        fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
-          method: 'POST',
-        })
-        .then(() => {
-          // Redirect to the "Please Exit" screen after the signal is reset
-          window.location.href = 'please-exit.html';
-        })
-        .catch(error => console.error('Error resetting signal:', error));
-      }
-    }
-
-    // Check for the signal every 2 seconds
+    // Poll the server for the signal every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            setTimeout(() => player.playVideo(), 3000); // Play the video after 3 seconds
+            console.log("Signal received! Playing video.");
+            document.querySelector('iframe').src += '&autoplay=1';  // Add autoplay when signal is received
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    setInterval(checkForSignal, 2000); // Poll for signal every 2 seconds
-
-    // Load the YouTube Iframe API
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // Keep checking for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
   </script>
+
 </body>
 </html>
