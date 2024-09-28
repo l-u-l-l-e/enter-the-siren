@@ -4,88 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wall of Fame</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-    .response-container {
-      background-color: #111;
-      border: 2px solid #08fff8;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      padding: 20px;
-      width: 100%;
-    }
-
-    .nickname {
-      font-size: 1.4em;
-      color: #E1D1FF;
-    }
-
-    .type, .generation, .observed {
-      color: #08fff8;
-      font-size: 1.1em;
-    }
-
-    .response {
-      color: #08fff8;
-      margin-top: 10px;
-    }
-
-    .reason {
-      color: #E1D1FF;
-      margin-top: 10px;
-      font-style: italic;
-    }
-
-    .exit-button {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background-color: #E1D1FF;
-      color: #3700AF;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-family: 'Fira Mono', monospace;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="fade-in">
-  <div class="container">
-    <h1>Wall of Fame</h1>
-    <div id="responses"></div>
-    <button class="exit-button" onclick="goToExitPage()">Exit</button>
-  </div>
+<body>
+  <h1>Wall of Fame</h1>
+  <div id="wallOfFame"></div>
 
   <script>
-    const responsesContainer = document.getElementById('responses');
+    function loadResponses() {
+      fetch('https://legend-oxidized-governor.glitch.me/responses')
+        .then(response => response.json())
+        .then(data => {
+          const wallDiv = document.getElementById('wallOfFame');
+          wallDiv.innerHTML = '';
 
-    // Fetch the responses from the Glitch server
-    fetch('https://legend-oxidized-governor.glitch.me/responses')
-      .then(response => response.json())
-      .then(data => {
-        data.forEach(response => {
-          const responseDiv = document.createElement('div');
-          responseDiv.classList.add('response-container');
-
-          responseDiv.innerHTML = `
-            <div class="nickname">${response.nickname}</div>
-            <div class="type">Type: ${response.type}</div>
-            <div class="generation">Generation: ${response.generation}</div>
-            <div class="observed">Observed: ${response.observed}</div>
-            <div class="reason">Reason: ${response.reason}</div>  <!-- Displays the 'Tell us why' response -->
-            <div class="response">Reflection: ${response.reflection}</div>
-          `;
-
-          responsesContainer.appendChild(responseDiv);
+          data.forEach(response => {
+            const userCard = document.createElement('div');
+            userCard.innerHTML = `
+              <h3>${response.nickname}</h3>
+              <p>Type: ${response.type}</p>
+              <p>Generation: ${response.generation}</p>
+              <p>Observed: ${response.observed}</p>
+              <p>Reason: ${response.reason}</p>
+              <p>Reflection: ${response.reflection}</p>
+            `;
+            wallDiv.appendChild(userCard);
+          });
         });
-      })
-      .catch(error => console.error('Error fetching responses:', error));
-
-    // Function to exit the Wall of Fame page and return to the questionnaire
-    function goToExitPage() {
-      window.location.href = 'nickname.html'; // Redirect back to the questionnaire start
     }
+
+    // Auto-refresh the wall of fame every minute
+    setInterval(loadResponses, 60000);
+    loadResponses();
   </script>
 </body>
 </html>
