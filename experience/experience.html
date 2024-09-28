@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
+    /* Fullscreen video and background styling */
     html, body {
       margin: 0;
       padding: 0;
@@ -31,41 +32,40 @@
   </style>
 </head>
 <body>
+
   <div class="container">
-    <iframe 
-      id="experienceVideo" 
-      src="https://www.youtube.com/embed/dMRR6yFSy5k?enablejsapi=1&autoplay=1&controls=0&loop=0&modestbranding=1&rel=0"
-      frameborder="0"
-      allow="autoplay; fullscreen">
-    </iframe>
+    <iframe id="sirenVideo" src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 
   <script>
-    // YouTube Iframe API setup to detect when video ends and reset the signal
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    const player = document.getElementById('sirenVideo');
 
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('experienceVideo', {
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        // Video has ended, send reset signal
-        fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
-          method: 'POST',
+    // Poll for the signal from Glitch server
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            console.log('Signal received, playing video.');
+            playVideo();
+          } else {
+            console.log('No signal yet.');
+          }
         })
-        .then(() => window.location.href = 'exit.html')
-        .catch(error => console.error('Error resetting signal:', error));
-      }
+        .catch(error => console.error('Error checking signal:', error));
     }
+
+    // Play the video by sending a command to the YouTube iframe API
+    function playVideo() {
+      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      // Unmute after playing (if required)
+      setTimeout(() => {
+        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+      }, 3000);  // Unmute after 3 seconds
+    }
+
+    // Keep checking for signal every 2 seconds
+    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
