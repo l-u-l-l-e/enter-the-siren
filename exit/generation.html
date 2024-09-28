@@ -3,36 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generation</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <title>Generation Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>Which generation do you feel like you belong to?</h1>
-    <div class="button-container"> <!-- Button container to style like the entry point -->
-      <button class="button" id="boomerButton">Baby Boomer</button>
-      <button class="button" id="genxButton">Gen X</button>
-      <button class="button" id="millennialButton">Millennial</button>
-      <button class="button" id="genzButton">Gen Z</button>
-    </div>
+    <button class="button generation" data-generation="Baby Boomer">Baby Boomer</button>
+    <button class="button generation" data-generation="Gen X">Gen X</button>
+    <button class="button generation" data-generation="Millennial">Millennial</button>
+    <button class="button generation" data-generation="Gen Z">Gen Z</button>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const buttons = document.querySelectorAll('.button');
+    const generationButtons = document.querySelectorAll('.generation');
 
-      buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const generation = this.innerText;  // Get the generation value
+    generationButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const selectedGeneration = this.getAttribute('data-generation');
 
-          // Store the selected generation in local storage or send it to the server
-          localStorage.setItem('generation', generation);  // Temporary storage for testing
-          
-          // Redirect to the next question (observed/observer)
-          window.location.href = 'observed.html';
-        });
+        // Save generation in local storage
+        localStorage.setItem('generation', selectedGeneration);
+
+        // Navigate to the next question (observed.html for example)
+        window.location.href = 'observed.html';
       });
     });
   </script>
