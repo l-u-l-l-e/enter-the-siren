@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Please Wait Your Turn</title>
-    <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
-    <style>
-        body {
-            background-color: black;
-            color: #08fff8;
-            font-family: 'Fira Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiting...</title>
+  <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    body {
+      background-color: black;
+      color: #08fff8;  /* Cyan color */
+      font-family: 'Fira Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+    }
 
-        .message {
-            font-size: 2em;
-            padding: 20px;
-        }
-    </style>
+    .message {
+      font-size: 2em;
+    }
+
+    .dots {
+      font-size: 2.5em;
+      color: #08fff8;
+    }
+  </style>
 </head>
 <body>
-    <div class="message">Please wait your turn</div> <!-- Message to the user -->
+  <div class="message">
+    Please wait your turn
+    <div class="dots">• • •</div>
+  </div>
 
-    <script>
-        // After 10 minutes (600,000 milliseconds), redirect to the index page
-        setTimeout(function() {
-            window.location.href = 'index.html';  // Redirect to your index page after 10 minutes
-        }, 600000);  // 600,000 milliseconds = 10 minutes
-    </script>
+  <script>
+    // Dot animation
+    let dotElement = document.querySelector('.dots');
+    let dots = 1;
+
+    setInterval(function () {
+      dotElement.textContent = '•'.repeat(dots);
+      dots = (dots % 3) + 1;
+    }, 500);  // Change dots every 500 milliseconds
+
+    // Poll for the signal every 2 seconds
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            window.location.href = 'experience.html';  // Redirect to experience page
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    setInterval(checkForSignal, 2000);
+  </script>
 </body>
 </html>
