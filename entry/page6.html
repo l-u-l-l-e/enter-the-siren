@@ -19,7 +19,7 @@
         .then(response => response.text())
         .then(data => {
           console.log("Signal sent to play video:", data);
-          // Redirect to the final page after sending the signal
+          // Redirect to the loading page after sending the signal
           window.location.href = 'loading.html';
         })
         .catch(error => console.error('Error sending signal:', error));
