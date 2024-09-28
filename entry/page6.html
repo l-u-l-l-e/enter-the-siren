@@ -14,22 +14,21 @@
     </a>
   </div>
 
-  <script>
-    document.getElementById('lastButton').addEventListener('click', function(e) {
-      e.preventDefault();
+  <button id="enterButton">Enter</button>
 
-      // Send the signal to the server to play the video
-      fetch('https://legend-oxidized-governor.glitch.me/play-video', {
-        method: 'POST'
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log("Signal sent:", data);
-        // Redirect to loading screen
-        window.location.href = 'loading.html';
-      })
-      .catch(error => console.error('Error sending signal:', error));
-    });
-  </script>
+<script>
+document.getElementById('enterButton').addEventListener('click', function() {
+    fetch('https://legend-oxidized-governor.glitch.me/play-video', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => console.log('Signal sent:', data))
+    .catch(error => console.error('Error sending signal:', error));
+});
+</script>
+
 </body>
 </html>
