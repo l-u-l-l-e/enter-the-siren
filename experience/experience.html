@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Styling for non-fullscreen video */
+    /* Make the video cover the full viewport width and height */
     html, body {
       margin: 0;
       padding: 0;
@@ -14,21 +14,20 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     .container {
-      width: 80%; /* You can adjust this to control the video size */
-      max-width: 1200px;
-      height: 60vh; /* Control the height of the video */
+      width: 100vw;  /* 100% of the viewport width */
+      height: 100vh; /* 100% of the viewport height */
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: black;
     }
 
     iframe {
-      width: 100%;
-      height: 100%;
+      width: 100vw;  /* 100% of the viewport width */
+      height: 100vh; /* 100% of the viewport height */
       border: none;
     }
   </style>
@@ -38,7 +37,7 @@
   <div class="container">
     <iframe id="sirenVideo" 
             src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
-            allow="autoplay; encrypted-media">
+            allow="autoplay; encrypted-media; fullscreen">
     </iframe>
   </div>
 
