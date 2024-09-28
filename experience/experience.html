@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experience</title>
+  <title>Experience Point</title>
   <style>
     html, body {
       margin: 0;
@@ -33,15 +33,28 @@
 <body>
 
   <div class="container">
-    <iframe id="experienceVideo" src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&controls=0&mute=0" 
-      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe id="experienceVideo" src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&controls=0&mute=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
   </div>
 
   <script>
-    // After the video finishes, redirect to "please exit" page
-    setTimeout(function() {
-      window.location.href = 'exit.html';
-    }, 600000); // 10 minutes
+    const video = document.getElementById('experienceVideo');
+
+    // Poll for signal and start the video
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            setTimeout(() => {
+              video.src += "&autoplay=1";  // Ensure video autoplay
+            }, 3000);  // Play video after 3 seconds
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    setInterval(checkForSignal, 2000);
   </script>
+
 </body>
 </html>
