@@ -16,6 +16,10 @@ body {
   overflow: hidden; /* Disable scrolling */
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Heading styles */
 h1 {
   margin-bottom: 30px; /* Less space below heading */
