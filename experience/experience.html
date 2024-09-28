@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Make the video cover the full viewport width and height */
+    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -18,16 +18,16 @@
     }
 
     .container {
-      width: 100vw;  /* 100% of the viewport width */
-      height: 100vh; /* 100% of the viewport height */
+      width: 100vw;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     iframe {
-      width: 100vw;  /* 100% of the viewport width */
-      height: 100vh; /* 100% of the viewport height */
+      width: 100vw;
+      height: 100vh;
       border: none;
     }
   </style>
@@ -44,45 +44,48 @@
   <script>
     const player = document.getElementById('sirenVideo');
 
-    // Poll for the signal from Glitch server
+    // Poll for signal from the Glitch server
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, playing video.');
-            playVideo();
-          } else {
-            console.log('No signal yet.');
+            playVideo();  // Play the video when signal is received
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Play the video by sending a command to the YouTube iframe API
+    // Function to play the video
     function playVideo() {
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
-      // Attempt to unmute after a delay
+      // Unmute after a delay to avoid restrictions
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  // Unmute after 2 seconds to avoid issues
+      }, 2000);  // Unmute after 2 seconds
     }
 
-    // When the video ends, reset signal and redirect to exit page
+    // Function to handle when the video ends
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
           method: 'POST',
         })
-        .then(() => window.location.href = 'please-exit.html')
+        .then(() => window.location.href = 'please-exit.html')  // Redirect to please-exit page
         .catch(error => console.error('Error resetting signal:', error));
       }
     }
 
-    // Keep checking for signal every 2 seconds
+    // Check signal every 2 seconds
     setInterval(checkForSignal, 2000);
 
+    // Listen for video state changes
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.event === 'onStateChange') {
+        onPlayerStateChange(event.data);
+      }
+    });
   </script>
 
 </body>
