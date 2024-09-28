@@ -1,53 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Waiting...</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure this path is correct -->
-  <style>
-    body {
-      background-color: black;
-      color: #08fff8;
-      font-family: 'Fira Mono', monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting...</title>
+    <link rel="stylesheet" href="../entry/styles.css"> <!-- Correct the stylesheet path -->
+    <style>
+        body {
+            background-color: black;
+            color: #08fff8;
+            font-family: 'Fira Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 50px;
+            overflow: hidden;
+        }
 
-    .dots {
-      font-size: 2.5em;
-      color: #08fff8;
-    }
-  </style>
+        .dots {
+            font-size: 2.5em;
+            color: #08fff8;
+        }
+    </style>
 </head>
 <body>
-  <div class="dots">• • •</div>
+    <div class="dots">• • •</div>
 
-  <script>
-    let dotElement = document.querySelector('.dots');
-    let dots = 1;
+    <script>
+        // Dot animation
+        let dotElement = document.querySelector('.dots');
+        let dots = 1;
 
-    setInterval(function () {
-      dotElement.textContent = '•'.repeat(dots);
-      dots = (dots % 3) + 1;
-    }, 500);
+        setInterval(function () {
+            dotElement.textContent = '•'.repeat(dots);
+            dots = (dots % 3) + 1;
+        }, 500);  // Animate dots
 
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json()) // Expect JSON response
-        .then(data => {
-          if (data.playVideo) {
-            window.location.href = 'experience.html'; // Redirect to experience page
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
+        // Poll for signal every 2 seconds
+        function checkForSignal() {
+            fetch('https://legend-oxidized-governor.glitch.me/signal')  // Ensure the URL is correct
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();  // Expect JSON from /signal endpoint
+                })
+                .then(data => {
+                    if (data.playVideo) {
+                        window.location.href = 'experience.html';  // Redirect when signal is received
+                    }
+                })
+                .catch(error => console.error('Error checking signal:', error));
+        }
 
-    setInterval(checkForSignal, 2000); // Poll every 2 seconds
-  </script>
+        setInterval(checkForSignal, 2000);  // Poll for the signal every 2 seconds
+    </script>
 </body>
 </html>
