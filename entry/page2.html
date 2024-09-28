@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What Are You?</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure correct stylesheet path -->
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
@@ -32,14 +32,14 @@
           const userType = this.innerText;
 
           // Send the selected type to the server
-          fetch('https://legend-oxidized-governor.glitch.me/submit', {
+          fetch('https://legend-oxidized-governor.glitch.me/submit', {  // Ensure correct Glitch URL
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               type: userType,
-              sessionId: 'unique-session-id'  // Replace with a method to track sessions
+              sessionId: 'unique-session-id'  // Replace with session tracking
             }),
           })
           .then(response => {
