@@ -14,20 +14,18 @@
   </div>
 
   <script>
-    document.getElementById('submitReason').addEventListener('click', function() {
-      const reason = document.getElementById('reason').value;
+  const submitButton = document.getElementById('submitTellUsWhy');
 
-      if (reason.trim() === "") {
-        alert("Tell us why");
-        return;
-      }
+  submitButton.addEventListener('click', function() {
+    const observationReason = document.getElementById('observationReason').value;
 
-      // Save the reason in local storage
-      localStorage.setItem('reason', reason);
+    // Save "Tell us why" response logic
+    localStorage.setItem('observationReason', observationReason);
 
-      // Navigate to the reflection page
-      window.location.href = 'reflection.html';
-    });
-  </script>
+    // After saving, navigate to "one more question" page
+    window.location.href = 'one-more-question.html';
+  });
+</script>
+
 </body>
 </html>
