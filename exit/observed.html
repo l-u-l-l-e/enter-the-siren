@@ -3,133 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Observer or Observed</title>
-  <link rel="stylesheet" href="../entry/styles.css">
-  <style>
-    /* Modal styling - covers the whole screen */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);  /* Dark background */
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background-color: #111;
-      color: #08fff8;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 700px;
-      height: 75%;  /* Larger height for the modal */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    /* Fill the textarea and button to cover the modal */
-    #reasonInput {
-      height: 70%;  /* Takes up most of the modal space */
-      width: 100%;
-      font-size: 1.3em;  /* Larger font size */
-      padding: 20px;  /* Adds padding inside the textarea */
-      box-sizing: border-box;  /* Ensures padding doesn't overflow */
-    }
-
-    /* Full-width submit button with minimal spacing */
-    #submitReason {
-      width: 100%;
-      font-size: 1.2em;
-      padding: 15px;
-      background-color: #E1D1FF;
-      color: #3700AF;
-      border-radius: 25px;
-      border: none;
-      cursor: pointer;
-      font-family: 'Fira Mono', monospace;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    #submitReason:hover {
-      background-color: #3700AF;
-      color: #E1D1FF;
-    }
-  </style>
+  <title>Observer Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
-    <h1>While you were in the booth, did you feel more like an observer or the observed?</h1>
-    <div class="button-container">
-      <button class="button" id="observerButton">Observer</button>
-      <button class="button" id="observedButton">Observed</button>
-      <button class="button" id="bothButton">Both</button>
-    </div>
-  </div>
-
-  <!-- Modal pop-up -->
-  <div id="reasonModal" class="modal">
-    <div class="modal-content">
-      <textarea id="reasonInput" class="input-field" placeholder="Tell us why"></textarea>
-      <button id="submitReason" class="close-button">Submit</button>
-    </div>
+    <h1>Did you feel more like an observer or the observed?</h1>
+    <button class="button observed" data-observed="Observer">Observer</button>
+    <button class="button observed" data-observed="Observed">Observed</button>
+    <button class="button observed" data-observed="Both">Both</button>
   </div>
 
   <script>
-    const reasonModal = document.getElementById('reasonModal');
-    const reasonInput = document.getElementById('reasonInput');
-    const submitReasonButton = document.getElementById('submitReason');
+    const observedButtons = document.querySelectorAll('.observed');
 
-    let selectedOption = null;  // Track the selected option
+    observedButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const observedChoice = this.getAttribute('data-observed');
 
-    // Function to show the modal pop-up
-    function showModal() {
-      reasonModal.style.display = 'flex'; // Show modal (flexbox layout)
-    }
+        // Save observed choice in local storage
+        localStorage.setItem('observed', observedChoice);
 
-    // Event listeners for the buttons
-    document.getElementById('observerButton').addEventListener('click', function() {
-      selectedOption = 'Observer';
-      showModal();
-    });
-
-    document.getElementById('observedButton').addEventListener('click', function() {
-      selectedOption = 'Observed';
-      showModal();
-    });
-
-    document.getElementById('bothButton').addEventListener('click', function() {
-      selectedOption = 'Both';
-      showModal();
-    });
-
-    // Close modal and submit the reason
-    submitReasonButton.addEventListener('click', function() {
-      const reason = reasonInput.value;
-
-      if (reason.trim() === "") {
-        alert("Please provide a reason before continuing.");
-        return;
-      }
-
-      // Save the selected option and reason in local storage
-      localStorage.setItem('observed', selectedOption);
-      localStorage.setItem('reason', reason);
-
-      // Redirect to the next page
-      window.location.href = 'one-more-question.html';
-    });
-
-    // Close modal when clicking outside of it
-    window.addEventListener('click', function(event) {
-      if (event.target === reasonModal) {
-        reasonModal.style.display = 'none';
-      }
+        // Navigate to the reason input (tell-us-why.html)
+        window.location.href = 'tell-us-why.html';
+      });
     });
   </script>
 </body>
