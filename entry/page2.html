@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What Are You?</title>
-  <link rel="stylesheet" href="../entry/styles.css">
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure this path is correct -->
 </head>
 <body class="fade-in">
   <div class="container">
@@ -27,7 +27,7 @@
       buttons.forEach(button => {
         button.addEventListener('click', function(e) {
           e.preventDefault();
-
+          
           // Get the selected type from the button's inner text
           const userType = this.innerText;
 
@@ -38,22 +38,22 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              type: userType,
-              sessionId: 'unique-session-id'  // Replace with a method to track sessions
+              type: userType,  // Send user type to the server
+              sessionId: 'unique-session-id'  // Replace with a real session tracking mechanism
             }),
           })
           .then(response => response.json())
           .then(data => {
-            if (data.message === 'Response saved successfully!') {
-              // Navigate to the next page (page3.html)
-              window.location.href = 'page3.html';
+            console.log('Response saved:', data);
+            if (data.message === "Response saved successfully!") {
+              window.location.href = 'page3.html';  // Navigate to the next page if saved successfully
             } else {
-              alert("There was an issue saving your response. Please try again.");
+              alert('There was an issue saving your response. Please try again.');
             }
           })
           .catch(error => {
             console.error('Error:', error);
-            alert("There was an issue saving your response. Please try again.");
+            alert('There was an issue saving your response. Please try again.');
           });
         });
       });
