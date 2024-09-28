@@ -4,38 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ready to Dive In?</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Linking to the stylesheet you are already using -->
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>Ready to dive in?</h1>
-    <button id="enterButton" class="button">Enter</button> <!-- Using class "button" to match the other pages -->
+    <button id="lastButton" class="button">Enter</button>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const enterButton = document.getElementById('enterButton');
-
-      enterButton.addEventListener('click', function() {
-        fetch('https://legend-oxidized-governor.glitch.me/play', {  // Check that this URL is correct and functional
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+    document.getElementById('lastButton').addEventListener('click', function() {
+      // Send the play signal to the server
+      fetch('https://legend-oxidized-governor.glitch.me/play', { method: 'POST' })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Signal sent to play video:", data);
+          // Redirect to the final page after sending the signal
+          window.location.href = 'loading.html';
         })
-        .then(response => {
-          if (response.ok) {
-            window.location.href = 'loading.html';  // Redirect to loading page after signal
-          } else {
-            console.error('Error sending signal:', response);
-            alert('There was an issue sending the signal. Please try again.');
-          }
-        })
-        .catch(error => {
-          console.error('Error sending signal:', error);
-          alert('There was an issue sending the signal. Please try again.');
-        });
-      });
+        .catch(error => console.error('Error sending signal:', error));
     });
   </script>
 </body>
