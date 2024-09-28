@@ -11,6 +11,7 @@
             color: #08fff8;
             font-family: 'Fira Mono', monospace;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -20,30 +21,25 @@
             overflow: hidden;
         }
 
-        .text {
-            font-size: 2em;
-            color: #08fff8;
-        }
-
         .dots {
             font-size: 2.5em;
             color: #08fff8;
+            margin-top: 20px; /* Space between the text and dots */
         }
     </style>
 </head>
 <body>
-    <div class="text">Please wait your turn</div>
-    <div class="dots">• • •</div>
+    <h1>Please wait your turn</h1>
+    <div class="dots">• • •</div> <!-- Animated dots below the sentence -->
 
     <script>
-        // Dot animation
         let dotElement = document.querySelector('.dots');
         let dots = 1;
 
         setInterval(function () {
             dotElement.textContent = '•'.repeat(dots);
             dots = (dots % 3) + 1;
-        }, 500);  // Animate dots
+        }, 500);
     </script>
 </body>
 </html>
