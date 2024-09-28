@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter Page</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to main stylesheet for consistent styling -->
+  <title>Enter</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Press Enter to Begin</h1>
-    <button class="button" id="enterButton">Enter</button> <!-- Styled button -->
+    <h1>Ready to enter?</h1>
+    <button class="button" id="enterButton">Enter</button>
   </div>
 
   <script>
     document.getElementById('enterButton').addEventListener('click', function() {
       fetch('https://legend-oxidized-governor.glitch.me/play-video', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }
       })
       .then(response => response.json())
       .then(data => {
