@@ -15,16 +15,15 @@
 
   <script>
     document.getElementById('submitReflection').addEventListener('click', function() {
-      const userReflection = document.getElementById('reflection').value;
-      const userNickname = localStorage.getItem('nickname');  // Assuming you save this earlier in the exit questionnaire
-      const userType = localStorage.getItem('type');  // Data from entry point stored in local storage
-      const userGeneration = localStorage.getItem('generation');  // Collected in the exit point
-      const observedChoice = localStorage.getItem('observed');  // Collected in the exit point
-      const observationReason = localStorage.getItem('reason');  // Collected in the exit point
+      const reflection = document.getElementById('reflection').value;
+      const nickname = localStorage.getItem('nickname');
+      const type = localStorage.getItem('type');
+      const generation = localStorage.getItem('generation');
+      const observed = localStorage.getItem('observed');
+      const reason = localStorage.getItem('reason');
 
-      // Ensure all required fields are filled out before submission
-      if (userReflection.trim() === "" || !userNickname || !userType || !userGeneration || !observedChoice) {
-        alert("Please complete all fields.");
+      if (reflection.trim() === "") {
+        alert("Please provide your reflection.");
         return;
       }
 
@@ -35,12 +34,12 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nickname: userNickname,
-          type: userType,
-          generation: userGeneration,
-          observed: observedChoice,
-          reason: observationReason,
-          reflection: userReflection
+          nickname: nickname,
+          type: type,
+          generation: generation,
+          observed: observed,
+          reason: reason,
+          reflection: reflection
         }),
       })
       .then(response => response.json())
