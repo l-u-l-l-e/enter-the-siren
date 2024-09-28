@@ -39,24 +39,21 @@
             dots = (dots % 3) + 1;
         }, 500);  // Animate dots
 
-        // Poll for signal every 2 seconds
-        function checkForSignal() {
-            fetch('https://legend-oxidized-governor.glitch.me/signal')  // Ensure the URL is correct
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();  // Expect JSON from /signal endpoint
-                })
-                .then(data => {
-                    if (data.playVideo) {
-                        window.location.href = 'experience.html';  // Redirect when signal is received
-                    }
-                })
-                .catch(error => console.error('Error checking signal:', error));
+        // Poll for signal and start the video
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          console.log("Signal received! Redirecting to experience page.");
+          window.location.href = 'experience.html';  // Redirect to experience page
         }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
 
-        setInterval(checkForSignal, 2000);  // Poll for the signal every 2 seconds
+  setInterval(checkForSignal, 2000);  // Check for signal every 2 seconds
+        
     </script>
 </body>
 </html>
