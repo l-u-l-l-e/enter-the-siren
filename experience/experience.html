@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -44,7 +44,7 @@
   <script>
     const player = document.getElementById('sirenVideo');
 
-    // Poll for signal from the Glitch server
+    // Poll for signal from the server
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -69,10 +69,14 @@
     // Function to handle when the video ends
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
+        console.log('Video ended, resetting signal...');
         fetch('https://legend-oxidized-governor.glitch.me/reset', {
           method: 'POST',
         })
-        .then(() => window.location.href = 'exit.html')  // Redirect to please-exit page
+        .then(() => {
+          console.log('Signal reset, redirecting to please-exit.html');
+          window.location.href = 'exit.html';  // Redirect to please-exit page
+        })
         .catch(error => console.error('Error resetting signal:', error));
       }
     }
