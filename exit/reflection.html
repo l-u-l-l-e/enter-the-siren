@@ -3,63 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reflect</title>
+  <title>Reflection</title>
   <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>How do you relate this experience with your own life on the internet?</h1>
-    <textarea id="reflectionInput" class="input-field" placeholder="Share your thoughts..."></textarea>
+    <textarea id="reflection" class="input-field" placeholder="Share your reflection..."></textarea>
     <button id="submitReflection" class="button">Submit</button>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const submitButton = document.getElementById('submitReflection');
-      const reflectionInput = document.getElementById('reflectionInput');
+    document.getElementById('submitReflection').addEventListener('click', function() {
+      const userReflection = document.getElementById('reflection').value.trim();
+      const userNickname = localStorage.getItem('nickname');
+      const userType = localStorage.getItem('type');
+      const userGeneration = localStorage.getItem('generation');
+      const observedChoice = localStorage.getItem('observed');
+      const observationReason = localStorage.getItem('reason');
 
-      // Event listener for the submit button
-      submitButton.addEventListener('click', function() {
-        const userReflection = reflectionInput.value.trim();
+      if (!userReflection) {
+        alert('Please provide your reflection.');
+        return;
+      }
 
-        if (!userReflection) {
-          alert("Please provide your reflection.");
-          return;
-        }
-
-        // Collect other data from localStorage (if stored previously)
-        const userNickname = localStorage.getItem('nickname');
-        const userType = localStorage.getItem('type');
-        const userGeneration = localStorage.getItem('generation');
-        const observedChoice = localStorage.getItem('observed');
-        const observationReason = localStorage.getItem('reason');
-
-        // Prepare data for submission
-        const responseData = {
+      fetch('https://legend-oxidized-governor.glitch.me/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           nickname: userNickname,
-          type: userType,
-          generation: userGeneration,
-          observed: observedChoice,
-          reason: observationReason,
-          reflection: userReflection
-        };
-
-        // Send the response data to the server
-        fetch('https://legend-oxidized-governor.glitch.me/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(responseData),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Response saved:', data);
-          // Redirect to the thank you page after successful submission
-          window.location.href = 'thankyou.html';
-        })
-        .catch(error => console.error('Error saving response:', error));
-      });
+          type: userType,  // Collected from entry point
+          generation: userGeneration,  // Collected in exit point
+          observed: observedChoice,  // Collected in exit point
+          reason: observationReason,  // "Tell us why" answer
+          reflection: userReflection  // Collected in exit point
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response saved:', data);
+        window.location.href = 'thankyou.html';  // Redirect to thank you page after submitting
+      })
+      .catch(error => console.error('Error saving response:', error));
     });
   </script>
 </body>
