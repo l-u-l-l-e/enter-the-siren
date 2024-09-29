@@ -24,23 +24,19 @@
     document.addEventListener('DOMContentLoaded', function() {
       const buttons = document.querySelectorAll('.button');
 
-      // Attach click event listeners to each button
       buttons.forEach(button => {
         button.addEventListener('click', function(e) {
           e.preventDefault();
           
-          // Get the selected type from the button's inner text
           const userType = this.innerText;
 
-          // Send the selected type to the server
-          fetch('https://legend-oxidized-governor.glitch.me/submit', {  // Ensure correct Glitch URL
+          fetch('https://legend-oxidized-governor.glitch.me/submit', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              type: userType,
-              sessionId: 'unique-session-id'  // Replace with session tracking
+              type: userType
             }),
           })
           .then(response => {
@@ -51,7 +47,8 @@
           })
           .then(data => {
             console.log('Response saved:', data);
-            window.location.href = 'page3.html';  // Navigate to the next page
+            localStorage.setItem('type', userType);  // Save type for future use
+            window.location.href = 'page3.html';
           })
           .catch(error => console.error('Error:', error));
         });
