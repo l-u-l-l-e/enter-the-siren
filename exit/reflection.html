@@ -35,17 +35,17 @@
         },
         body: JSON.stringify({
           nickname: userNickname,
-          type: userType,  // Collected from entry point
-          generation: userGeneration,  // Collected in exit point
-          observed: observedChoice,  // Collected in exit point
-          reason: observationReason,  // "Tell us why" answer
-          reflection: userReflection  // Collected in exit point
+          type: userType,
+          generation: userGeneration,
+          observed: observedChoice,
+          reason: observationReason,
+          reflection: userReflection
         }),
       })
       .then(response => response.json())
       .then(data => {
         console.log('Response saved:', data);
-        window.location.href = 'thankyou.html';  // Redirect to thank you page after submitting
+        window.location.href = 'thankyou.html';  // Redirect after submission
       })
       .catch(error => console.error('Error saving response:', error));
     });
