@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Streaming Siren</title>
+  <title>Experience Point</title>
   <style>
+    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -41,17 +42,16 @@
   </div>
 
   <script>
-    const videoDuration = 763 * 1000; // 763 seconds in milliseconds
     const player = document.getElementById('sirenVideo');
+    const videoDurationInSeconds = 763;  // Replace with actual video duration in seconds
 
-    // Poll for signal from the Glitch server
+    // Poll for the signal from the Glitch server
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
             playVideo();  // Play the video when signal is received
-            setTimeout(handleVideoEnd, videoDuration);  // Set the timer to handle end
           }
         })
         .catch(error => console.error('Error checking signal:', error));
@@ -65,21 +65,15 @@
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
       }, 2000);  // Unmute after 2 seconds
+
+      // Set up redirection 2 seconds before video ends
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Convert to milliseconds
+      setTimeout(() => {
+        window.location.href = 'exit.html';  // Redirect to exit page 2 seconds before the video ends
+      }, redirectTime);
     }
 
-    // Handle the video end using the duration timer
-    function handleVideoEnd() {
-      fetch('https://legend-oxidized-governor.glitch.me/reset', {
-        method: 'POST',
-      })
-      .then(() => {
-        console.log('Signal reset, redirecting to exit page.');
-        window.location.href = 'exit.html';  // Redirect to the exit page after video ends
-      })
-      .catch(error => console.error('Error resetting signal:', error));
-    }
-
-    // Check signal every 2 seconds
+    // Keep checking for signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
 
