@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://legend-oxidized-governor.glitch.me; script-src 'self' 'unsafe-inline' https://legend-oxidized-governor.glitch.me; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-  <title>Which generation?</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure the path is correct -->
+  <title>Which Generation?</title>
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
     <h1>Which generation do you feel like you belong to?</h1>
-
-    <!-- Button container for generation options -->
     <div class="button-container">
       <button class="button">Baby Boomer</button>
       <button class="button">Gen X</button>
@@ -20,18 +18,17 @@
     </div>
   </div>
 
-    <script>
-        const buttons = document.querySelectorAll('.button');
+  <script>
+    const buttons = document.querySelectorAll('.button');
 
-        buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const selectedGeneration = this.innerText;
-                localStorage.setItem('generation', selectedGeneration);  // Store selected generation in localStorage
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        const selectedGeneration = this.innerText;
+        localStorage.setItem('generation', selectedGeneration);
 
-                // Redirect to the next page after selecting
-                window.location.href = 'observed.html'; 
-            });
-        });
-    </script>
+        window.location.href = 'observed.html';  // Redirect after selection
+      });
+    });
+  </script>
 </body>
 </html>
