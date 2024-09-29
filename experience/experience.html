@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -42,52 +41,45 @@
   </div>
 
   <script>
-    // Set up YouTube Iframe API
+    const videoDuration = 763 * 1000; // 763 seconds in milliseconds
     const player = document.getElementById('sirenVideo');
 
-    function playVideo() {
-      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      
-      // Unmute after a delay
-      setTimeout(() => {
-        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  // Unmute after 2 seconds
-    }
-
-    // Detect when the video ends
-    window.addEventListener('message', function(event) {
-      if (event.data && event.data.event === 'onStateChange') {
-        if (event.data.info === 0) {  // YT.PlayerState.ENDED == 0
-          handleVideoEnd();  // Call the function to handle video end
-        }
-      }
-    });
-
-    function handleVideoEnd() {
-      // Reset signal after video ends and redirect to exit page
-      fetch('https://legend-oxidized-governor.glitch.me/reset', {
-        method: 'POST',
-      })
-      .then(() => {
-        console.log('Signal reset, redirecting to exit page.');
-        window.location.href = 'exit.html';  // Redirect to the exit page
-      })
-      .catch(error => console.error('Error resetting signal:', error));
-    }
-
-    // Poll for the signal from the server to start the video
+    // Poll for signal from the Glitch server
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            playVideo();  // Start the video when the signal is received
+            playVideo();  // Play the video when signal is received
+            setTimeout(handleVideoEnd, videoDuration);  // Set the timer to handle end
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Keep checking for signal every 2 seconds
+    // Function to play the video
+    function playVideo() {
+      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      
+      // Unmute after a delay to avoid restrictions
+      setTimeout(() => {
+        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+      }, 2000);  // Unmute after 2 seconds
+    }
+
+    // Handle the video end using the duration timer
+    function handleVideoEnd() {
+      fetch('https://legend-oxidized-governor.glitch.me/reset', {
+        method: 'POST',
+      })
+      .then(() => {
+        console.log('Signal reset, redirecting to exit page.');
+        window.location.href = 'exit.html';  // Redirect to the exit page after video ends
+      })
+      .catch(error => console.error('Error resetting signal:', error));
+    }
+
+    // Check signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
 
