@@ -11,6 +11,7 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      text-align: left; /* Align text to the left */
     }
 
     /* Style for each response */
@@ -27,11 +28,19 @@
       margin-bottom: 10px;
     }
 
-    /* Type and generation styling (smaller) */
+    /* Type and generation (italic, smaller, next to name) */
     .subheadline {
-      font-size: 1.3em; /* Smaller font size for type and generation */
+      font-size: 1.3em;
+      font-style: italic; /* Italic style */
       color: #E1D1FF; /* Light purple color */
-      margin-bottom: 15px;
+      margin-bottom: 5px;
+    }
+
+    /* Date styling (very small, number format) */
+    .date-time {
+      font-size: 0.8em; /* Very small font size */
+      color: #888888; /* Grey color for the date */
+      margin-bottom: 10px;
     }
 
     /* Normal text size for the response body */
@@ -39,14 +48,6 @@
       color: #E1D1FF; /* Light purple color */
       font-size: 1.1em; /* Normal text size */
       line-height: 1.5; /* Better line spacing */
-    }
-
-    /* Date styling (very small) */
-    .date-time {
-      font-size: 0.8em; /* Very small font size */
-      color: #888888; /* Grey color for the date */
-      margin-top: 10px;
-      text-align: right;
     }
   </style>
 </head>
@@ -86,11 +87,18 @@
           headlineDiv.innerHTML = `${response.nickname}`;
           responseDiv.appendChild(headlineDiv);
 
-          // Type and Generation (smaller)
+          // Type and Generation (italic, smaller, next to name)
           const subheadlineDiv = document.createElement('div');
           subheadlineDiv.classList.add('subheadline');
           subheadlineDiv.innerHTML = `${response.type}, ${response.generation}`;
           responseDiv.appendChild(subheadlineDiv);
+
+          // Date and time (number format: dd.mm.yyyy hh:mm)
+          const dateTimeDiv = document.createElement('div');
+          dateTimeDiv.classList.add('date-time');
+          const date = new Date(response.timestamp);
+          dateTimeDiv.textContent = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+          responseDiv.appendChild(dateTimeDiv);
 
           // Response body (normal text size)
           const bodyDiv = document.createElement('div');
@@ -99,19 +107,6 @@
                                <p><strong>Because: </strong>${response.reason}</p>
                                <p>${response.reflection}</p>`;
           responseDiv.appendChild(bodyDiv);
-
-          // Date and time (very small)
-          const dateTimeDiv = document.createElement('div');
-          dateTimeDiv.classList.add('date-time');
-          dateTimeDiv.textContent = new Date(response.timestamp).toLocaleString('en-GB', {
-            hour12: false,
-            year: 'numeric',
-            month: 'short',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-          responseDiv.appendChild(dateTimeDiv);
 
           // Append the response to the container
           responsesContainer.appendChild(responseDiv);
