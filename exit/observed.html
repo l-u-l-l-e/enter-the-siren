@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://legend-oxidized-governor.glitch.me; script-src 'self' 'unsafe-inline' https://legend-oxidized-governor.glitch.me; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-  <title>Observed or observer</title>
-<link rel="stylesheet" href="../entry/styles.css">
+  <title>Observed or Observer</title>
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
@@ -21,12 +21,9 @@
     observedButtons.forEach(button => {
       button.addEventListener('click', function() {
         const observedChoice = this.getAttribute('data-observed');
-
-        // Save observed choice in local storage
         localStorage.setItem('observed', observedChoice);
 
-        // Navigate to the reason input (tell-us-why.html)
-        window.location.href = 'tell-us-why.html';
+        window.location.href = 'tell-us-why.html';  // Redirect to next page
       });
     });
   </script>
