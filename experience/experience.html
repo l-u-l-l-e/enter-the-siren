@@ -64,15 +64,19 @@
     }
 
     // Function to handle when the video ends
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
-          method: 'POST',
-        })
-        .then(() => window.location.href = 'please-exit.html')  // Redirect to please-exit page
-        .catch(error => console.error('Error resetting signal:', error));
-      }
-    }
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    // Send request to reset the signal
+    fetch('https://legend-oxidized-governor.glitch.me/reset-signal-after-video', {
+      method: 'POST',
+    })
+    .then(() => {
+      // Redirect to "please-exit.html" after resetting the signal
+      window.location.href = 'please-exit.html';
+    })
+    .catch(error => console.error('Error resetting signal:', error));
+  }
+}
 
     // Check signal every 2 seconds
     setInterval(checkForSignal, 2000);
