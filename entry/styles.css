@@ -16,10 +16,6 @@ body {
   overflow: hidden; /* Disable scrolling */
 }
 
-a {
-  text-decoration: none;
-}
-
 /* Heading styles */
 h1 {
   margin-bottom: 30px; /* Less space below heading */
@@ -43,7 +39,6 @@ h2 {
   margin: 15px; /* Added margin between buttons */
   flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 buttons per row */
   text-align: center;
-  text-decoration: none; /* REMOVE underline from button text */
 }
 
 .button:hover {
@@ -64,46 +59,31 @@ h2 {
   font-size: 1.3em;
 }
 
-/* Style for text input fields */
+/* Input field styles */
 .input-field {
-  background-color: transparent;
-  color: #08fff8;
+  background-color: transparent; /* No change when clicked */
+  color: #08fff8; /* Same text color as body */
   font-family: 'Fira Mono', monospace;
   font-size: 1.2em;
   padding: 15px;
-  border: 2px solid #08fff8;  /* Cyan border to match the buttons */
-  border-radius: 25px;  /* Rounded corners to match the buttons */
+  border: 2px solid #08fff8; /* Cyan border to match the buttons */
+  border-radius: 25px; /* Rounded corners to match the buttons */
   width: 100%;
-  box-sizing: border-box;  /* Ensure padding doesn't affect width */
-  margin-bottom: 20px;  /* Space below the input */
-  outline: none;  /* Remove default outline */
-  transition: border-color 0.3s ease;  /* Smooth transition on focus */
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  outline: none; /* Remove default outline */
+  transition: border-color 0.3s ease;
 }
 
-/* Input field focus state */
+/* No color change on focus */
 .input-field:focus {
-  border-color: #E1D1FF;  /* Light purple border on focus */
+  border-color: #08fff8; /* Keep the same cyan border on focus */
 }
 
-/* Style for textarea fields */
-textarea.input-field {
-  resize: none;  /* Disable resizing for textarea */
-  height: 150px;  /* Set height for consistency */
-}
-
-/* Container for overall layout */
-.container {
-  max-width: 600px;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Flexbox for button layout */
-.button-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow buttons to wrap if needed */
-  justify-content: center; /* Center the buttons */
-  gap: 20px; /* Adds space between buttons */
+/* Placeholder text styles */
+::placeholder {
+  color: rgba(8, 255, 248, 0.5); /* Cyan color with 50% opacity */
+  font-family: 'Fira Mono', monospace;
 }
 
 /* Smooth transitions for page changes */
@@ -111,34 +91,11 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fade-in and fade-out effects */
 .fade-in {
-  animation: fadeIn 0.5s ease-in forwards; /* Added forwards to retain final state */
-}
-
-.fade-out {
-  animation: fadeOut 0.5s ease-out forwards; /* Added forwards to retain final state */
+  animation: fadeIn 0.5s ease-in forwards;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-/* Dot animation for the waiting page */
-.dots {
-  font-size: 2em;
-  text-align: center;
-}
-
-/* Mobile responsiveness */
-@media screen and (max-width: 768px) {
-  .button {
-    flex: 1 1 100%; /* Full-width buttons on smaller screens */
-  }
 }
