@@ -44,15 +44,7 @@
   <script>
     const player = document.getElementById('sirenVideo');
 
-    // Function to play the video
-    function playVideo() {
-      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      setTimeout(() => {
-        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  // Unmute after 2 seconds
-    }
-
-    // Poll for the signal from the server every 2 seconds
+    // Poll for signal from the Glitch server
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -64,23 +56,37 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Function to reset the signal after the video ends
-    function resetSignalAfterVideo() {
-      fetch('https://legend-oxidized-governor.glitch.me/reset', { method: 'POST' })
-        .then(() => window.location.href = 'exit.html')  // Redirect to exit.html
-        .catch(error => console.error('Error resetting signal:', error));
+    // Function to play the video
+    function playVideo() {
+      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      
+      // Unmute after a delay to avoid restrictions
+      setTimeout(() => {
+        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+      }, 2000);  // Unmute after 2 seconds
     }
 
-    // YouTube Iframe API event listener
+    // Function to handle when the video ends
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Reset signal after video ends
+        fetch('https://legend-oxidized-governor.glitch.me/reset', {
+          method: 'POST',
+        })
+        .then(() => window.location.href = 'exit.html')  // Redirect to exit page after signal is reset
+        .catch(error => console.error('Error resetting signal:', error));
+      }
+    }
+
+    // Check signal every 2 seconds
+    setInterval(checkForSignal, 2000);
+
+    // Listen for video state changes
     window.addEventListener('message', function(event) {
-      if (event.data && event.data.event === 'onStateChange' && event.data.info === 0) {
-        console.log('Video finished, resetting signal.');
-        resetSignalAfterVideo();  // Video ended, reset signal and redirect
+      if (event.data && event.data.event === 'onStateChange') {
+        onPlayerStateChange(event.data);
       }
     });
-
-    // Check the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
   </script>
 
 </body>
