@@ -1,19 +1,19 @@
 <script>
   // Function to fetch and display responses
   function fetchResponses() {
-    fetch('https://power-flax-syzygy.glitch.me')  // Ensure the correct URL
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch responses');
-        }
-        return response.json();
-      })
-      .then(data => displayResponses(data))
-      .catch(error => {
-        console.error('Error fetching responses:', error);
-        alert('Failed to load responses. Please try again later.');
-      });
-  }
+  fetch('https://power-flax-syzygy.glitch.me/responses')  // Update this with your Glitch URL
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch responses');
+      }
+      return response.json();
+    })
+    .then(data => displayResponses(data))
+    .catch(error => {
+      console.error('Error fetching responses:', error);
+      alert('Failed to load responses. Please try again later.');
+    });
+}
 
   // Function to display the responses on the Wall of Fame
   function displayResponses(responses) {
