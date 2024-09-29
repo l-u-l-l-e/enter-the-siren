@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://legend-oxidized-governor.glitch.me; script-src 'self' 'unsafe-inline' https://legend-oxidized-governor.glitch.me; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-  <title>Your name</title>
-<link rel="stylesheet" href="../entry/styles.css">
+  <title>Your Name</title>
+  <link rel="stylesheet" href="../entry/styles.css">
 </head>
 <body class="fade-in">
   <div class="container">
@@ -23,11 +23,9 @@
         return;
       }
 
-      // Save nickname in local storage
       localStorage.setItem('nickname', nickname);
 
-      // Navigate to the next question (generation.html for example)
-      window.location.href = 'generation.html';
+      window.location.href = 'generation.html';  // Navigate to next page
     });
   </script>
 </body>
