@@ -9,59 +9,55 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
   margin: 0;
   padding: 50px;
   overflow: hidden; /* Disable scrolling */
-  max-width: 100%; /* Prevents content from going too wide */
 }
 
-/* Container to control overall layout width */
+/* Container styles for responsiveness */
 .container {
-  max-width: 90vw;  /* Prevents content from stretching too wide on large screens */
-  padding: 0 20px;
-  box-sizing: border-box;
+  max-width: 800px;  /* Set max-width for the container */
+  width: 100%;  /* Full width for smaller screens */
+  padding: 20px;  /* Padding for spacing */
 }
 
 /* Heading styles */
 h1 {
-  margin-bottom: 30px;
+  margin-bottom: 30px; /* Less space below heading */
 }
 
 h2 {
-  margin-bottom: 60px;
+  margin-bottom: 60px; /* Adjusted space between heading and subtitle */
 }
 
 /* Button styles */
 .button {
-  background-color: #E1D1FF;
-  color: #3700AF;
+  background-color: #E1D1FF; /* Bright button background */
+  color: #3700AF; /* Button text color */
   padding: 15px 30px;
   border: none;
   cursor: pointer;
   font-size: 1.2em;
-  border-radius: 25px;
+  border-radius: 25px; /* Rounded buttons */
   font-family: 'Fira Mono', monospace;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  margin: 15px;
-  flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 per row */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Faster hover transition */
+  margin: 15px; /* Added margin between buttons */
   text-align: center;
-  box-sizing: border-box;
-  max-width: 200px; /* Set a max width for buttons to avoid stretching */
-}
-
-.button:hover {
-  background-color: #3700AF;
-  color: #E1D1FF;
 }
 
 /* Flexbox for button layout */
 .button-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allow buttons to wrap */
   justify-content: center;
-  gap: 10px; /* Space between buttons */
+}
+
+.button-container .button {
+  margin: 10px;
+  width: 45%; /* Two buttons per line */
+  font-size: 1.2em;
 }
 
 /* Input field styles */
@@ -69,21 +65,20 @@ h2 {
   background-color: transparent;
   color: #08fff8;
   font-family: 'Fira Mono', monospace;
-  font-size: 1.2em;
-  padding: 15px;
-  border: 2px solid #08fff8;
-  border-radius: 25px;
-  width: 100%; /* Ensure it fits the container width */
-  max-width: 500px; /* Max width for input fields */
+  font-size: 1.3em;  /* Increased font size */
+  padding: 20px;  /* Increased padding */
+  border: 2px solid #08fff8;  /* Cyan border */
+  border-radius: 25px;  /* Rounded corners */
+  width: 100%;  /* Full width */
   box-sizing: border-box;
-  margin-bottom: 20px;
-  outline: none;
+  margin-bottom: 30px;  /* Increased space below input */
+  outline: none;  /* Remove default outline */
   transition: border-color 0.3s ease;
 }
 
 /* No color change on focus */
 .input-field:focus {
-  border-color: #08fff8;
+  border-color: #08fff8; /* Keep the same cyan border on focus */
 }
 
 /* Placeholder text styles */
@@ -104,16 +99,4 @@ html {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-/* Responsive adjustments for smaller screens */
-@media screen and (max-width: 768px) {
-  body {
-    padding: 20px; /* Reduce padding on smaller screens */
-  }
-  
-  .button-container .button {
-    flex: 1 1 100%; /* Make buttons full width on small screens */
-    max-width: none; /* Remove max width for buttons on small screens */
-  }
 }
