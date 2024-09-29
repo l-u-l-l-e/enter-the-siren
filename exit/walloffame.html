@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wall of Fame</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure this path is correct -->
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure the path is correct -->
   <style>
     /* Wall of Fame specific styles */
     .wall-container {
@@ -51,73 +51,75 @@
   <div class="container wall-container">
     <h1>Wall of Fame</h1> <!-- Hidden title -->
 
-    <!-- This is the missing #responses container -->
+    <!-- This is the responses container -->
     <div id="responses">
       <!-- Real responses from the server will be injected here -->
     </div>
   </div>
 
   <script>
-    // Function to fetch and display responses
-    function fetchResponses() {
-      fetch('https://power-flax-syzygy.glitch.me/responses')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to fetch responses');
-          }
-          return response.json();
-        })
-        .then(data => displayResponses(data))
-        .catch(error => {
-          console.error('Error fetching responses:', error);
-          alert('Failed to load responses. Please try again later.');
-        });
-    }
-
-    // Function to display the responses on the Wall of Fame
-    function displayResponses(responses) {
-      const responsesContainer = document.getElementById('responses');
-      if (!responsesContainer) {
-        console.error('The #responses container was not found');
-        return;
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to fetch and display responses
+      function fetchResponses() {
+        fetch('https://power-flax-syzygy.glitch.me/responses')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to fetch responses');
+            }
+            return response.json();
+          })
+          .then(data => displayResponses(data))
+          .catch(error => {
+            console.error('Error fetching responses:', error);
+            alert('Failed to load responses. Please try again later.');
+          });
       }
 
-      responsesContainer.innerHTML = ''; // Clear any existing content
+      // Function to display the responses on the Wall of Fame
+      function displayResponses(responses) {
+        const responsesContainer = document.getElementById('responses');
+        if (!responsesContainer) {
+          console.error('The #responses container was not found');
+          return;
+        }
 
-      responses.forEach(response => {
-        const responseDiv = document.createElement('div');
-        responseDiv.classList.add('response');
+        responsesContainer.innerHTML = ''; // Clear any existing content
 
-        const headlineDiv = document.createElement('div');
-        headlineDiv.classList.add('headline');
-        headlineDiv.innerHTML = `${response.nickname} <br> ${response.type}, ${response.generation}`;
-        responseDiv.appendChild(headlineDiv);
+        responses.forEach(response => {
+          const responseDiv = document.createElement('div');
+          responseDiv.classList.add('response');
 
-        const bodyDiv = document.createElement('div');
-        bodyDiv.classList.add('response-body');
-        bodyDiv.innerHTML = `<p><strong>Felt: </strong>${response.observed}</p>
-                             <p><strong>Because: </strong>${response.reason}</p>
-                             <p>${response.reflection}</p>`;
-        responseDiv.appendChild(bodyDiv);
+          const headlineDiv = document.createElement('div');
+          headlineDiv.classList.add('headline');
+          headlineDiv.innerHTML = `${response.nickname} <br> ${response.type}, ${response.generation}`;
+          responseDiv.appendChild(headlineDiv);
 
-        const dateTimeDiv = document.createElement('div');
-        dateTimeDiv.classList.add('date-time');
-        dateTimeDiv.textContent = new Date(response.timestamp).toLocaleString('en-GB', {
-          hour12: false,   // Use 24-hour format
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
+          const bodyDiv = document.createElement('div');
+          bodyDiv.classList.add('response-body');
+          bodyDiv.innerHTML = `<p><strong>Felt: </strong>${response.observed}</p>
+                               <p><strong>Because: </strong>${response.reason}</p>
+                               <p>${response.reflection}</p>`;
+          responseDiv.appendChild(bodyDiv);
+
+          const dateTimeDiv = document.createElement('div');
+          dateTimeDiv.classList.add('date-time');
+          dateTimeDiv.textContent = new Date(response.timestamp).toLocaleString('en-GB', {
+            hour12: false,   // Use 24-hour format
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          responseDiv.appendChild(dateTimeDiv);
+
+          responsesContainer.appendChild(responseDiv);
         });
-        responseDiv.appendChild(dateTimeDiv);
+      }
 
-        responsesContainer.appendChild(responseDiv);
-      });
-    }
-
-    // Call the function to fetch and display the responses when the page loads
-    fetchResponses();
+      // Call the function to fetch and display the responses when the page loads
+      fetchResponses();
+    });
   </script>
 </body>
 </html>
