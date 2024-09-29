@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wall of Fame</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure the path is correct -->
+  <link rel="stylesheet" href="../entry/styles.css">
   <style>
-    /* Wall of Fame specific styles */
     .wall-container {
       max-width: 800px;
       margin: 0 auto;
@@ -14,26 +13,23 @@
     }
 
     .response {
-      margin-bottom: 40px; /* Space between responses */
-      padding-bottom: 20px; /* Padding below each response */
-      border-bottom: 1px solid #08fff8; /* Separator between responses */
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #08fff8;
     }
 
-    /* Headline styling for Nickname, Type, and Generation */
     .headline {
       font-size: 1.5em;
       color: #08fff8;
     }
 
-    /* Styling for the response body (Observed, Reason, Reflection) */
     .response-body {
       margin-top: 10px;
       color: #E1D1FF;
       font-size: 1.1em;
-      line-height: 1.5; /* Spacing between lines for readability */
+      line-height: 1.5;
     }
 
-    /* Styling for date and time */
     .date-time {
       font-size: 0.8em;
       color: #888888;
@@ -41,7 +37,6 @@
       text-align: right;
     }
 
-    /* Hide title on the page */
     h1 {
       display: none;
     }
@@ -49,25 +44,19 @@
 </head>
 <body class="fade-in">
   <div class="container wall-container">
-    <h1>Wall of Fame</h1> <!-- Hidden title -->
-
-    <!-- Dynamic Responses will be inserted here -->
-    <div id="responses">
-      <!-- Real responses from the server will be injected here -->
-    </div>
+    <h1>Wall of Fame</h1>
+    <div id="responses"></div>
   </div>
 
   <script>
-    // Function to format the date and time
     function formatDateTime(timestamp) {
       const date = new Date(timestamp);
       return date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-GB', { hour12: false });
     }
 
-    // Function to display the responses on the wall
     function displayResponses(responses) {
       const responsesContainer = document.getElementById('responses');
-      responsesContainer.innerHTML = ''; // Clear any existing content
+      responsesContainer.innerHTML = '';
 
       responses.forEach(response => {
         const responseDiv = document.createElement('div');
@@ -87,41 +76,21 @@
 
         const dateTimeDiv = document.createElement('div');
         dateTimeDiv.classList.add('date-time');
-        dateTimeDiv.textContent = formatDateTime(response.timestamp); // Format and display timestamp
+        dateTimeDiv.textContent = formatDateTime(response.timestamp);
         responseDiv.appendChild(dateTimeDiv);
 
         responsesContainer.appendChild(responseDiv);
       });
     }
 
-    // Fetch real responses from the server
     function fetchResponses() {
-      fetch('https://legend-oxidized-governor.glitch.me/responses')  // Ensure the correct URL
+      fetch('https://legend-oxidized-governor.glitch.me/responses')
         .then(response => response.json())
         .then(data => displayResponses(data))
         .catch(error => console.error('Error fetching responses:', error));
     }
 
-    // Call the function to fetch and display the responses when the page loads
     fetchResponses();
-
-    // Redirect to the welcome back page after 9 minutes of inactivity
-    let inactivityTime = 9 * 60 * 1000; // 9 minutes in milliseconds
-    let inactivityTimeout;
-
-    function resetInactivityTimer() {
-      clearTimeout(inactivityTimeout);
-      inactivityTimeout = setTimeout(() => {
-        window.location.href = 'welcome-back.html';
-      }, inactivityTime);
-    }
-
-    // Reset the inactivity timer on any user activity
-    document.addEventListener('mousemove', resetInactivityTimer);
-    document.addEventListener('keydown', resetInactivityTimer);
-
-    // Initially set the inactivity timer
-    resetInactivityTimer();
   </script>
 </body>
 </html>
