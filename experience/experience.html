@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
+    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -16,6 +17,14 @@
       overflow: hidden;
     }
 
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     iframe {
       width: 100vw;
       height: 100vh;
@@ -25,10 +34,12 @@
 </head>
 <body>
 
-  <iframe id="sirenVideo" 
-          src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
-          allow="autoplay; encrypted-media; fullscreen">
-  </iframe>
+  <div class="container">
+    <iframe id="sirenVideo" 
+            src="https://www.youtube.com/embed/dMRR6yFSy5k?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
+            allow="autoplay; encrypted-media; fullscreen">
+    </iframe>
+  </div>
 
   <script>
     const player = document.getElementById('sirenVideo');
@@ -38,10 +49,10 @@
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 3000);  // Unmute after 3 seconds
+      }, 2000);  // Unmute after 2 seconds
     }
 
-    // Poll for signal from the server
+    // Poll for the signal from the server every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
@@ -60,14 +71,15 @@
         .catch(error => console.error('Error resetting signal:', error));
     }
 
-    // Listen for message from YouTube iframe when the video ends
+    // YouTube Iframe API event listener
     window.addEventListener('message', function(event) {
       if (event.data && event.data.event === 'onStateChange' && event.data.info === 0) {
+        console.log('Video finished, resetting signal.');
         resetSignalAfterVideo();  // Video ended, reset signal and redirect
       }
     });
 
-    // Check signal every 2 seconds
+    // Check the signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
 
