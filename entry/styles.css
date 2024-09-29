@@ -9,41 +9,51 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
   margin: 0;
   padding: 50px;
   overflow: hidden; /* Disable scrolling */
+  max-width: 100%; /* Prevents content from going too wide */
+}
+
+/* Container to control overall layout width */
+.container {
+  max-width: 90vw;  /* Prevents content from stretching too wide on large screens */
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 /* Heading styles */
 h1 {
-  margin-bottom: 30px; /* Less space below heading */
+  margin-bottom: 30px;
 }
 
 h2 {
-  margin-bottom: 60px; /* Adjusted space between heading and subtitle */
+  margin-bottom: 60px;
 }
 
 /* Button styles */
 .button {
-  background-color: #E1D1FF; /* Bright button background */
-  color: #3700AF; /* Button text color */
+  background-color: #E1D1FF;
+  color: #3700AF;
   padding: 15px 30px;
   border: none;
   cursor: pointer;
   font-size: 1.2em;
-  border-radius: 25px; /* Rounded buttons */
+  border-radius: 25px;
   font-family: 'Fira Mono', monospace;
-  transition: background-color 0.2s ease, color 0.2s ease; /* Faster hover transition */
-  margin: 15px; /* Added margin between buttons */
-  flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 buttons per row */
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin: 15px;
+  flex: 1 1 40%; /* Buttons take up 40% of the row to fit 2 per row */
   text-align: center;
+  box-sizing: border-box;
+  max-width: 200px; /* Set a max width for buttons to avoid stretching */
 }
 
 .button:hover {
-  background-color: #3700AF; /* Darker hover background */
-  color: #E1D1FF; /* Inverted text color on hover */
+  background-color: #3700AF;
+  color: #E1D1FF;
 }
 
 /* Flexbox for button layout */
@@ -51,33 +61,29 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.button-container .button {
-  margin: 10px;
-  width: 45%; /* Adjust button width to fit two per line */
-  font-size: 1.3em;
+  gap: 10px; /* Space between buttons */
 }
 
 /* Input field styles */
 .input-field {
-  background-color: transparent; /* No change when clicked */
-  color: #08fff8; /* Same text color as body */
+  background-color: transparent;
+  color: #08fff8;
   font-family: 'Fira Mono', monospace;
   font-size: 1.2em;
   padding: 15px;
-  border: 2px solid #08fff8; /* Cyan border to match the buttons */
-  border-radius: 25px; /* Rounded corners to match the buttons */
-  width: 100%;
+  border: 2px solid #08fff8;
+  border-radius: 25px;
+  width: 100%; /* Ensure it fits the container width */
+  max-width: 500px; /* Max width for input fields */
   box-sizing: border-box;
   margin-bottom: 20px;
-  outline: none; /* Remove default outline */
+  outline: none;
   transition: border-color 0.3s ease;
 }
 
 /* No color change on focus */
 .input-field:focus {
-  border-color: #08fff8; /* Keep the same cyan border on focus */
+  border-color: #08fff8;
 }
 
 /* Placeholder text styles */
@@ -98,4 +104,16 @@ html {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 20px; /* Reduce padding on smaller screens */
+  }
+  
+  .button-container .button {
+    flex: 1 1 100%; /* Make buttons full width on small screens */
+    max-width: none; /* Remove max width for buttons on small screens */
+  }
 }
