@@ -27,32 +27,32 @@
 <body>
   <div class="dots">• • •</div>
 
-  <script>
-    let dotElement = document.querySelector('.dots');
-    let dots = 1;
+ <script>
+  let dotElement = document.querySelector('.dots');
+  let dots = 1;
 
-    // Simple animation for the dots
-    setInterval(function () {
-      dotElement.textContent = '•'.repeat(dots);
-      dots = (dots % 3) + 1;
-    }, 500);
+  // Simple animation for the dots
+  setInterval(function () {
+    dotElement.textContent = '•'.repeat(dots);
+    dots = (dots % 3) + 1;
+  }, 500);
 
-    // Poll for the signal from the server
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')  // Ensure the endpoint is correct
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {  // Make sure the 'playVideo' property is being returned
-            window.location.href = 'experience.html';  // Redirect to experience page when signal is received
-          }
-        })
-        .catch(error => {
-          console.error('Error checking signal:', error);
-        });
-    }
+  // Poll for the signal from the server
+  function checkForSignal() {
+    fetch('https://legend-oxidized-governor.glitch.me/signal')
+      .then(response => response.json())
+      .then(data => {
+        if (data.playVideo) {
+          // Signal received, redirect to experience page
+          window.location.href = 'experience.html';
+        }
+      })
+      .catch(error => console.error('Error checking signal:', error));
+  }
 
-    // Check for signal every 2 seconds
-    setInterval(checkForSignal, 2000);
-  </script>
+  // Check for signal every 2 seconds
+  setInterval(checkForSignal, 2000);
+</script>
+
 </body>
 </html>
