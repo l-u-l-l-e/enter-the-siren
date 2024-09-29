@@ -4,34 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Please Exit</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to main styles -->
+  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
   <style>
     body {
-      background-color: black; /* Ensure background consistency */
-      color: #08fff8; /* Cyan text */
-      font-family: 'Fira Mono', monospace; /* Use consistent font */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      background-color: black;
+      color: #08fff8;
+      font-family: 'Fira Mono', monospace;
+      font-size: 3em;
       text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5em; /* Similar size as other titles */
-      margin: 0;
     }
   </style>
 </head>
 <body>
-  <h1>Please Exit</h1> 
-  
+  <div>Please Exit</div>
+
   <script>
-    // Redirect to 'dots.html' after 10 seconds
+    // Redirect to 'dots.html' after 10 seconds and reset the signal
     setTimeout(function() {
       fetch('https://legend-oxidized-governor.glitch.me/reset', { method: 'POST' })
-        .then(() => window.location.href = 'dots.html')
+        .then(() => window.location.href = 'dots.html')  // Redirect to dots.html after reset
         .catch(error => console.error('Error resetting signal:', error));
     }, 10000);  // 10 seconds delay
   </script>
