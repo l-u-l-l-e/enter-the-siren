@@ -42,51 +42,53 @@
   </div>
 
   <script>
+    // Set up YouTube Iframe API
     const player = document.getElementById('sirenVideo');
 
-    // Poll for signal from the Glitch server
-    function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
-        .then(response => response.json())
-        .then(data => {
-          if (data.playVideo) {
-            playVideo();  // Play the video when signal is received
-          }
-        })
-        .catch(error => console.error('Error checking signal:', error));
-    }
-
-    // Function to play the video
     function playVideo() {
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
-      // Unmute after a delay to avoid restrictions
+      // Unmute after a delay
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
       }, 2000);  // Unmute after 2 seconds
     }
 
-    // Function to handle when the video ends
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        // Reset signal after video ends
-        fetch('https://legend-oxidized-governor.glitch.me/reset', {
-          method: 'POST',
-        })
-        .then(() => window.location.href = 'exit.html')  // Redirect to exit page after signal is reset
-        .catch(error => console.error('Error resetting signal:', error));
-      }
-    }
-
-    // Check signal every 2 seconds
-    setInterval(checkForSignal, 2000);
-
-    // Listen for video state changes
+    // Detect when the video ends
     window.addEventListener('message', function(event) {
       if (event.data && event.data.event === 'onStateChange') {
-        onPlayerStateChange(event.data);
+        if (event.data.info === 0) {  // YT.PlayerState.ENDED == 0
+          handleVideoEnd();  // Call the function to handle video end
+        }
       }
     });
+
+    function handleVideoEnd() {
+      // Reset signal after video ends and redirect to exit page
+      fetch('https://legend-oxidized-governor.glitch.me/reset', {
+        method: 'POST',
+      })
+      .then(() => {
+        console.log('Signal reset, redirecting to exit page.');
+        window.location.href = 'exit.html';  // Redirect to the exit page
+      })
+      .catch(error => console.error('Error resetting signal:', error));
+    }
+
+    // Poll for the signal from the server to start the video
+    function checkForSignal() {
+      fetch('https://legend-oxidized-governor.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            playVideo();  // Start the video when the signal is received
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    // Keep checking for signal every 2 seconds
+    setInterval(checkForSignal, 2000);
   </script>
 
 </body>
