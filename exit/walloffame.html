@@ -4,12 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wall of Fame</title>
-  <link rel="stylesheet" href="../entry/styles.css"> 
+  <link rel="stylesheet" href="../entry/styles.css">
+  <style>
+    /* Style for the wall of fame */
+    .wall-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Style for each response */
+    .response {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #08fff8; /* Thin line between responses */
+    }
+
+    /* Styling for nickname (large) */
+    .headline {
+      font-size: 2em; /* Large font size for nickname */
+      color: #08fff8; /* Cyan color for nickname */
+      margin-bottom: 10px;
+    }
+
+    /* Type and generation styling (smaller) */
+    .subheadline {
+      font-size: 1.3em; /* Smaller font size for type and generation */
+      color: #E1D1FF; /* Light purple color */
+      margin-bottom: 15px;
+    }
+
+    /* Normal text size for the response body */
+    .response-body {
+      color: #E1D1FF; /* Light purple color */
+      font-size: 1.1em; /* Normal text size */
+      line-height: 1.5; /* Better line spacing */
+    }
+
+    /* Date styling (very small) */
+    .date-time {
+      font-size: 0.8em; /* Very small font size */
+      color: #888888; /* Grey color for the date */
+      margin-top: 10px;
+      text-align: right;
+    }
+  </style>
 </head>
 <body class="fade-in">
   <div class="container wall-container">
-    <h1>Wall of Fame</h1>
-    <div id="responses"></div>
+    <div id="responses"></div> <!-- Responses will be injected here -->
   </div>
 
   <script>
@@ -31,17 +74,25 @@
 
       function displayResponses(responses) {
         const responsesContainer = document.getElementById('responses');
-        responsesContainer.innerHTML = ''; 
+        responsesContainer.innerHTML = ''; // Clear previous content
 
         responses.forEach(response => {
           const responseDiv = document.createElement('div');
           responseDiv.classList.add('response');
 
+          // Nickname (big)
           const headlineDiv = document.createElement('div');
           headlineDiv.classList.add('headline');
-          headlineDiv.innerHTML = `${response.nickname} <br> ${response.type}, ${response.generation}`;
+          headlineDiv.innerHTML = `${response.nickname}`;
           responseDiv.appendChild(headlineDiv);
 
+          // Type and Generation (smaller)
+          const subheadlineDiv = document.createElement('div');
+          subheadlineDiv.classList.add('subheadline');
+          subheadlineDiv.innerHTML = `${response.type}, ${response.generation}`;
+          responseDiv.appendChild(subheadlineDiv);
+
+          // Response body (normal text size)
           const bodyDiv = document.createElement('div');
           bodyDiv.classList.add('response-body');
           bodyDiv.innerHTML = `<p><strong>Felt: </strong>${response.observed}</p>
@@ -49,6 +100,7 @@
                                <p>${response.reflection}</p>`;
           responseDiv.appendChild(bodyDiv);
 
+          // Date and time (very small)
           const dateTimeDiv = document.createElement('div');
           dateTimeDiv.classList.add('date-time');
           dateTimeDiv.textContent = new Date(response.timestamp).toLocaleString('en-GB', {
@@ -61,6 +113,7 @@
           });
           responseDiv.appendChild(dateTimeDiv);
 
+          // Append the response to the container
           responsesContainer.appendChild(responseDiv);
         });
       }
