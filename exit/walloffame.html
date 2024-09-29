@@ -4,64 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wall of Fame</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Ensure the path is correct -->
-  <style>
-    /* Wall of Fame specific styles */
-    .wall-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .response {
-      margin-bottom: 40px; /* Space between responses */
-      padding-bottom: 20px; /* Padding below each response */
-      border-bottom: 1px solid #08fff8; /* Separator between responses */
-    }
-
-    /* Headline styling for Nickname, Type, and Generation */
-    .headline {
-      font-size: 1.5em;
-      color: #08fff8;
-    }
-
-    /* Styling for the response body (Observed, Reason, Reflection) */
-    .response-body {
-      margin-top: 10px;
-      color: #E1D1FF;
-      font-size: 1.1em;
-      line-height: 1.5; /* Spacing between lines for readability */
-    }
-
-    /* Styling for date and time */
-    .date-time {
-      font-size: 0.8em;
-      color: #888888;
-      margin-top: 10px;
-      text-align: right;
-    }
-
-    /* Hide the main title on the page */
-    h1 {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="../entry/styles.css"> 
 </head>
 <body class="fade-in">
   <div class="container wall-container">
-    <h1>Wall of Fame</h1> <!-- Hidden title -->
-
-    <!-- This is the responses container -->
-    <div id="responses">
-      <!-- Real responses from the server will be injected here -->
-    </div>
+    <h1>Wall of Fame</h1>
+    <div id="responses"></div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Function to fetch and display responses
       function fetchResponses() {
-        fetch('https://power-flax-syzygy.glitch.me/responses')
+        fetch('https://legend-oxidized-governor.glitch.me/responses')
           .then(response => {
             if (!response.ok) {
               throw new Error('Failed to fetch responses');
@@ -75,15 +29,9 @@
           });
       }
 
-      // Function to display the responses on the Wall of Fame
       function displayResponses(responses) {
         const responsesContainer = document.getElementById('responses');
-        if (!responsesContainer) {
-          console.error('The #responses container was not found');
-          return;
-        }
-
-        responsesContainer.innerHTML = ''; // Clear any existing content
+        responsesContainer.innerHTML = ''; 
 
         responses.forEach(response => {
           const responseDiv = document.createElement('div');
@@ -104,7 +52,7 @@
           const dateTimeDiv = document.createElement('div');
           dateTimeDiv.classList.add('date-time');
           dateTimeDiv.textContent = new Date(response.timestamp).toLocaleString('en-GB', {
-            hour12: false,   // Use 24-hour format
+            hour12: false,
             year: 'numeric',
             month: 'short',
             day: '2-digit',
@@ -117,7 +65,6 @@
         });
       }
 
-      // Call the function to fetch and display the responses when the page loads
       fetchResponses();
     });
   </script>
