@@ -15,13 +15,13 @@
   <script>
     document.getElementById('readyButton').addEventListener('click', function() {
       // Send signal to play the video
-      fetch('https://legend-oxidized-governor.glitch.me/play-video', {
+      fetch('https://power-flax-syzygy.glitch.me/play-video', {
         method: 'POST',
       })
       .then(response => response.json())
       .then(data => {
         console.log('Signal sent:', data);
-        window.location.href = 'loading.html'; // Redirect to loading after signal is sent
+        window.location.href = 'loading.html'; 
       })
       .catch(error => console.error('Error sending signal:', error));
     });
