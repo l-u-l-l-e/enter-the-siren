@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Waiting</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Make sure this path is correct -->
+  <link rel="stylesheet" href="../entry/styles.css">
   <style>
     body {
       background-color: black;
@@ -46,13 +46,11 @@
     let dotElement = document.querySelector('.dots');
     let dots = 1;
 
-    // Dot animation
     setInterval(function () {
       dotElement.textContent = '•'.repeat(dots);
       dots = (dots % 3) + 1;
     }, 500);
 
-    // Redirect to index after 10 minutes (600,000 milliseconds)
     setTimeout(function() {
       window.location.href = 'index.html';
     }, 732000); // 
