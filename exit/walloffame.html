@@ -28,9 +28,14 @@
       height: 90vh; 
       margin: 0 auto;
       padding: 20px;
-      overflow-y: auto; 
+      overflow-y: scroll; /* Allow vertical scrolling */
       text-align: left; 
-      scrollbar-width: thin; 
+      scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+
+    /* Hide scrollbar for Chrome, Edge, and Safari */
+    .wall-container::-webkit-scrollbar {
+      display: none;
     }
 
     .response {
@@ -62,18 +67,6 @@
       color: #E1D1FF; 
       font-size: 1.1em; 
       line-height: 1.5; 
-    }
-
-    .wall-container::-webkit-scrollbar {
-      width: 6px; 
-    }
-
-    .wall-container::-webkit-scrollbar-thumb {
-      background-color: #08fff8; 
-    }
-
-    .wall-container::-webkit-scrollbar-track {
-      background-color: #000; 
     }
   </style>
 </head>
