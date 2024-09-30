@@ -14,14 +14,13 @@
 
   <script>
     document.getElementById('readyButton').addEventListener('click', function() {
-      // Send signal to play the video
       fetch('https://power-flax-syzygy.glitch.me/play-video', {
         method: 'POST',
       })
       .then(response => response.json())
       .then(data => {
         console.log('Signal sent:', data);
-        window.location.href = 'loading.html'; 
+        window.location.href = 'loading.html';  // Redirect after the signal is sent
       })
       .catch(error => console.error('Error sending signal:', error));
     });
