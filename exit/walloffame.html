@@ -6,7 +6,6 @@
   <title>Wall of Fame</title>
   <link rel="stylesheet" href="../entry/styles.css">
   <style>
-    /* Style for the wall of fame */
     body {
       margin: 0;
       padding: 0;
@@ -26,68 +25,62 @@
     .wall-container {
       max-width: 800px;
       width: 100%;
-      height: 90vh; /* Allow scrolling within this container */
+      height: 90vh; 
       margin: 0 auto;
       padding: 20px;
-      overflow-y: auto; /* Enable vertical scrolling */
-      text-align: left; /* Align text to the left */
-      scrollbar-width: thin; /* Thin scrollbar for Firefox */
+      overflow-y: auto; 
+      text-align: left; 
+      scrollbar-width: thin; 
     }
 
-    /* Style for each response */
     .response {
       margin-bottom: 30px;
       padding-bottom: 20px;
-      border-bottom: 1px solid #08fff8; /* Thin line between responses */
+      border-bottom: 1px solid #08fff8; 
     }
 
-    /* Styling for nickname (large) */
     .headline {
-      font-size: 2em; /* Large font size for nickname */
-      color: #08fff8; /* Cyan color for nickname */
+      font-size: 2em; 
+      color: #08fff8; 
       margin-bottom: 10px;
     }
 
-    /* Type and generation (italic, smaller, next to name) */
     .subheadline {
       font-size: 1.3em;
-      font-style: italic; /* Italic style */
-      color: #E1D1FF; /* Light purple color */
+      font-style: italic; 
+      color: #E1D1FF; 
       margin-bottom: 5px;
     }
 
-    /* Date styling (very small, number format) */
     .date-time {
-      font-size: 0.8em; /* Very small font size */
-      color: #888888; /* Grey color for the date */
+      font-size: 0.8em; 
+      color: #08fff8; 
       margin-bottom: 10px;
     }
 
-    /* Normal text size for the response body */
     .response-body {
-      color: #E1D1FF; /* Light purple color */
-      font-size: 1.1em; /* Normal text size */
-      line-height: 1.5; /* Better line spacing */
+      color: #E1D1FF; 
+      font-size: 1.1em; 
+      line-height: 1.5; 
     }
 
-    /* Scrollbar styling for WebKit browsers (Chrome, Safari) */
     .wall-container::-webkit-scrollbar {
-      width: 6px; /* Make the scrollbar thinner */
+      width: 6px; 
     }
 
     .wall-container::-webkit-scrollbar-thumb {
-      background-color: #08fff8; /* Color of the scrollbar */
+      background-color: #08fff8; 
     }
 
     .wall-container::-webkit-scrollbar-track {
-      background-color: #000; /* Track background */
+      background-color: #000; 
     }
   </style>
 </head>
 <body class="fade-in">
   <div class="container">
     <div class="wall-container">
-      <div id="responses"></div> <!-- Responses will be injected here -->
+      <div id="responses"></div> 
     </div>
   </div>
 
@@ -110,32 +103,28 @@
 
       function displayResponses(responses) {
         const responsesContainer = document.getElementById('responses');
-        responsesContainer.innerHTML = ''; // Clear previous content
+        responsesContainer.innerHTML = ''; 
 
         responses.forEach(response => {
           const responseDiv = document.createElement('div');
           responseDiv.classList.add('response');
 
-          // Nickname (big)
           const headlineDiv = document.createElement('div');
           headlineDiv.classList.add('headline');
           headlineDiv.innerHTML = `${response.nickname}`;
           responseDiv.appendChild(headlineDiv);
 
-          // Type and Generation (italic, smaller, next to name)
           const subheadlineDiv = document.createElement('div');
           subheadlineDiv.classList.add('subheadline');
           subheadlineDiv.innerHTML = `${response.type}, ${response.generation}`;
           responseDiv.appendChild(subheadlineDiv);
 
-          // Date and time (number format: dd.mm.yyyy hh:mm)
           const dateTimeDiv = document.createElement('div');
           dateTimeDiv.classList.add('date-time');
           const date = new Date(response.timestamp);
           dateTimeDiv.textContent = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
           responseDiv.appendChild(dateTimeDiv);
 
-          // Response body (normal text size)
           const bodyDiv = document.createElement('div');
           bodyDiv.classList.add('response-body');
           bodyDiv.innerHTML = `<p><strong>Felt: </strong>${response.observed}</p>
@@ -143,7 +132,6 @@
                                <p>${response.reflection}</p>`;
           responseDiv.appendChild(bodyDiv);
 
-          // Append the response to the container
           responsesContainer.appendChild(responseDiv);
         });
       }
