@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://legend-oxidized-governor.glitch.me; script-src 'self' https://legend-oxidized-governor.glitch.me; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://power-flax-syzygy.glitch.me; script-src 'self' https://power-flax-syzygy.glitch.me; style-src 'self' 'unsafe-inline';">
   <title>Internet as Sea</title>
   <link rel="stylesheet" href="../entry/styles.css">
 </head>
@@ -27,13 +27,11 @@
           e.preventDefault();
           const href = this.getAttribute('href');
 
-          // Apply fade-out class before navigating
           document.body.classList.add('fade-out');
           
-          // Wait for the fade-out animation to finish, then navigate
           setTimeout(function() {
             window.location.href = href;
-          }, 500);  // Matches the CSS fade-out animation duration (0.5 seconds)
+          }, 500);  
         });
       });
     });
