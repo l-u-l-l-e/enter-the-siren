@@ -1,18 +1,13 @@
-@font-face {
-  font-family: 'ArthemysDisplay';
-  src: url('https://cdn.glitch.global/95bc25d0-218b-4f9b-bcd7-c432fdb0ad0e/ArthemysDisplay-Bitmap.otf?v=1727707936853') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 
-body, h1, h2, p {
-  font-family: 'ArthemysDisplay', sans-serif;
+body, h1, h2, p, input, button {
+  font-family: 'Fira Mono', monospace;
 }
 
 body {
   background-color: black;
   color: #08fff8;
-  font-family: 'ArthemysDisplay', sans-serif;
+  font-family: 'Fira Mono', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +26,7 @@ body {
 
 h1 {
   margin-bottom: 30px; 
-  font-size: 2em; 
+  font-size: 2em;
 }
 
 h2 {
@@ -45,10 +40,10 @@ h2 {
   border: none;
   cursor: pointer;
   font-size: 1.2em;
-  border-radius: 25px; 
-  font-family: 'ArthemysDisplay', sans-serif;
+  border-radius: 25px;
+  font-family: 'Fira Mono', monospace;
   transition: background-color 0.2s ease, color 0.2s ease;
-  margin: 15px; 
+  margin: 15px;
   text-align: center;
 }
 
@@ -65,33 +60,32 @@ h2 {
 
 .button-container .button {
   margin: 10px;
-  width: 45%; 
+  width: 45%;
   font-size: 1.2em;
 }
 
 .input-field {
   background-color: transparent;
   color: #08fff8;
-  font-family: 'ArthemysDisplay', sans-serif;
+  font-family: 'Fira Mono', monospace;
   font-size: 1.2em;  
   padding: 15px; 
-  border: 2px solid #08fff8; 
+  border: 2px solid #08fff8;  
   border-radius: 25px; 
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 20px; 
-  outline: none;
+  outline: none; 
   transition: border-color 0.3s ease;
 }
 
-
 .input-field:focus {
-  border-color: #08fff8; 
+  border-color: #08fff8;
 }
 
 ::placeholder {
-  color: rgba(8, 255, 248, 0.5);
-  font-family: 'ArthemysDisplay', sans-serif;
+  color: rgba(8, 255, 248, 0.5); 
+  font-family: 'Fira Mono', monospace;
 }
 
 html {
@@ -118,12 +112,12 @@ html {
   }
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.5em; 
     margin-bottom: 20px;
   }
 
   .button-container .button {
-    width: 100%; 
+    width: 100%;  
     font-size: 1.1em;
   }
 
