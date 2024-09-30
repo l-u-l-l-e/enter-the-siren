@@ -125,7 +125,7 @@
           bodyDiv.classList.add('response-body');
           bodyDiv.innerHTML = `<p><strong>Felt: </strong>${response.observed}</p>
                                <p><strong>Because: </strong>${response.reason}</p>
-                               <p>${response.reflection}</p>`;
+                               <p><strong>Learned: </strong>${response.reflection}</p>`;
           responseDiv.appendChild(bodyDiv);
 
           responsesContainer.appendChild(responseDiv);
