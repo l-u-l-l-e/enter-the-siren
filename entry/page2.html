@@ -47,7 +47,7 @@
           })
           .then(data => {
             console.log('Response saved:', data);
-            localStorage.setItem('type', userType);  // Save type for future use
+            localStorage.setItem('type', userType);  
             window.location.href = 'page3.html';
           })
           .catch(error => console.error('Error:', error));
