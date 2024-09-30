@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Please Exit</title>
-  <link rel="stylesheet" href="../entry/styles.css"> <!-- Link to your main stylesheet -->
+  <link rel="stylesheet" href="../entry/styles.css"> 
   <style>
     body {
       display: flex;
@@ -23,12 +23,11 @@
   <div>Please Exit</div>
 
   <script>
-    // Redirect to 'dots.html' after 10 seconds and reset the signal
     setTimeout(function() {
-      fetch('https://legend-oxidized-governor.glitch.me/reset', { method: 'POST' })
-        .then(() => window.location.href = 'dots.html')  // Redirect to dots.html after reset
+      fetch('https://power-flax-syzygy.glitch.me/reset', { method: 'POST' })
+        .then(() => window.location.href = 'dots.html')  
         .catch(error => console.error('Error resetting signal:', error));
-    }, 10000);  // 10 seconds delay
+    }, 10000);  
   </script>
 </body>
 </html>
