@@ -1,9 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 
+@font-face {
+  font-family: 'ArthemysDisplay';
+  src: url('https://cdn.glitch.global/95bc25d0-218b-4f9b-bcd7-c432fdb0ad0e/ArthemysDisplay-Bitmap.otf?v=1727707936853') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, h1, h2, p {
+  font-family: 'ArthemysDisplay', sans-serif;
+}
+
 body {
   background-color: black;
   color: #08fff8;
-  font-family: 'Fira Mono', monospace;
+  font-family: 'ArthemysDisplay', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +48,7 @@ h2 {
   cursor: pointer;
   font-size: 1.2em;
   border-radius: 25px; 
-  font-family: 'Fira Mono', monospace;
+  font-family: 'ArthemysDisplay', sans-serif;
   transition: background-color 0.2s ease, color 0.2s ease;
   margin: 15px; 
   text-align: center;
@@ -63,7 +74,7 @@ h2 {
 .input-field {
   background-color: transparent;
   color: #08fff8;
-  font-family: 'Fira Mono', monospace;
+  font-family: 'ArthemysDisplay', sans-serif;
   font-size: 1.2em;  
   padding: 15px; 
   border: 2px solid #08fff8; 
@@ -82,7 +93,7 @@ h2 {
 
 ::placeholder {
   color: rgba(8, 255, 248, 0.5);
-  font-family: 'Fira Mono', monospace;
+  font-family: 'ArthemysDisplay', sans-serif;
 }
 
 html {
