@@ -98,6 +98,9 @@
         const responsesContainer = document.getElementById('responses');
         responsesContainer.innerHTML = ''; 
 
+        // Reverse the responses array to show most recent on top
+        responses.reverse();
+
         responses.forEach(response => {
           const responseDiv = document.createElement('div');
           responseDiv.classList.add('response');
