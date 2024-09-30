@@ -18,18 +18,6 @@
       margin: 0;
       padding: 50px;
     }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .message {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
     .dots {
       font-size: 2.5em;
       color: #08fff8;
@@ -37,10 +25,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="message">Please wait your turn</h1>
-    <div class="dots">• • •</div>
-  </div>
+  <div class="dots">• • •</div>
 
   <script>
     let dotElement = document.querySelector('.dots');
@@ -51,9 +36,21 @@
       dots = (dots % 3) + 1;
     }, 500);
 
-    setTimeout(function() {
-      window.location.href = 'index.html';
-    }, 732000); // 
+    function checkForSignal() {
+      fetch('https://power-flax-syzygy.glitch.me/signal')
+        .then(response => response.json())
+        .then(data => {
+          if (data.playVideo) {
+            console.log('Signal received, redirecting to experience page.');
+            window.location.href = 'experience.html';  
+          } else {
+            console.log('Waiting for signal...');
+          }
+        })
+        .catch(error => console.error('Error checking signal:', error));
+    }
+
+    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
