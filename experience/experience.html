@@ -43,37 +43,33 @@
 
   <script>
     const player = document.getElementById('sirenVideo');
-    const videoDurationInSeconds = 763;  // Replace with actual video duration in seconds
+    const videoDurationInSeconds = 763;  
 
     // Poll for the signal from the Glitch server
     function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
+      fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            playVideo();  // Play the video when signal is received
+            playVideo();  
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Function to play the video
     function playVideo() {
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
-      // Unmute after a delay to avoid restrictions
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  // Unmute after 2 seconds
+      }, 2000);  
 
-      // Set up redirection 2 seconds before video ends
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Convert to milliseconds
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; 
       setTimeout(() => {
-        window.location.href = 'exit.html';  // Redirect to exit page 2 seconds before the video ends
+        window.location.href = 'exit.html';  
       }, redirectTime);
     }
 
-    // Keep checking for signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
 
