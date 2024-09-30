@@ -39,12 +39,12 @@
 
     // Poll for the signal every 2 seconds
     function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
+      fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
             console.log('Signal received, redirecting to experience page.');
-            window.location.href = 'experience.html';  // Redirect to experience page when signal is received
+            window.location.href = 'experience.html';  
           } else {
             console.log('Waiting for signal...');
           }
