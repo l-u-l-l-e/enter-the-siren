@@ -36,18 +36,18 @@
 
   <div class="container">
     <iframe id="sirenVideo" 
-            src="https://www.youtube.com/embed/fISsSQ8A1YQ?si=uN5NreQgGcO0qr0B" 
+            src="https://www.youtube.com/embed/fISsSQ8A1YQ?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
             allow="autoplay; encrypted-media; fullscreen">
     </iframe>
   </div>
 
   <script>
     const player = document.getElementById('sirenVideo');
-    const videoDurationInSeconds = 763;  
+    const videoDurationInSeconds = 747;  // Updated video duration (12 minutes and 27 seconds)
 
-    // Poll for the signal from the Glitch server
+    // Poll for the signal from the server
     function checkForSignal() {
-      fetch('https://legend-oxidized-governor.glitch.me/signal')
+      fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
@@ -58,15 +58,17 @@
     }
 
     function playVideo() {
+      // Send the 'play' command to the YouTube iframe using the API
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  
+      }, 2000);  // Unmute the video after 2 seconds
 
+      // Redirect after the video ends
       const redirectTime = (videoDurationInSeconds - 2) * 1000; 
       setTimeout(() => {
-        window.location.href = 'exit.html';  
+        window.location.href = 'exit.html';  // Redirect to exit page after the video ends
       }, redirectTime);
     }
 
