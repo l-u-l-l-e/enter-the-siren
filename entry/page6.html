@@ -21,7 +21,7 @@
   .then(response => response.json())
   .then(data => {
     console.log('Signal sent:', data);
-    window.location.href = 'loading.html'; // Make sure it redirects
+    window.location.href = 'loading.html'; 
   })
   .catch(error => console.error('Error sending signal:', error));
 });
