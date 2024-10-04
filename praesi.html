@@ -14,15 +14,34 @@
       height: 100vh;
       background-color: #f4f4f4;
     }
-   iframe {
-    overflow: hidden; /* Hide any overflowing content */
-    width: 100%;
-    height: 100vh; /* Full page height */
-    border: none;
-  }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* Full-screen height */
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent; /* Make the overlay invisible */
+      z-index: 10; /* Higher than the iframe to block interaction */
+    }
   </style>
 </head>
 <body>
-  <iframe src="https://indd.adobe.com/view/2539da8f-b630-4e41-beb0-f3ca900481dc" allowfullscreen></iframe>
+  <div class="iframe-wrapper">
+    <iframe src="https://indd.adobe.com/view/2539da8f-b630-4e41-beb0-f3ca900481dc" allowfullscreen></iframe>
+    <div class="overlay"></div> <!-- Transparent overlay to block controls -->
+  </div>
 </body>
 </html>
