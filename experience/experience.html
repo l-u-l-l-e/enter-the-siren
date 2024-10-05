@@ -43,7 +43,7 @@
 
   <script>
     const player = document.getElementById('sirenVideo');
-    const videoDurationInSeconds = 747;  // 12 minutes and 27 seconds
+    const videoDurationInSeconds = 754;  // 12 minutes and 34 seconds
 
     // Poll for the signal from the server
     function checkForSignal() {
@@ -60,9 +60,13 @@
     function playVideo() {
       // Send the 'play' command to the YouTube iframe using the API
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      
+      setTimeout(() => {
+        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+      }, 2000);  // Unmute the video after 2 seconds
 
       // Redirect after the video ends
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; 
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; // 752 seconds = 12:32 minutes
       setTimeout(() => {
         window.location.href = 'exit.html';  // Redirect to exit page after the video ends
       }, redirectTime);
