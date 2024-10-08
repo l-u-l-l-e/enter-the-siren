@@ -97,7 +97,7 @@
         const responsesContainer = document.getElementById('responses');
         responsesContainer.innerHTML = '';
 
-        // Reverse the responses array to show most recent on top
+        // Reverse the responses array to show the most recent on top
         responses.reverse();
 
         responses.forEach(response => {
@@ -137,6 +137,11 @@
       }
 
       fetchResponses();
+
+      // Redirect to welcomeback.html after 9 minutes (540,000 milliseconds)
+      setTimeout(function() {
+        window.location.href = 'welcomeback.html';
+      }, 540000);
     });
   </script>
 </body>
