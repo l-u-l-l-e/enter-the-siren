@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASMR</title>
+  <title>Experience Point</title>
   <style>
+    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -49,7 +50,7 @@
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, playing video.');
+            console.log('Signal received, starting video playback.');
             playVideo();
           }
         })
@@ -61,12 +62,12 @@
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
       setTimeout(() => {
-        // Unmute the video 2 seconds after starting
+        // Unmute the video 2 seconds after starting to ensure smooth playback
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
       }, 2000);
 
       // Redirect after the video ends
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; // 752 seconds = 12:32 minutes
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before end
       setTimeout(() => {
         window.location.href = 'exit.html';  // Redirect to exit page after the video ends
       }, redirectTime);
