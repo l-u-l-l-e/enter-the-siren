@@ -12,11 +12,11 @@
       background-color: black;
       color: #08fff8;
       font-family: 'Fira Mono', monospace;
-      overflow: hidden; /* Prevent body scrolling */
+      overflow: hidden;
     }
 
     .container {
-      height: 100vh; /* Full viewport height */
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -28,12 +28,11 @@
       height: 90vh; 
       margin: 0 auto;
       padding: 20px;
-      overflow-y: scroll; /* Allow vertical scrolling */
+      overflow-y: scroll; 
       text-align: left; 
-      scrollbar-width: none; /* Hide scrollbar for Firefox */
+      scrollbar-width: none;
     }
 
-    /* Hide scrollbar for Chrome, Edge, and Safari */
     .wall-container::-webkit-scrollbar {
       display: none;
     }
@@ -96,12 +95,17 @@
 
       function displayResponses(responses) {
         const responsesContainer = document.getElementById('responses');
-        responsesContainer.innerHTML = ''; 
+        responsesContainer.innerHTML = '';
 
         // Reverse the responses array to show most recent on top
         responses.reverse();
 
         responses.forEach(response => {
+          // Skip responses with undefined values
+          if (!response.nickname || !response.type || !response.generation || !response.observed || !response.reason || !response.reflection) {
+            return;
+          }
+
           const responseDiv = document.createElement('div');
           responseDiv.classList.add('response');
 
