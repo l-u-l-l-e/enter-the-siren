@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience Point</title>
   <style>
-    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -43,14 +42,14 @@
 
   <script>
     const player = document.getElementById('sirenVideo');
-    const videoDurationInSeconds = 754;  // 12 minutes and 34 seconds
+    const videoDurationInSeconds = 754; // 12 minutes and 34 seconds
 
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, starting video playback.');
+            console.log('Signal received, video will start playing.');
             playVideo();
           }
         })
@@ -58,18 +57,17 @@
     }
 
     function playVideo() {
-      // Send the 'play' command to the YouTube iframe using the API
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      
+
+      // Attempt to unmute after 2 seconds to ensure autoplay starts smoothly
       setTimeout(() => {
-        // Unmute the video 2 seconds after starting to ensure smooth playback
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
       }, 2000);
 
-      // Redirect after the video ends
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before end
+      // Redirect after the video ends (12:34 minutes)
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before the end
       setTimeout(() => {
-        window.location.href = 'exit.html';  // Redirect to exit page after the video ends
+        window.location.href = 'exit.html'; // Redirect to exit page after the video ends
       }, redirectTime);
     }
 
