@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASMR</title>
+  <title>Experience Point</title>
   <style>
     /* Fullscreen video styles */
     html, body {
@@ -33,6 +33,7 @@
   </style>
 </head>
 <body>
+
   <div class="container">
     <iframe id="sirenVideo" 
             src="https://www.youtube.com/embed/UYMx0qaVJyI?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
@@ -44,25 +45,26 @@
     const player = document.getElementById('sirenVideo');
     const videoDurationInSeconds = 754;  // 12 minutes and 34 seconds
 
-    // Poll for the signal from the server
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            playVideo();  
+            console.log('Signal received, video will start in 8 seconds.');
+            setTimeout(playVideo, 8000); // Play the video after an 8-second delay
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
     function playVideo() {
-      // Play the video and unmute after a short delay for smoother transition
+      // Send the 'play' command to the YouTube iframe using the API
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-
+      
       setTimeout(() => {
+        // Unmute the video 2 seconds after starting to ensure smooth playback
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }, 2000);  // Unmute the video after 2 seconds
+      }, 2000);
 
       // Redirect after the video ends
       const redirectTime = (videoDurationInSeconds - 2) * 1000; // 752 seconds = 12:32 minutes
@@ -71,8 +73,9 @@
       }, redirectTime);
     }
 
-    // Start checking for the signal every 2 seconds
+    // Check for the signal every 2 seconds
     setInterval(checkForSignal, 2000);
   </script>
+
 </body>
 </html>
