@@ -43,8 +43,10 @@
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, redirecting to experience page.');
-            window.location.href = 'experience.html';  
+            console.log('Signal received. Waiting for 8 seconds before redirecting...');
+            setTimeout(() => {
+              window.location.href = 'experience.html';
+            }, 8000);  // 8-second delay
           } else {
             console.log('Waiting for signal...');
           }
