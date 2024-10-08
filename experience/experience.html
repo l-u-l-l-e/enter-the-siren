@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experience Point</title>
+  <title>ASMR</title>
   <style>
-    /* Fullscreen video styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -50,8 +49,8 @@
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, video will start in 8 seconds.');
-            setTimeout(playVideo, 8000); // Play the video after an 8-second delay
+            console.log('Signal received, playing video.');
+            playVideo();
           }
         })
         .catch(error => console.error('Error checking signal:', error));
@@ -62,7 +61,7 @@
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
       
       setTimeout(() => {
-        // Unmute the video 2 seconds after starting to ensure smooth playback
+        // Unmute the video 2 seconds after starting
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
       }, 2000);
 
