@@ -32,7 +32,6 @@
   </style>
 </head>
 <body>
-
   <div class="container">
     <iframe id="sirenVideo" 
             src="https://www.youtube.com/embed/UYMx0qaVJyI?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
@@ -57,6 +56,7 @@
     }
 
     function playVideo() {
+      // Send the 'play' command to the YouTube iframe using the API
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
 
       // Attempt to unmute after 2 seconds to ensure autoplay starts smoothly
@@ -73,7 +73,11 @@
 
     // Check for the signal every 2 seconds
     setInterval(checkForSignal, 2000);
-  </script>
 
+    // YouTube API ready event handler
+    window.onYouTubeIframeAPIReady = function() {
+      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    };
+  </script>
 </body>
 </html>
