@@ -32,9 +32,10 @@
   </style>
 </head>
 <body>
+
   <div class="container">
     <iframe id="sirenVideo" 
-            src="https://www.youtube.com/embed/UYMx0qaVJyI?autoplay=1&mute=1&controls=0&enablejsapi=1&rel=0" 
+            src="https://www.youtube.com/embed/UYMx0qaVJyI?autoplay=1&controls=0&enablejsapi=1&rel=0" 
             allow="autoplay; encrypted-media; fullscreen">
     </iframe>
   </div>
@@ -43,41 +44,45 @@
     const player = document.getElementById('sirenVideo');
     const videoDurationInSeconds = 754; // 12 minutes and 34 seconds
 
+    // Check for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
+
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, video will start playing.');
+            console.log('Signal received, starting video playback.');
             playVideo();
+          } else {
+            console.log('No signal yet...');
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
     function playVideo() {
-      // Send the 'play' command to the YouTube iframe using the API
+      // Send the play command to the YouTube iframe
       player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
 
-      // Attempt to unmute after 2 seconds to ensure autoplay starts smoothly
+      // Unmute the video after 2 seconds to ensure it starts smoothly
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        console.log('Attempting to unmute the video.');
       }, 2000);
 
-      // Redirect after the video ends (12:34 minutes)
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before the end
+      // Set playback quality to highest available
+      player.contentWindow.postMessage('{"event":"command","func":"setPlaybackQuality","args":["highres"]}', '*');
+      console.log('Setting playback quality to highest.');
+
+      // Redirect to exit page after the video ends
+      const redirectTime = videoDurationInSeconds * 1000; // Full duration in milliseconds
       setTimeout(() => {
-        window.location.href = 'exit.html'; // Redirect to exit page after the video ends
+        console.log('Video ended, redirecting to exit.');
+        window.location.href = 'exit.html';
       }, redirectTime);
     }
-
-    // Check for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
-
-    // YouTube API ready event handler
-    window.onYouTubeIframeAPIReady = function() {
-      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    };
   </script>
+
 </body>
 </html>
