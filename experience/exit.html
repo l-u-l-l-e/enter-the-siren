@@ -11,25 +11,26 @@
   <h2>There's one last thing for you</h2>
   
   <script>
-    function resetSignal() {
-      return fetch('https://power-flax-syzygy.glitch.me/reset', { method: 'POST' })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to reset the signal');
-          }
-          console.log('Signal reset successfully.');
-        })
-        .catch(error => {
-          console.error('Error resetting signal:', error);
-        });
+    async function resetSignal() {
+      try {
+        const response = await fetch('https://legend-oxidized-governor.glitch.me/reset', { method: 'POST' });
+        if (!response.ok) {
+          throw new Error('Failed to reset the signal');
+        }
+        console.log('Signal reset successfully.');
+      } catch (error) {
+        console.error('Error resetting signal:', error);
+      }
     }
 
-    async function handleExitProcess() {
-      await resetSignal();
-      console.log('Waiting for 10 seconds before redirecting...');
-      setTimeout(() => {
-        window.location.href = 'dots.html';
-      }, 10000);  // Show the exit page for 10 seconds
+    function handleExitProcess() {
+      // Reset the signal first
+      resetSignal().then(() => {
+        console.log('Waiting for 10 seconds before redirecting to dots...');
+        setTimeout(() => {
+          window.location.href = 'dots.html';
+        }, 10000); // Show the exit page for 10 seconds before redirecting
+      });
     }
 
     // Start the exit process immediately when the page loads
