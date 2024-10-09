@@ -72,18 +72,28 @@
       // When the video is playing, set a timeout to redirect 2 seconds before it ends
       if (event.data === YT.PlayerState.PLAYING && !videoStarted) {
         videoStarted = true;
-        const remainingTime = player.getDuration() - 2;
+        const remainingTime = player.getDuration() - 2; // 2 seconds before the end
         setTimeout(() => {
           resetSignalAndRedirect();
         }, remainingTime * 1000);
       }
     }
 
+    function resetSignalAndRedirect() {
+      // Reset the signal on the server
+      fetch('https://power-flax-syzygy.glitch.me/reset', { method: 'POST' })
+        .then(() => {
+          console.log('Signal reset successfully.');
+          window.location.href = 'exit.html'; // Redirect to exit page after resetting the signal
+        })
+        .catch(error => console.error('Error resetting the signal:', error));
+    }
+
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
-          if (data.playVideo && !videoStarted) {
+          if (data.playVideo) {
             console.log('Signal received, video will start playing.');
             playVideo();
           }
@@ -93,18 +103,6 @@
 
     function playVideo() {
       player.playVideo();
-    }
-
-    function resetSignalAndRedirect() {
-      // Reset the signal on the server
-      fetch('https://power-flax-syzygy.glitch.me/reset', {
-        method: 'POST'
-      })
-      .then(() => {
-        // After resetting the signal, redirect to exit page
-        window.location.href = 'exit.html';
-      })
-      .catch(error => console.error('Error resetting signal:', error));
     }
 
     // Check for the signal every 2 seconds
