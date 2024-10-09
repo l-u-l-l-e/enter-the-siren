@@ -33,15 +33,14 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-
   <div class="container">
     <div id="sirenVideo"></div>
   </div>
 
   <script>
     let player;
+    let videoStarted = false;
     const videoId = 'UYMx0qaVJyI'; // Your video ID
-    const videoDurationInSeconds = 754; // 12 minutes and 34 seconds
 
     // This function gets called when the YouTube Iframe API is ready
     function onYouTubeIframeAPIReady() {
@@ -55,7 +54,8 @@
           'playsinline': 1
         },
         events: {
-          'onReady': onPlayerReady
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
         }
       });
     }
@@ -68,11 +68,22 @@
       }, 2000);
     }
 
+    function onPlayerStateChange(event) {
+      // When the video is playing, set a timeout to redirect 2 seconds before it ends
+      if (event.data === YT.PlayerState.PLAYING && !videoStarted) {
+        videoStarted = true;
+        const remainingTime = player.getDuration() - 2;
+        setTimeout(() => {
+          window.location.href = 'exit.html';
+        }, remainingTime * 1000);
+      }
+    }
+
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
-          if (data.playVideo) {
+          if (data.playVideo && !videoStarted) {
             console.log('Signal received, video will start playing.');
             playVideo();
           }
@@ -82,12 +93,6 @@
 
     function playVideo() {
       player.playVideo();
-
-      // Redirect after the video ends (12:34 minutes)
-      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before the end
-      setTimeout(() => {
-        window.location.href = 'exit.html'; // Redirect to exit page after the video ends
-      }, redirectTime);
     }
 
     // Check for the signal every 2 seconds
