@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASMR</title>
+  <title>Experience Point</title>
   <style>
     html, body {
       margin: 0;
@@ -74,7 +74,7 @@
         videoStarted = true;
         const remainingTime = player.getDuration() - 2;
         setTimeout(() => {
-          window.location.href = 'exit.html';
+          resetSignalAndRedirect();
         }, remainingTime * 1000);
       }
     }
@@ -93,6 +93,18 @@
 
     function playVideo() {
       player.playVideo();
+    }
+
+    function resetSignalAndRedirect() {
+      // Reset the signal on the server
+      fetch('https://power-flax-syzygy.glitch.me/reset', {
+        method: 'POST'
+      })
+      .then(() => {
+        // After resetting the signal, redirect to exit page
+        window.location.href = 'exit.html';
+      })
+      .catch(error => console.error('Error resetting signal:', error));
     }
 
     // Check for the signal every 2 seconds
