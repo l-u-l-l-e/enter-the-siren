@@ -24,65 +24,74 @@
       align-items: center;
     }
 
-    iframe {
+    #sirenVideo {
       width: 100vw;
       height: 100vh;
       border: none;
     }
   </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
   <div class="container">
-    <iframe id="sirenVideo" 
-            src="https://www.youtube.com/embed/UYMx0qaVJyI?autoplay=1&controls=0&enablejsapi=1&rel=0" 
-            allow="autoplay; encrypted-media; fullscreen">
-    </iframe>
+    <div id="sirenVideo"></div>
   </div>
 
   <script>
-    const player = document.getElementById('sirenVideo');
+    let player;
+    const videoId = 'UYMx0qaVJyI'; // Your video ID
     const videoDurationInSeconds = 754; // 12 minutes and 34 seconds
 
-    // Check for the signal every 2 seconds
-    setInterval(checkForSignal, 2000);
+    // This function gets called when the YouTube Iframe API is ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('sirenVideo', {
+        videoId: videoId,
+        playerVars: {
+          'autoplay': 1,
+          'controls': 0,
+          'mute': 1,
+          'rel': 0,
+          'playsinline': 1
+        },
+        events: {
+          'onReady': onPlayerReady
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      // Unmute the video after 2 seconds to ensure smooth start
+      setTimeout(() => {
+        event.target.unMute();
+        event.target.setVolume(100);
+      }, 2000);
+    }
 
     function checkForSignal() {
       fetch('https://power-flax-syzygy.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received, starting video playback.');
+            console.log('Signal received, video will start playing.');
             playVideo();
-          } else {
-            console.log('No signal yet...');
           }
         })
         .catch(error => console.error('Error checking signal:', error));
     }
 
     function playVideo() {
-      // Send the play command to the YouTube iframe
-      player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      player.playVideo();
 
-      // Unmute the video after 2 seconds to ensure it starts smoothly
+      // Redirect after the video ends (12:34 minutes)
+      const redirectTime = (videoDurationInSeconds - 2) * 1000; // Redirect 2 seconds before the end
       setTimeout(() => {
-        player.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-        console.log('Attempting to unmute the video.');
-      }, 2000);
-
-      // Set playback quality to highest available
-      player.contentWindow.postMessage('{"event":"command","func":"setPlaybackQuality","args":["highres"]}', '*');
-      console.log('Setting playback quality to highest.');
-
-      // Redirect to exit page after the video ends
-      const redirectTime = videoDurationInSeconds * 1000; // Full duration in milliseconds
-      setTimeout(() => {
-        console.log('Video ended, redirecting to exit.');
-        window.location.href = 'exit.html';
+        window.location.href = 'exit.html'; // Redirect to exit page after the video ends
       }, redirectTime);
     }
-  </script>
 
+    // Check for the signal every 2 seconds
+    setInterval(checkForSignal, 2000);
+  </script>
 </body>
 </html>
