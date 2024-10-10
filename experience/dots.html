@@ -37,18 +37,16 @@
       dots = (dots % 3) + 1;
     }, 500);
 
-    // Poll for the signal every 2 seconds after a 5-second delay
-    setTimeout(() => {
-      setInterval(checkForSignal, 2000);
-    }, 5000); // 5-second delay before starting to poll for signal
-
+    // Poll for the signal every 2 seconds
     function checkForSignal() {
       fetch('https://legend-oxidized-governor.glitch.me/signal')
         .then(response => response.json())
         .then(data => {
           if (data.playVideo) {
-            console.log('Signal received. Redirecting to experience page...');
-            window.location.href = 'experience.html';
+            console.log('Signal received. Waiting for 8 seconds before redirecting...');
+            setTimeout(() => {
+              window.location.href = 'experience.html';
+            }, 8000);  // 8-second delay before redirecting to experience page
           } else {
             console.log('Waiting for signal...');
           }
@@ -56,10 +54,8 @@
         .catch(error => console.error('Error checking signal:', error));
     }
 
-    // Automatically return to index after 12 minutes (720,000 milliseconds)
-    setTimeout(function() {
-      window.location.href = 'index.html';
-    }, 720000);
+    // Start checking for the signal immediately
+    setInterval(checkForSignal, 2000);
   </script>
 </body>
 </html>
